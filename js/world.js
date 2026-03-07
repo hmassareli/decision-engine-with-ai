@@ -7,59 +7,65 @@
 // NPCs use these to judge the player's character
 export const DEED_CATEGORIES = {
   // ── Violent / criminal ──
-  killed:      { label: "Killed",      icon: "💀", type: "negative" },
-  harassed:    { label: "Harassed",    icon: "😡", type: "negative" },
-  stolen:      { label: "Stolen",      icon: "🗝️", type: "negative" },
-  vandalized:  { label: "Vandalized",  icon: "🔨", type: "negative" },
-  threatened:  { label: "Threatened",  icon: "⚔️", type: "negative" },
-  betrayed:    { label: "Betrayed",    icon: "🗡️", type: "negative" },
+  killed: { label: "Killed", icon: "💀", type: "negative" },
+  harassed: { label: "Harassed", icon: "😡", type: "negative" },
+  stolen: { label: "Stolen", icon: "🗝️", type: "negative" },
+  vandalized: { label: "Vandalized", icon: "🔨", type: "negative" },
+  threatened: { label: "Threatened", icon: "⚔️", type: "negative" },
+  betrayed: { label: "Betrayed", icon: "🗡️", type: "negative" },
 
   // ── Good deeds ──
-  helped:      { label: "Helped",      icon: "🤝", type: "positive" },
-  donated:     { label: "Donated",     icon: "💰", type: "positive" },
-  rescued:     { label: "Rescued",     icon: "🛡️", type: "positive" },
-  healed:      { label: "Healed",      icon: "💚", type: "positive" },
-  defended:    { label: "Defended",     icon: "🏰", type: "positive" },
-  forgave:     { label: "Forgave",     icon: "🕊️", type: "positive" },
+  helped: { label: "Helped", icon: "🤝", type: "positive" },
+  donated: { label: "Donated", icon: "💰", type: "positive" },
+  rescued: { label: "Rescued", icon: "🛡️", type: "positive" },
+  healed: { label: "Healed", icon: "💚", type: "positive" },
+  defended: { label: "Defended", icon: "🏰", type: "positive" },
+  forgave: { label: "Forgave", icon: "🕊️", type: "positive" },
 
   // ── Neutral / social ──
-  lied:        { label: "Lied",        icon: "🎭", type: "neutral" },
-  bribed:      { label: "Bribed",      icon: "💸", type: "neutral" },
-  seduced:     { label: "Seduced",     icon: "💋", type: "neutral" },
-  snitched:    { label: "Snitched",    icon: "👁️", type: "neutral" },
-  explored:    { label: "Explored",    icon: "🗺️", type: "neutral" },
+  lied: { label: "Lied", icon: "🎭", type: "neutral" },
+  bribed: { label: "Bribed", icon: "💸", type: "neutral" },
+  seduced: { label: "Seduced", icon: "💋", type: "neutral" },
+  snitched: { label: "Snitched", icon: "👁️", type: "neutral" },
+  explored: { label: "Explored", icon: "🗺️", type: "neutral" },
 };
 
 // ── Location definitions ─────────────────────
 export const LOCATIONS = {
   tavern: {
     name: "The Broken Lamp Tavern",
-    description: "A dimly-lit tavern with creaky wooden floors, a long oak bar, and the smell of mead and roasted meat. Candles flicker on every table. A bard plays softly in the corner.",
+    description:
+      "A dimly-lit tavern with creaky wooden floors, a long oak bar, and the smell of mead and roasted meat. Candles flicker on every table. A bard plays softly in the corner.",
     npcsPresent: ["elara"],
   },
   market: {
     name: "The Market Square",
-    description: "A bustling open-air market with merchants shouting prices. Stalls sell everything from fresh bread to questionable potions.",
+    description:
+      "A bustling open-air market with merchants shouting prices. Stalls sell everything from fresh bread to questionable potions.",
     npcsPresent: [],
   },
   port: {
     name: "The Docks",
-    description: "Salt air and the creak of ships. Sailors unload cargo while shady figures linger in the shadows between warehouses.",
+    description:
+      "Salt air and the creak of ships. Sailors unload cargo while shady figures linger in the shadows between warehouses.",
     npcsPresent: [],
   },
   castle: {
     name: "Stonekeep Castle",
-    description: "The imposing castle overlooks the city. Guards patrol the gates. Only those with business or status may enter.",
+    description:
+      "The imposing castle overlooks the city. Guards patrol the gates. Only those with business or status may enter.",
     npcsPresent: [],
   },
   forest: {
     name: "The Whispering Woods",
-    description: "Dense trees block the sunlight. Strange sounds echo between the trunks. Locals avoid it after dark.",
+    description:
+      "Dense trees block the sunlight. Strange sounds echo between the trunks. Locals avoid it after dark.",
     npcsPresent: [],
   },
   mines: {
     name: "The Old Mines",
-    description: "Abandoned iron mines carved into the hillside. Some say creatures have moved in since the miners left.",
+    description:
+      "Abandoned iron mines carved into the hillside. Some say creatures have moved in since the miners left.",
     npcsPresent: [],
   },
 };
@@ -130,7 +136,9 @@ export class WorldState {
   // ── Observable ─────────────────────────────
   onChange(fn) {
     this._listeners.push(fn);
-    return () => { this._listeners = this._listeners.filter(f => f !== fn); };
+    return () => {
+      this._listeners = this._listeners.filter((f) => f !== fn);
+    };
   }
 
   _notify() {
@@ -258,10 +266,10 @@ export class WorldState {
     const r = this.reputation;
     if (r <= -50) return "Villain";
     if (r <= -20) return "Troublemaker";
-    if (r <= -5)  return "Suspicious";
-    if (r <= 5)   return "Unknown";
-    if (r <= 20)  return "Decent";
-    if (r <= 50)  return "Respected";
+    if (r <= -5) return "Suspicious";
+    if (r <= 5) return "Unknown";
+    if (r <= 20) return "Decent";
+    if (r <= 50) return "Respected";
     return "Hero";
   }
 
@@ -309,7 +317,9 @@ export class WorldState {
       lines.push("CRIMES & MISDEEDS:");
       for (const { def, data } of byType.negative) {
         const latest = data.details[data.details.length - 1];
-        lines.push(`  ${def.icon} ${def.label}: ${data.count} time(s) — last: "${latest.text}" (day ${latest.day})`);
+        lines.push(
+          `  ${def.icon} ${def.label}: ${data.count} time(s) — last: "${latest.text}" (day ${latest.day})`,
+        );
       }
     }
 
@@ -317,7 +327,9 @@ export class WorldState {
       lines.push("GOOD DEEDS:");
       for (const { def, data } of byType.positive) {
         const latest = data.details[data.details.length - 1];
-        lines.push(`  ${def.icon} ${def.label}: ${data.count} time(s) — last: "${latest.text}" (day ${latest.day})`);
+        lines.push(
+          `  ${def.icon} ${def.label}: ${data.count} time(s) — last: "${latest.text}" (day ${latest.day})`,
+        );
       }
     }
 
@@ -325,7 +337,9 @@ export class WorldState {
       lines.push("OTHER ACTIONS:");
       for (const { def, data } of byType.neutral) {
         const latest = data.details[data.details.length - 1];
-        lines.push(`  ${def.icon} ${def.label}: ${data.count} time(s) — last: "${latest.text}" (day ${latest.day})`);
+        lines.push(
+          `  ${def.icon} ${def.label}: ${data.count} time(s) — last: "${latest.text}" (day ${latest.day})`,
+        );
       }
     }
 
@@ -352,9 +366,12 @@ export class WorldState {
   buildWorldPrompt() {
     const loc = this.location;
     const recentEvents = this.getRecentEvents(5);
-    const eventsText = recentEvents.length > 0
-      ? recentEvents.map(e => `- Day ${e.day}, ${e.time}: ${e.text}`).join("\n")
-      : "- Nothing notable has happened yet.";
+    const eventsText =
+      recentEvents.length > 0
+        ? recentEvents
+            .map((e) => `- Day ${e.day}, ${e.time}: ${e.text}`)
+            .join("\n")
+        : "- Nothing notable has happened yet.";
 
     const deedsSummary = this.getDeedsSummary();
     const freeTags = this.getReputationTagsSummary();

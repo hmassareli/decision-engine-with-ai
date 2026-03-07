@@ -19,7 +19,8 @@ export function parseReply(rawText) {
   const result = { texts: [], requests: [], mood: "neutral" };
 
   // 2. <block type="text" mood="...">...</block>
-  const textRx = /<block\s+type\s*=\s*["']text["']\s*(?:mood\s*=\s*["'](\w+)["'])?\s*>([\s\S]*?)<\/block>/gi;
+  const textRx =
+    /<block\s+type\s*=\s*["']text["']\s*(?:mood\s*=\s*["'](\w+)["'])?\s*>([\s\S]*?)<\/block>/gi;
   let m;
   while ((m = textRx.exec(text)) !== null) {
     if (m[1]) result.mood = m[1].toLowerCase();
@@ -74,7 +75,10 @@ function _parseLegacyRequest(body) {
     const eq = line.indexOf("=");
     if (eq > 0) {
       const key = line.slice(0, eq).trim();
-      attrs[key] = line.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+      attrs[key] = line
+        .slice(eq + 1)
+        .trim()
+        .replace(/^["']|["']$/g, "");
     }
   }
   return attrs;

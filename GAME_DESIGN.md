@@ -78,27 +78,29 @@
 
 ### Divisão de responsabilidades:
 
-| Camada | O que faz | Depende de LLM? |
-|--------|-----------|-----------------|
-| **Engine** | Avaliar ações, calcular stats, aplicar efeitos, checar gold, resolver combate | ❌ Não |
-| **Scheduler** | Rodar rotinas de NPC, avançar tempo, trigger de eventos | ❌ Não |
-| **Gossip Network** | Propagar informação entre NPCs baseado em afinidade | ❌ Não |
-| **Chat** | Conversar com NPC ativo, two-pass flow | ✅ Sim |
-| **NPC Reactions** | NPC reagir ao que ouviu na fofoca, questionar jogador | ✅ Sim (texto) |
-| **World Events** | Descrever textualmente o que aconteceu | ✅ Sim (opcional) |
+| Camada             | O que faz                                                                     | Depende de LLM?   |
+| ------------------ | ----------------------------------------------------------------------------- | ----------------- |
+| **Engine**         | Avaliar ações, calcular stats, aplicar efeitos, checar gold, resolver combate | ❌ Não            |
+| **Scheduler**      | Rodar rotinas de NPC, avançar tempo, trigger de eventos                       | ❌ Não            |
+| **Gossip Network** | Propagar informação entre NPCs baseado em afinidade                           | ❌ Não            |
+| **Chat**           | Conversar com NPC ativo, two-pass flow                                        | ✅ Sim            |
+| **NPC Reactions**  | NPC reagir ao que ouviu na fofoca, questionar jogador                         | ✅ Sim (texto)    |
+| **World Events**   | Descrever textualmente o que aconteceu                                        | ✅ Sim (opcional) |
 
 ---
 
 ## 3. O JOGADOR
 
 ### Stats do Jogador
-| Stat | Min | Max | Descrição |
-|------|-----|-----|-----------|
-| `gold` | 0 | ∞ | Moeda universal |
-| `health` | 0 | 100 | Vida (0 = game over) |
+
+| Stat         | Min  | Max  | Descrição                  |
+| ------------ | ---- | ---- | -------------------------- |
+| `gold`       | 0    | ∞    | Moeda universal            |
+| `health`     | 0    | 100  | Vida (0 = game over)       |
 | `reputation` | -100 | +100 | Reputação global na cidade |
 
 ### Stats POR NPC (independentes)
+
 Cada NPC tem seus próprios valores de relação com o jogador:
 | Stat | Min | Max | Descrição |
 |------|-----|-----|-----------|
@@ -107,10 +109,13 @@ Cada NPC tem seus próprios valores de relação com o jogador:
 | `respect` | 0 | 100 | Respeito |
 
 ### Inventário
+
 Lista de itens: poções, mapas, armas, chaves, receitas, presentes, comida.
 
 ### Deed History (Histórico de Ações)
+
 Categorizado por tipo:
+
 - **Negativo:** killed, harassed, stolen, vandalized, threatened, betrayed
 - **Positivo:** helped, donated, rescued, healed, defended, forgave
 - **Neutro:** lied, bribed, seduced, snitched, explored
@@ -122,6 +127,7 @@ Categorizado por tipo:
 Cada NPC é definido por um **template** (estático) e um **estado vivo** (dinâmico).
 
 ### Template (imutável)
+
 ```
 name, age, role, location
 backstory (história pessoal)
@@ -144,6 +150,7 @@ schedule []  ← NOVO: rotina diária
 ```
 
 ### Estado Vivo (mutável)
+
 ```
 stats { friendship, trust, respect }  — relação com o JOGADOR
 gold                                  — dinheiro do NPC
@@ -157,16 +164,16 @@ needs { hunger, energy, social }      — necessidades básicas
 
 ### NPCs Planejados
 
-| NPC | Role | Local | Personalidade |
-|-----|------|-------|---------------|
-| **Elara** | Tavern Owner | Taverna | Sarcástica, leal, protetora. Knows city gossip. |
-| **Rodrik** | Merchant/Thief | Mercado | Smooth-talker, mentiroso, rouba por necessidade (família doente). |
-| **Captain Voss** | Guard Captain | Castelo | Rígido, honrado, odeia criminosos. Pode recrutar para a guarda. |
-| **Mira** | Healer/Herbalist | Floresta | Gentil, mística, sabe segredos antigos. Cura por preço justo. |
-| **Old Barret** | Retired Miner | Minas | Rabugento, bêbado, mas tem mapas e conhecimento das minas. |
-| **Lina** | Orphan/Pickpocket | Ruas | Criança de rua, esperta, pode ser adotada ou virar aprendiz. |
-| **Father Aldric** | Priest | Castelo/Praça | Moralista, julga ações, pode absolver ou condenar. Rede de informação. |
-| **Thessa** | Bard | Taverna/Mercado | Viajante, canta notícias, espalha fofocas. A "mídia" do jogo. |
+| NPC               | Role              | Local           | Personalidade                                                          |
+| ----------------- | ----------------- | --------------- | ---------------------------------------------------------------------- |
+| **Elara**         | Tavern Owner      | Taverna         | Sarcástica, leal, protetora. Knows city gossip.                        |
+| **Rodrik**        | Merchant/Thief    | Mercado         | Smooth-talker, mentiroso, rouba por necessidade (família doente).      |
+| **Captain Voss**  | Guard Captain     | Castelo         | Rígido, honrado, odeia criminosos. Pode recrutar para a guarda.        |
+| **Mira**          | Healer/Herbalist  | Floresta        | Gentil, mística, sabe segredos antigos. Cura por preço justo.          |
+| **Old Barret**    | Retired Miner     | Minas           | Rabugento, bêbado, mas tem mapas e conhecimento das minas.             |
+| **Lina**          | Orphan/Pickpocket | Ruas            | Criança de rua, esperta, pode ser adotada ou virar aprendiz.           |
+| **Father Aldric** | Priest            | Castelo/Praça   | Moralista, julga ações, pode absolver ou condenar. Rede de informação. |
+| **Thessa**        | Bard              | Taverna/Mercado | Viajante, canta notícias, espalha fofocas. A "mídia" do jogo.          |
 
 ---
 
@@ -175,6 +182,7 @@ needs { hunger, energy, social }      — necessidades básicas
 Os NPCs têm relações entre si, independentes do jogador. Isso forma um **grafo social** que dita como informações (e fofocas) se propagam.
 
 ### Estrutura
+
 ```javascript
 // Cada NPC tem um mapa de relações com OUTROS NPCs
 npcRelations: {
@@ -186,16 +194,18 @@ npcRelations: {
 ```
 
 ### Escala de Afinidade (0–100)
-| Range | Label | Comportamento |
-|-------|-------|---------------|
-| 0–10 | Inimigo | Não fala, pode atacar, espalha informação contra |
-| 11–25 | Desconfiança | Interação mínima, fofoca negativa |
-| 26–40 | Conhecido | Cumprimenta, conversa pouco |
-| 41–60 | Colega | Conversa normal, compartilha info básica |
-| 61–80 | Amigo | Confia, compartilha segredos, defende |
-| 81–100 | Íntimo | Protege, arrisca a vida, dá cobertura, alerta de perigos |
+
+| Range  | Label        | Comportamento                                            |
+| ------ | ------------ | -------------------------------------------------------- |
+| 0–10   | Inimigo      | Não fala, pode atacar, espalha informação contra         |
+| 11–25  | Desconfiança | Interação mínima, fofoca negativa                        |
+| 26–40  | Conhecido    | Cumprimenta, conversa pouco                              |
+| 41–60  | Colega       | Conversa normal, compartilha info básica                 |
+| 61–80  | Amigo        | Confia, compartilha segredos, defende                    |
+| 81–100 | Íntimo       | Protege, arrisca a vida, dá cobertura, alerta de perigos |
 
 ### Como a Afinidade Muda
+
 - **NPC vê o jogador fazer algo bom com seu amigo** → afinidade com jogador sobe
 - **NPC ouve fofoca de que o jogador roubou** → afinidade cai baseado no honesty/morality do NPC
 - **Jogador ajuda NPC** → afinidade do NPC com jogador sobe, e amigos próximos do NPC também ganham um boost menor
@@ -208,12 +218,13 @@ npcRelations: {
 A fofoca é o mecanismo central de consequência social. Quando algo acontece, a informação não é instantânea — ela se espalha pela rede de afinidade.
 
 ### Tipos de Informação
-| Tipo | Heat (calor) | Exemplos |
-|------|-------------|----------|
-| **Normal** | 1–3 | "O jogador comprou uma cerveja", "Fulano cumprimentou ciclano" |
-| **Interessante** | 4–6 | "O jogador convidou Elara pra sair", "Houve uma briga no mercado" |
-| **Quente** | 7–8 | "O jogador roubou do Rodrik", "Elara fechou a taverna cedo" |
-| **Explosiva** | 9–10 | "O jogador matou alguém", "Casamento!", "Traição!" |
+
+| Tipo             | Heat (calor) | Exemplos                                                          |
+| ---------------- | ------------ | ----------------------------------------------------------------- |
+| **Normal**       | 1–3          | "O jogador comprou uma cerveja", "Fulano cumprimentou ciclano"    |
+| **Interessante** | 4–6          | "O jogador convidou Elara pra sair", "Houve uma briga no mercado" |
+| **Quente**       | 7–8          | "O jogador roubou do Rodrik", "Elara fechou a taverna cedo"       |
+| **Explosiva**    | 9–10         | "O jogador matou alguém", "Casamento!", "Traição!"                |
 
 ### Como a Fofoca Propaga
 
@@ -266,6 +277,7 @@ A fofoca é o mecanismo central de consequência social. Quando algo acontece, a
 9. **NPCs que gostam do jogador** podem suavizar ou omitir detalhes
 
 ### Estrutura de uma Fofoca
+
 ```javascript
 {
   id: "gossip_001",
@@ -282,6 +294,7 @@ A fofoca é o mecanismo central de consequência social. Quando algo acontece, a
 ```
 
 ### Efeitos da Fofoca nos NPCs
+
 - NPC que **ouve** uma fofoca negativa sobre o jogador → diminui afinidade proporcionalmente
 - NPC que **ouve** algo bom sobre o jogador → aumenta afinidade levemente
 - NPC com **suspicion alto** vai acreditar mais facilmente em fofocas negativas
@@ -295,46 +308,100 @@ A fofoca é o mecanismo central de consequência social. Quando algo acontece, a
 NPCs devem ter vida própria, mesmo sem interação com o jogador. Isso funciona inteiramente via engine (sem LLM).
 
 ### Períodos do Dia
-| Período | Hora Aprox. | Duração do Tick |
-|---------|-------------|-----------------|
-| Dawn | 5h–7h | 1 tick |
-| Morning | 7h–12h | 1 tick |
-| Afternoon | 12h–17h | 1 tick |
-| Evening | 17h–21h | 1 tick |
-| Night | 21h–5h | 1 tick |
+
+| Período   | Hora Aprox. | Duração do Tick |
+| --------- | ----------- | --------------- |
+| Dawn      | 5h–7h       | 1 tick          |
+| Morning   | 7h–12h      | 1 tick          |
+| Afternoon | 12h–17h     | 1 tick          |
+| Evening   | 17h–21h     | 1 tick          |
+| Night     | 21h–5h      | 1 tick          |
 
 ### Schedule (Rotina de cada NPC)
+
 ```javascript
 // Exemplo: Elara
 schedule: [
-  { time: "dawn",      location: "tavern",  activity: "cleaning",    note: "Limpa o bar" },
-  { time: "morning",   location: "market",  activity: "shopping",    note: "Compra ingredientes" },
-  { time: "afternoon", location: "tavern",  activity: "cooking",     note: "Prepara comida" },
-  { time: "evening",   location: "tavern",  activity: "working",     note: "Atende clientes" },
-  { time: "night",     location: "tavern",  activity: "resting",     note: "Fecha e dorme no andar de cima" },
-]
+  {
+    time: "dawn",
+    location: "tavern",
+    activity: "cleaning",
+    note: "Limpa o bar",
+  },
+  {
+    time: "morning",
+    location: "market",
+    activity: "shopping",
+    note: "Compra ingredientes",
+  },
+  {
+    time: "afternoon",
+    location: "tavern",
+    activity: "cooking",
+    note: "Prepara comida",
+  },
+  {
+    time: "evening",
+    location: "tavern",
+    activity: "working",
+    note: "Atende clientes",
+  },
+  {
+    time: "night",
+    location: "tavern",
+    activity: "resting",
+    note: "Fecha e dorme no andar de cima",
+  },
+];
 
 // Exemplo: Rodrik
 schedule: [
-  { time: "dawn",      location: "port",    activity: "scouting",    note: "Observa cargas chegando" },
-  { time: "morning",   location: "market",  activity: "selling",     note: "Finge vender especiarias" },
-  { time: "afternoon", location: "market",  activity: "pickpocket",  note: "Trabalha (rouba)" },
-  { time: "evening",   location: "tavern",  activity: "drinking",    note: "Bebe e escuta fofocas" },
-  { time: "night",     location: "port",    activity: "fencing",     note: "Vende itens roubados" },
-]
+  {
+    time: "dawn",
+    location: "port",
+    activity: "scouting",
+    note: "Observa cargas chegando",
+  },
+  {
+    time: "morning",
+    location: "market",
+    activity: "selling",
+    note: "Finge vender especiarias",
+  },
+  {
+    time: "afternoon",
+    location: "market",
+    activity: "pickpocket",
+    note: "Trabalha (rouba)",
+  },
+  {
+    time: "evening",
+    location: "tavern",
+    activity: "drinking",
+    note: "Bebe e escuta fofocas",
+  },
+  {
+    time: "night",
+    location: "port",
+    activity: "fencing",
+    note: "Vende itens roubados",
+  },
+];
 ```
 
 ### Necessidades dos NPCs (Needs)
+
 Cada NPC tem necessidades que afetam comportamento:
 
-| Need | Decai por | Efeito se baixo |
-|------|-----------|-----------------|
-| `hunger` | -5/tick | NPC compra comida, ou rouba se greed alto |
-| `energy` | -10/tick | NPC vai descansar, fica irritado se acordado |
-| `social` | -3/tick | NPC procura conversar, vai a locais sociais |
-| `gold` | gasta | NPC trabalha mais, pode roubar, fica nervoso |
+| Need     | Decai por | Efeito se baixo                              |
+| -------- | --------- | -------------------------------------------- |
+| `hunger` | -5/tick   | NPC compra comida, ou rouba se greed alto    |
+| `energy` | -10/tick  | NPC vai descansar, fica irritado se acordado |
+| `social` | -3/tick   | NPC procura conversar, vai a locais sociais  |
+| `gold`   | gasta     | NPC trabalha mais, pode roubar, fica nervoso |
 
 ### Ações Autônomas (sem LLM)
+
 Cada tick, o engine roda para cada NPC:
 
 1. **Move** NPC para local da rotina
@@ -352,66 +419,72 @@ Cada tick, o engine roda para cada NPC:
 ## 8. INTERAÇÕES COM O JOGADOR — CATÁLOGO COMPLETO
 
 ### 🍺 Comércio
-| Ação | Descrição | Requer |
-|------|-----------|--------|
-| `serve_drink` | Comprar bebida (beer, ale, wine, mead, water, special) | Gold |
-| `cook_food` | Comprar comida (soup, cheese_bread, roast_meat, stew) | Gold |
-| `give_item` | Comprar item (potion, map, dagger, key) | Gold + Trust |
-| `sell_item` | Vender item do inventário | Item no inventário |
-| `barter` | Trocar itens sem gold | Itens + Friendship |
-| `hire_service` | Contratar serviço (cura, reparo, informação) | Gold + Trust |
+
+| Ação           | Descrição                                              | Requer             |
+| -------------- | ------------------------------------------------------ | ------------------ |
+| `serve_drink`  | Comprar bebida (beer, ale, wine, mead, water, special) | Gold               |
+| `cook_food`    | Comprar comida (soup, cheese_bread, roast_meat, stew)  | Gold               |
+| `give_item`    | Comprar item (potion, map, dagger, key)                | Gold + Trust       |
+| `sell_item`    | Vender item do inventário                              | Item no inventário |
+| `barter`       | Trocar itens sem gold                                  | Itens + Friendship |
+| `hire_service` | Contratar serviço (cura, reparo, informação)           | Gold + Trust       |
 
 ### 🗣️ Social
-| Ação | Descrição | Requer |
-|------|-----------|--------|
-| `invite_drink` | Convidar NPC pra beber | Friendship ≥ 15 |
-| `invite_talk` | Convidar para conversar sobre um tema | Friendship ≥ 10 |
-| `invite_adventure` | Convidar para uma aventura | Friendship 30 + Trust 20 |
-| `invite_date` | Convidar para um encontro | Friendship 35 + Trust 20 |
-| `give_gift` | Dar presente para o NPC | Qualquer item |
-| `compliment` | Elogiar o NPC | Nada |
-| `insult` | Insultar o NPC | Nada (mas tem consequências) |
-| `threaten` | Ameaçar o NPC | Nada (consequências graves) |
+
+| Ação               | Descrição                             | Requer                       |
+| ------------------ | ------------------------------------- | ---------------------------- |
+| `invite_drink`     | Convidar NPC pra beber                | Friendship ≥ 15              |
+| `invite_talk`      | Convidar para conversar sobre um tema | Friendship ≥ 10              |
+| `invite_adventure` | Convidar para uma aventura            | Friendship 30 + Trust 20     |
+| `invite_date`      | Convidar para um encontro             | Friendship 35 + Trust 20     |
+| `give_gift`        | Dar presente para o NPC               | Qualquer item                |
+| `compliment`       | Elogiar o NPC                         | Nada                         |
+| `insult`           | Insultar o NPC                        | Nada (mas tem consequências) |
+| `threaten`         | Ameaçar o NPC                         | Nada (consequências graves)  |
 
 ### 🔍 Informação
-| Ação | Descrição | Requer |
-|------|-----------|--------|
-| `share_rumor` | Pedir/compartilhar fofoca | Trust + Friendship |
-| `share_secret` | Pedir segredo pessoal | Trust 35 + Friendship 30 |
-| `ask_about_npc` | Perguntar sobre outro NPC | Friendship ≥ 15 |
-| `ask_about_event` | Perguntar sobre evento recente | Trust ≥ 10 |
-| `investigate` | Investigar algo específico | Trust ≥ 20 |
+
+| Ação              | Descrição                      | Requer                   |
+| ----------------- | ------------------------------ | ------------------------ |
+| `share_rumor`     | Pedir/compartilhar fofoca      | Trust + Friendship       |
+| `share_secret`    | Pedir segredo pessoal          | Trust 35 + Friendship 30 |
+| `ask_about_npc`   | Perguntar sobre outro NPC      | Friendship ≥ 15          |
+| `ask_about_event` | Perguntar sobre evento recente | Trust ≥ 10               |
+| `investigate`     | Investigar algo específico     | Trust ≥ 20               |
 
 ### ⚔️ Combate
-| Ação | Descrição | Requer |
-|------|-----------|--------|
-| `start_fight` | Iniciar briga (bandits, monster, guard, arena) | Respect ≥ 10 |
-| `duel` | Duelar com NPC específico | Ambos concordam |
-| `defend` | Defender NPC de ataque | Estar presente + Bravery |
-| `ambush` | Emboscar alguém | Nada (consequências extremas) |
-| `surrender` | Se render em combate | Nada |
-| `flee` | Fugir do combate | Nada (perde respect) |
+
+| Ação          | Descrição                                      | Requer                        |
+| ------------- | ---------------------------------------------- | ----------------------------- |
+| `start_fight` | Iniciar briga (bandits, monster, guard, arena) | Respect ≥ 10                  |
+| `duel`        | Duelar com NPC específico                      | Ambos concordam               |
+| `defend`      | Defender NPC de ataque                         | Estar presente + Bravery      |
+| `ambush`      | Emboscar alguém                                | Nada (consequências extremas) |
+| `surrender`   | Se render em combate                           | Nada                          |
+| `flee`        | Fugir do combate                               | Nada (perde respect)          |
 
 ### 🏰 Compromisso
-| Ação | Descrição | Requer |
-|------|-----------|--------|
-| `follow_player` | NPC segue o jogador | Trust 25 + Friendship 30 |
-| `become_apprentice` | Virar aprendiz de NPC | Respect 40 + Trust 35 |
-| `teach_skill` | NPC ensina habilidade | Trust 50 + Friendship 40 |
-| `move_in` | Morar junto | Trust 50 + Friendship 55 |
-| `marry` | Casar | Friendship 80 + Trust 70 + Respect 50 |
-| `adopt` | Adotar (criança NPC como Lina) | Trust 60 + Reputation ≥ 20 |
-| `join_war` | Juntar-se a guerra/facção | Respect 40 + Trust 35 |
+
+| Ação                | Descrição                      | Requer                                |
+| ------------------- | ------------------------------ | ------------------------------------- |
+| `follow_player`     | NPC segue o jogador            | Trust 25 + Friendship 30              |
+| `become_apprentice` | Virar aprendiz de NPC          | Respect 40 + Trust 35                 |
+| `teach_skill`       | NPC ensina habilidade          | Trust 50 + Friendship 40              |
+| `move_in`           | Morar junto                    | Trust 50 + Friendship 55              |
+| `marry`             | Casar                          | Friendship 80 + Trust 70 + Respect 50 |
+| `adopt`             | Adotar (criança NPC como Lina) | Trust 60 + Reputation ≥ 20            |
+| `join_war`          | Juntar-se a guerra/facção      | Respect 40 + Trust 35                 |
 
 ### 😈 Traição / Crime
-| Ação | Descrição | Requer |
-|------|-----------|--------|
-| `steal_from` | Roubar de NPC | Nada (mas pode ser pego) |
-| `betray` | Trair aliado (entregar segredo, sabotar) | Nada (consequências extremas) |
-| `frame` | Incriminar NPC por algo | Nada (se descoberto: destruição) |
-| `blackmail` | Chantagear com segredo | Saber um segredo |
-| `poison` | Envenenar comida/bebida | Ter veneno + não ser visto |
-| `murder` | Matar NPC | Nada (consequências permanentes) |
+
+| Ação         | Descrição                                | Requer                           |
+| ------------ | ---------------------------------------- | -------------------------------- |
+| `steal_from` | Roubar de NPC                            | Nada (mas pode ser pego)         |
+| `betray`     | Trair aliado (entregar segredo, sabotar) | Nada (consequências extremas)    |
+| `frame`      | Incriminar NPC por algo                  | Nada (se descoberto: destruição) |
+| `blackmail`  | Chantagear com segredo                   | Saber um segredo                 |
+| `poison`     | Envenenar comida/bebida                  | Ter veneno + não ser visto       |
+| `murder`     | Matar NPC                                | Nada (consequências permanentes) |
 
 ---
 
@@ -422,6 +495,7 @@ O mundo reage organicamente baseado no **reputation score** e nos **deeds** do j
 ### Reações por Nível de Reputação
 
 #### 🦸 Hero (reputation ≥ 51)
+
 - NPCs cumprimentam na rua espontaneamente
 - Crianças correm em direção ao jogador, não pra longe
 - Merchants dão desconto (10–20%)
@@ -430,18 +504,21 @@ O mundo reage organicamente baseado no **reputation score** e nos **deeds** do j
 - Possível ser convidado para audiência no castelo
 
 #### 😊 Respected (21 a 50)
+
 - NPCs são educados e prestativos
 - Preços normais
 - Guardas são amigáveis
 - Alguns NPCs puxam conversa
 
 #### 😐 Unknown / Decent (-5 a 20)
+
 - Tratamento neutro
 - NPCs respondem mas não iniciam conversa
 - Preços normais
 - Nenhuma reação especial
 
 #### 🤨 Suspicious (-20 a -6)
+
 - NPCs desconfiam, respostas curtas
 - Alguns merchants aumentam preços (10%)
 - Crianças hesitam perto do jogador
@@ -449,6 +526,7 @@ O mundo reage organicamente baseado no **reputation score** e nos **deeds** do j
 - NPCs param de conversar quando o jogador se aproxima
 
 #### 😠 Troublemaker (-50 a -21)
+
 - NPCs evitam o jogador
 - Crianças fogem do jogador na rua
 - Merchants cobram 30% mais ou se recusam a vender
@@ -457,6 +535,7 @@ O mundo reage organicamente baseado no **reputation score** e nos **deeds** do j
 - Possível ser banido de certos locais
 
 #### 💀 Villain (reputation ≤ -51)
+
 - NPCs que veem o jogador na rua podem:
   - Fugir gritando por ajuda
   - Confrontar o jogador (NPCs com bravery alto)
@@ -470,15 +549,15 @@ O mundo reage organicamente baseado no **reputation score** e nos **deeds** do j
 
 ### Reações por Deed Específico
 
-| Deed | Reação Imediata | Reação a Longo Prazo |
-|------|----------------|---------------------|
-| **Matar** alguém | Pânico geral, guardas chamados | Cartaz de procurado, NPCs fogem |
-| **Roubar** | Vítima grita, pode pegar em flagra | Merchants guardam itens | 
-| **Ameaçar** | NPC reage com medo ou raiva (depende de bravery) | Evita o jogador, conta para amigos |
-| **Trair** aliado | Aliado fica devastado, rompe relação | Todos próximos ficam sabendo |
-| **Ajudar** alguém | NPC fica grato | Amigos do NPC ganham afinidade |
-| **Salvar** vida | NPC fica eternamente grato | Vira notícia, reputation boost grande |
-| **Doar** gold | NPC agradece | Se NPC fala, outros ouvem |
+| Deed              | Reação Imediata                                  | Reação a Longo Prazo                  |
+| ----------------- | ------------------------------------------------ | ------------------------------------- |
+| **Matar** alguém  | Pânico geral, guardas chamados                   | Cartaz de procurado, NPCs fogem       |
+| **Roubar**        | Vítima grita, pode pegar em flagra               | Merchants guardam itens               |
+| **Ameaçar**       | NPC reage com medo ou raiva (depende de bravery) | Evita o jogador, conta para amigos    |
+| **Trair** aliado  | Aliado fica devastado, rompe relação             | Todos próximos ficam sabendo          |
+| **Ajudar** alguém | NPC fica grato                                   | Amigos do NPC ganham afinidade        |
+| **Salvar** vida   | NPC fica eternamente grato                       | Vira notícia, reputation boost grande |
+| **Doar** gold     | NPC agradece                                     | Se NPC fala, outros ouvem             |
 
 ### Exemplo de Cadeia de Reação: Matar um cachorro
 
@@ -515,15 +594,17 @@ Ação: Jogador mata um cachorro de rua
 O combate é resolvido por um mix de engine (mecânica) e LLM (narração).
 
 ### Stats de Combate
+
 Derivados dos stats existentes + equipamento:
 
-| Stat | Base | Modificadores |
-|------|------|---------------|
-| `attack` | 10 | + arma equipada + bravery do aliado NPC |
-| `defense` | 10 | + armadura + respect (moral) |
-| `initiative` | 10 | + suspicion (alertness) |
+| Stat         | Base | Modificadores                           |
+| ------------ | ---- | --------------------------------------- |
+| `attack`     | 10   | + arma equipada + bravery do aliado NPC |
+| `defense`    | 10   | + armadura + respect (moral)            |
+| `initiative` | 10   | + suspicion (alertness)                 |
 
 ### Fluxo de Combate
+
 1. **Início** — jogador ou NPC inicia combate (engine registra)
 2. **Rodadas** — cada rodada, jogador escolhe: atacar, defender, habilidade, fugir, renderizar, conversar
 3. **Resolução** — engine rola dados + stats → resultado
@@ -537,7 +618,9 @@ Derivados dos stats existentes + equipamento:
    - Se o NPC inimigo tem suspicion baixo e o argumento é bom → pode parar a luta
 
 ### NPC como Aliado em Combate
+
 Quando um NPC segue o jogador (`follow_player`), ele participa de combates automaticamente:
+
 - **High loyalty/friendship** → fica até o fim, se arrisca
 - **Low bravery** → pode fugir se health ficar baixo
 - **High betrayalChance** → pode trocar de lado em combate difícil
@@ -550,6 +633,7 @@ Quando um NPC segue o jogador (`follow_player`), ele participa de combates autom
 O sistema de guerra permite ao jogador se afiliar a facções e participar de conflitos maiores.
 
 ### Como funciona
+
 1. **Jogador pede** `join_war` → engine avalia (precisa respect e trust altos)
 2. **NPC aliado pode ir junto** → se `follow_player` ativo e friendship alto
 3. **O conflito é agendado** — não é instantâneo:
@@ -566,18 +650,20 @@ O sistema de guerra permite ao jogador se afiliar a facções e participar de co
    - Reputação muda drasticamente
 
 ### Facções Possíveis
-| Facção | Líder | Localização | Objetivo |
-|--------|-------|-------------|----------|
-| The Crown | Rei / Captain Voss | Castelo | Manter ordem |
-| The Resistance | Líder oculto | Porto/Minas | Derrubar o rei |
-| Thieves Guild | ? | Porto (subterrâneo) | Lucro e sobrevivência |
-| The Wilds | Mira? | Floresta | Proteger a natureza |
+
+| Facção         | Líder              | Localização         | Objetivo              |
+| -------------- | ------------------ | ------------------- | --------------------- |
+| The Crown      | Rei / Captain Voss | Castelo             | Manter ordem          |
+| The Resistance | Líder oculto       | Porto/Minas         | Derrubar o rei        |
+| Thieves Guild  | ?                  | Porto (subterrâneo) | Lucro e sobrevivência |
+| The Wilds      | Mira?              | Floresta            | Proteger a natureza   |
 
 ---
 
 ## 12. ECONOMIA E COMÉRCIO
 
 ### Preços Base
+
 ```
 Drinks: beer(2), ale(2), wine(5), mead(4), water(0), special(10)
 Food:   soup(3), cheese_bread(2), roast_meat(8), stew(5)
@@ -585,24 +671,28 @@ Items:  potion(15), map(10), dagger(20), key(25)
 ```
 
 ### Modificadores de Preço
-| Condição | Modificador |
-|----------|-------------|
-| Reputation Hero | -10% a -20% |
-| Reputation Villain | +30% ou recusa |
-| NPC greed alto | +15% |
-| NPC friendship alto | -10% |
-| Compra em bulk | -5% por item extra |
-| Item raro / escasso | +50% |
-| Período night | +20% (perigo) |
+
+| Condição            | Modificador        |
+| ------------------- | ------------------ |
+| Reputation Hero     | -10% a -20%        |
+| Reputation Villain  | +30% ou recusa     |
+| NPC greed alto      | +15%               |
+| NPC friendship alto | -10%               |
+| Compra em bulk      | -5% por item extra |
+| Item raro / escasso | +50%               |
+| Período night       | +20% (perigo)      |
 
 ### Renda dos NPCs
+
 - **Elara** ganha gold ao vender drinks/food (quando NPCs ou jogador compram)
 - **Rodrik** ganha gold furtando ou vendendo itens roubados
 - **Mira** ganha gold vendendo poções e curas
 - **NPCs gastam** gold em comida, moradia, necessidades
 
 ### Comércio entre NPCs (sem jogador)
+
 NPCs transacionam entre si automaticamente:
+
 - Elara compra ingredientes no mercado de manhã
 - Rodrik bebe na taverna à noite (paga Elara)
 - Mira compra ervas ou as coleta na floresta
@@ -613,16 +703,18 @@ NPCs transacionam entre si automaticamente:
 ## 13. RELACIONAMENTOS PROFUNDOS
 
 ### Tier de Relacionamento (por NPC)
-| Friendship | Tier | Desbloqueia |
-|------------|------|-------------|
-| 0–10 | Stranger | Comprar/vender |
-| 11–25 | Acquaintance | Conversar casual |
-| 26–50 | Regular | Convidar drink/talk, pedir rumor |
-| 51–75 | Friend | Convidar aventura, seguir, pedir segredos |
-| 76–90 | Trusted Ally | Morar junto, ensinar skill, join war |
-| 91–100 | Soulmate | Casar, adotar, lealdade absoluta |
+
+| Friendship | Tier         | Desbloqueia                               |
+| ---------- | ------------ | ----------------------------------------- |
+| 0–10       | Stranger     | Comprar/vender                            |
+| 11–25      | Acquaintance | Conversar casual                          |
+| 26–50      | Regular      | Convidar drink/talk, pedir rumor          |
+| 51–75      | Friend       | Convidar aventura, seguir, pedir segredos |
+| 76–90      | Trusted Ally | Morar junto, ensinar skill, join war      |
+| 91–100     | Soulmate     | Casar, adotar, lealdade absoluta          |
 
 ### Romance
+
 1. Começa com **invite_date** (req: friendship 35+)
 2. Se date vai bem (ALLOWED) → flag `dating = true`
 3. Vários dates bem-sucedidos → pode propor `move_in`
@@ -630,9 +722,11 @@ NPCs transacionam entre si automaticamente:
 5. Casado → NPC defende o jogador, está sempre ao lado, compartilha gold
 
 ### Traição
+
 A traição pode acontecer em AMBAS as direções:
 
 **Jogador trai NPC:**
+
 - Namorar/casar com um NPC e flertar com outro
 - NPC traído pode: confrontar, chorar, terminar, atacar, ou silenciosamente preparar vingança
 - Se o NPC tem `loyalty alto` → dá segunda chance (com custo de trust enorme)
@@ -640,12 +734,14 @@ A traição pode acontecer em AMBAS as direções:
 - Se tem `betrayalChance alto` → trai de volta (vende segredos do jogador)
 
 **NPC trai jogador:**
+
 - NPCs com `betrayalChance` alto podem trair em situações críticas
 - Rodrik (40% chance) pode roubar o jogador se friendship cair
 - Condições: momento de pressão + betrayalChance roll
 - O jogador pode **perdoar** (deed: forgave) → NPC pode se redimir
 
 ### Casamento em detalhe
+
 - Cerimônia (Father Aldric) → vira notícia (heat 10)
 - NPC cônjuge mora com jogador
 - Ações do jogador afetam cônjuge diretamente:
@@ -708,15 +804,15 @@ Toda ação importante gera uma **cadeia de consequência** que se propaga pelo 
 
 ### Consequências por Tipo de Ação
 
-| Ação | Consequência Imediata | Consequência Via Fofoca | Consequência a Longo Prazo |
-|------|----------------------|------------------------|---------------------------|
-| **Ameaçar** | Trust -15, Respect -5 | NPCs próximos passam a evitar | Pode ser confrontado, banido |
-| **Roubar** | Se pego: fight/arrest. Se não: guilt? | Merchant avisa outros | Preços sobem, itens escondem |
-| **Matar** | Shock, testemunhas chamam guardas | Toda cidade sabe rápido | Caçadores de recompensa, banimento |
-| **Ajudar** | Friendship +, Gratidão | Amigos do NPC ganham simpatia | Desconto, presentes, aliados |
-| **Casar** | Notícia enorme (heat 10) | Todos celebram (ou invejam) | Cônjuge como aliado permanente |
-| **Trair cônjuge** | Cônjuge devastado | Cidade toda julga | Filhos (se houver) podem odiar |
-| **Salvar alguém** | Hero moment | Vira lenda local | Respect boost permanente |
+| Ação              | Consequência Imediata                 | Consequência Via Fofoca       | Consequência a Longo Prazo         |
+| ----------------- | ------------------------------------- | ----------------------------- | ---------------------------------- |
+| **Ameaçar**       | Trust -15, Respect -5                 | NPCs próximos passam a evitar | Pode ser confrontado, banido       |
+| **Roubar**        | Se pego: fight/arrest. Se não: guilt? | Merchant avisa outros         | Preços sobem, itens escondem       |
+| **Matar**         | Shock, testemunhas chamam guardas     | Toda cidade sabe rápido       | Caçadores de recompensa, banimento |
+| **Ajudar**        | Friendship +, Gratidão                | Amigos do NPC ganham simpatia | Desconto, presentes, aliados       |
+| **Casar**         | Notícia enorme (heat 10)              | Todos celebram (ou invejam)   | Cônjuge como aliado permanente     |
+| **Trair cônjuge** | Cônjuge devastado                     | Cidade toda julga             | Filhos (se houver) podem odiar     |
+| **Salvar alguém** | Hero moment                           | Vira lenda local              | Respect boost permanente           |
 
 ### O Efeito "Parente Decepcionado"
 
@@ -732,13 +828,13 @@ Jogador mata um cachorro na rua
     │  → Se repete: "Estou pensando se te conheço..."  │
     │  → Se repete MUITO: "Quero o divórcio."          │
     └──────────────────────────────────────────────────┘
-    
+
     ┌────┴──── Mestre (se apprentice) ────────────────┐
     │  "Um aprendiz meu fazendo isso? Vergonha."      │
     │  → respect: -10                                   │
     │  → Pode expulsar da aprendizagem                 │
     └──────────────────────────────────────────────────┘
-    
+
     ┌────┴──── Criança adotada (Lina) ───────────────┐
     │  "Por que você é assim? Pensei que era bom..."  │
     │  → trust: -20                                    │
@@ -754,13 +850,13 @@ Eventos que acontecem sem o jogador fazer nada — o mundo vive.
 
 ### Eventos por Período do Dia
 
-| Período | Eventos Possíveis |
-|---------|-------------------|
-| **Dawn** | Merchants abrem barracas, patrulha de guarda, Mira coleta ervas |
-| **Morning** | Comércio ativo, crianças brincam, rumores na taverna |
-| **Afternoon** | Trabalho pesado, minas ativas, treinamento de guardas |
-| **Evening** | Taverna lota, bardo toca, fofocas fluem, roubos aumentam |
-| **Night** | Perigos: roubos, emboscadas, contrabando no porto |
+| Período       | Eventos Possíveis                                               |
+| ------------- | --------------------------------------------------------------- |
+| **Dawn**      | Merchants abrem barracas, patrulha de guarda, Mira coleta ervas |
+| **Morning**   | Comércio ativo, crianças brincam, rumores na taverna            |
+| **Afternoon** | Trabalho pesado, minas ativas, treinamento de guardas           |
+| **Evening**   | Taverna lota, bardo toca, fofocas fluem, roubos aumentam        |
+| **Night**     | Perigos: roubos, emboscadas, contrabando no porto               |
 
 ### Evento: Roubo (Theft)
 
@@ -825,7 +921,7 @@ Quando reputation é muito baixa, NPCs com bravery alto podem confrontar:
     "  1. Conversar — tentar resolver pacificamente (social check)",
     "  2. Intimidar — ameaçar de volta (pode escalar pra fight)",
     "  3. Lutar — iniciar combate direto",
-    "  4. Fugir — correr (perde respect, NPC pode perseguir)", 
+    "  4. Fugir — correr (perde respect, NPC pode perseguir)",
     "  5. Ignorar — tentar passar (NPC pode bloquear ou atacar)",
   ]
 }
@@ -875,23 +971,23 @@ Quando reputation é muito baixa, NPCs com bravery alto podem confrontar:
 
 Tudo isso roda no JavaScript puro, sem chamar o modelo:
 
-| Sistema | Descrição |
-|---------|-----------|
-| **Stat Evaluation** | Avaliar se uma ação é ALLOWED/DENIED/CONDITIONAL |
-| **Effect Application** | Aplicar mudanças de stats, gold, flags |
-| **Time Advancement** | Avançar períodos, dias, triggering rotinas |
-| **NPC Scheduling** | Mover NPCs entre locais conforme rotina |
-| **Need Simulation** | Fome, energia, social decay + comportamentos compensatórios |
-| **Gossip Propagation** | Espalhar fofocas pela rede de afinidade |
-| **Reputation Tracking** | Calcular deeds, reputação, labels |
-| **Passive Mood Effects** | Stats mudando conforme tom da conversa |
-| **Random Events** | Rolar dados, checar condições, triggering eventos |
-| **Combat Resolution** | Cálculos de ataque, defesa, dano, initiative |
-| **Economy Simulation** | NPCs comprando/vendendo entre si |
-| **World Reactions** | Crianças fugindo, guardas patrulhando, preços mudando |
-| **Price Modifiers** | Aplicar multiplicadores baseado em reputation/friendship |
-| **NPC-NPC Interactions** | NPCs se encontram, trocam info, afinidades evoluem |
-| **Death/Injury System** | Checar health, aplicar ferimentos, sequelas |
+| Sistema                  | Descrição                                                   |
+| ------------------------ | ----------------------------------------------------------- |
+| **Stat Evaluation**      | Avaliar se uma ação é ALLOWED/DENIED/CONDITIONAL            |
+| **Effect Application**   | Aplicar mudanças de stats, gold, flags                      |
+| **Time Advancement**     | Avançar períodos, dias, triggering rotinas                  |
+| **NPC Scheduling**       | Mover NPCs entre locais conforme rotina                     |
+| **Need Simulation**      | Fome, energia, social decay + comportamentos compensatórios |
+| **Gossip Propagation**   | Espalhar fofocas pela rede de afinidade                     |
+| **Reputation Tracking**  | Calcular deeds, reputação, labels                           |
+| **Passive Mood Effects** | Stats mudando conforme tom da conversa                      |
+| **Random Events**        | Rolar dados, checar condições, triggering eventos           |
+| **Combat Resolution**    | Cálculos de ataque, defesa, dano, initiative                |
+| **Economy Simulation**   | NPCs comprando/vendendo entre si                            |
+| **World Reactions**      | Crianças fugindo, guardas patrulhando, preços mudando       |
+| **Price Modifiers**      | Aplicar multiplicadores baseado em reputation/friendship    |
+| **NPC-NPC Interactions** | NPCs se encontram, trocam info, afinidades evoluem          |
+| **Death/Injury System**  | Checar health, aplicar ferimentos, sequelas                 |
 
 ---
 
@@ -899,17 +995,18 @@ Tudo isso roda no JavaScript puro, sem chamar o modelo:
 
 O LLM é usado SOMENTE para gerar diálogo natural e interpretar input do jogador:
 
-| Uso do LLM | Descrição |
-|-------------|-----------|
-| **Diálogo com NPC** | Conversa natural, personalizada, em character |
-| **Interpretar intent** | Entender se "dá um soco nele" é `start_fight` |
-| **Reagir a engine** | NPC responde à decisão ALLOWED/DENIED |
-| **Mencionar fofocas** | Engine injeta no prompt; LLM fala naturalmente |
-| **Expressar emoção** | Mood tags (friendly, hostile, flirty, neutral) |
-| **Questionar jogador** | NPC pergunta sobre ação que ouviu ("ouvi que você...") |
-| **Narração de eventos** | Descrever textualmente o que aconteceu (opcional) |
+| Uso do LLM              | Descrição                                              |
+| ----------------------- | ------------------------------------------------------ |
+| **Diálogo com NPC**     | Conversa natural, personalizada, em character          |
+| **Interpretar intent**  | Entender se "dá um soco nele" é `start_fight`          |
+| **Reagir a engine**     | NPC responde à decisão ALLOWED/DENIED                  |
+| **Mencionar fofocas**   | Engine injeta no prompt; LLM fala naturalmente         |
+| **Expressar emoção**    | Mood tags (friendly, hostile, flirty, neutral)         |
+| **Questionar jogador**  | NPC pergunta sobre ação que ouviu ("ouvi que você...") |
+| **Narração de eventos** | Descrever textualmente o que aconteceu (opcional)      |
 
 ### O que o LLM NÃO faz
+
 - ❌ Decidir se uma ação é permitida (engine faz)
 - ❌ Mudar stats diretamente (engine faz)
 - ❌ Propagar fofocas (scheduler/engine faz)
@@ -947,6 +1044,7 @@ O LLM é usado SOMENTE para gerar diálogo natural e interpretar input do jogado
 ```
 
 Cada local tem:
+
 - NPCs fixos (moram/trabalham ali)
 - NPCs visitantes (seguem rotina)
 - Eventos possíveis
@@ -1015,6 +1113,7 @@ Jogador digita mensagem
 ## 20. ROADMAP E PRIORIDADES
 
 ### Fase 1 — Core Loop ✅ (Atual)
+
 - [x] Chat com LLM via LM Studio
 - [x] XML response format (text + request)
 - [x] Two-pass flow (request → engine → reaction)
@@ -1030,6 +1129,7 @@ Jogador digita mensagem
 - [x] paidBy system (NPC ou player paga)
 
 ### Fase 2 — Rede Social e Fofocas
+
 - [ ] `npcRelations` com affinidade entre NPCs
 - [ ] Gossip system: criação, propagação, degradação
 - [ ] Gossip injection into prompts (NPC menciona o que ouviu)
@@ -1038,6 +1138,7 @@ Jogador digita mensagem
 - [ ] Heat tiers (normal → interessante → quente → explosiva)
 
 ### Fase 3 — Rotinas e Vida Autônoma
+
 - [ ] Schedule system (NPCs seguem rotinas)
 - [ ] Need system (hunger, energy, social)
 - [ ] NPC movement entre locais por período
@@ -1046,6 +1147,7 @@ Jogador digita mensagem
 - [ ] Economia circulante (gold gira entre NPCs)
 
 ### Fase 4 — Reações do Mundo
+
 - [ ] Reputation tiers com efeitos visuais/mecânicos
 - [ ] Crianças fogem, NPCs confrontam, guardas prendem
 - [ ] Price modifiers baseados em reputation
@@ -1054,6 +1156,7 @@ Jogador digita mensagem
 - [ ] "Parente decepcionado" system
 
 ### Fase 5 — Combate e Guerra
+
 - [ ] Combat resolution system (engine-based)
 - [ ] NPC aliado em combate
 - [ ] Duel system
@@ -1063,6 +1166,7 @@ Jogador digita mensagem
 - [ ] Talk-during-combat (interrupt combat com diálogo)
 
 ### Fase 6 — Eventos Aleatórios
+
 - [ ] Random event roller por tick
 - [ ] Theft events (pickpocket, break-in, holdup)
 - [ ] Street confrontation events
@@ -1071,6 +1175,7 @@ Jogador digita mensagem
 - [ ] Bounty hunter system
 
 ### Fase 7 — Relacionamentos Profundos
+
 - [ ] Dating system
 - [ ] Marriage + ceremony
 - [ ] Adoption (Lina)
@@ -1080,6 +1185,7 @@ Jogador digita mensagem
 - [ ] Legacy system (NPC remembers EVERYTHING)
 
 ### Fase 8 — Polish e Expansão
+
 - [ ] Mais NPCs (8+ com backstories completas)
 - [ ] Mais locais (farm, dungeon, ruins)
 - [ ] Crafting system
@@ -1094,6 +1200,7 @@ Jogador digita mensagem
 ## APÊNDICE: NPCs — FICHA COMPLETA
 
 ### Elara — Tavern Owner
+
 ```
 Idade: 28 | Local: Taverna | Gold: 200
 Traits: loyalty:70, aggression:30, greed:20, honesty:75,
@@ -1107,6 +1214,7 @@ Segredos: Sabe onde está o mapa do dungeon do pai. Sabe que Rodrik é ladrão.
 ```
 
 ### Rodrik — Thief / Fake Merchant
+
 ```
 Idade: 34 | Local: Mercado | Gold: 30
 Traits: loyalty:15, aggression:45, greed:85, honesty:10,
@@ -1120,6 +1228,7 @@ Segredos: Trabalha pro thieves guild. Sabe entradas secretas no porto.
 ```
 
 ### Captain Voss — Guard Captain
+
 ```
 Idade: 45 | Local: Castelo | Gold: 150
 Traits: loyalty:80, aggression:60, greed:10, honesty:85,
@@ -1132,6 +1241,7 @@ Segredos: Sabe de corrupção no castelo. Dividido entre lealdade e justiça.
 ```
 
 ### Mira — Healer / Herbalist
+
 ```
 Idade: 32 | Local: Floresta | Gold: 80
 Traits: loyalty:60, aggression:10, greed:5, honesty:90,
@@ -1144,6 +1254,7 @@ Segredos: Sabe de ruínas antigas na floresta profunda. Ouve a floresta.
 ```
 
 ### Old Barret — Retired Miner
+
 ```
 Idade: 62 | Local: Minas | Gold: 40
 Traits: loyalty:50, aggression:20, greed:30, honesty:60,
@@ -1156,6 +1267,7 @@ Segredos: Sabe a localização de veios de ouro nas minas. Viu criaturas.
 ```
 
 ### Lina — Orphan / Pickpocket
+
 ```
 Idade: 12 | Local: Ruas/Mercado | Gold: 3
 Traits: loyalty:40, aggression:15, greed:30, honesty:35,
@@ -1168,6 +1280,7 @@ Segredos: Conhece passagens secretas pela cidade. Viu coisas à noite.
 ```
 
 ### Father Aldric — Priest
+
 ```
 Idade: 55 | Local: Castelo/Praça | Gold: 100
 Traits: loyalty:65, aggression:5, greed:15, honesty:80,
@@ -1180,6 +1293,7 @@ Segredos: Ouve confissões — sabe de TUDO mas em teoria não conta.
 ```
 
 ### Thessa — Bard
+
 ```
 Idade: 25 | Local: Taverna/Mercado/Porto | Gold: 50
 Traits: loyalty:30, aggression:10, greed:40, honesty:50,

@@ -2,11 +2,17 @@
 //  MAIN — entry point, wires everything together
 // ═══════════════════════════════════════════════
 
+import { initialGreeting, sendUserMessage } from "./chat.js";
 import { GameEngine } from "./engine.js";
 import { NPC } from "./npc.js";
+import {
+  addMessage,
+  hideProcessing,
+  initUI,
+  removeWelcome,
+  updateStatsPanel,
+} from "./ui.js";
 import { WorldState } from "./world.js";
-import { initUI, addMessage, removeWelcome, updateStatsPanel, hideProcessing } from "./ui.js";
-import { sendUserMessage, initialGreeting } from "./chat.js";
 
 // ── Boot ─────────────────────────────────────
 
@@ -15,10 +21,10 @@ const world = new WorldState();
 const elara = new NPC("elara");
 const engine = new GameEngine(elara, world);
 
-const chatEl       = document.getElementById("chat");
-const msgEl        = document.getElementById("msg");
-const sendBtn      = document.getElementById("send-btn");
-const engineLogEl  = document.getElementById("engine-log");
+const chatEl = document.getElementById("chat");
+const msgEl = document.getElementById("msg");
+const sendBtn = document.getElementById("send-btn");
+const engineLogEl = document.getElementById("engine-log");
 const toggleRawBtn = document.getElementById("toggle-raw-btn");
 
 // Init UI module with DOM refs
@@ -59,7 +65,7 @@ async function handleSend() {
     hideProcessing();
     const errDiv = addMessage(
       "assistant",
-      `⚠️ Error: ${err.message}\n\nMake sure LM Studio is running:\nlms server start --cors`
+      `⚠️ Error: ${err.message}\n\nMake sure LM Studio is running:\nlms server start --cors`,
     );
     errDiv.style.borderColor = "#ef4444";
   } finally {

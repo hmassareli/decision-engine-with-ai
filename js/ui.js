@@ -15,9 +15,9 @@ export function initUI(chatElement, engineLogElement, toggleRawBtn) {
   toggleRawBtn.addEventListener("click", () => {
     showRawResponses = !showRawResponses;
     toggleRawBtn.textContent = showRawResponses ? "hide raw" : "show raw";
-    document.querySelectorAll(".raw-response").forEach((el) =>
-      el.classList.toggle("visible", showRawResponses)
-    );
+    document
+      .querySelectorAll(".raw-response")
+      .forEach((el) => el.classList.toggle("visible", showRawResponses));
   });
 }
 
@@ -74,14 +74,17 @@ export function addEngineNotification(request, result) {
   const div = document.createElement("div");
   div.className = "message engine-notification";
   const cls =
-    result.decision === "ALLOWED" ? "en-allowed"
-    : result.decision === "DENIED" ? "en-denied"
-    : "en-conditional";
+    result.decision === "ALLOWED"
+      ? "en-allowed"
+      : result.decision === "DENIED"
+        ? "en-denied"
+        : "en-conditional";
 
   const target = request.target ? ` → ${request.target}` : "";
-  const scoreInfo = result.score !== undefined
-    ? ` (score ${result.finalScore} vs ${result.threshold})`
-    : "";
+  const scoreInfo =
+    result.score !== undefined
+      ? ` (score ${result.finalScore} vs ${result.threshold})`
+      : "";
 
   div.innerHTML =
     `⚙️ <span class="en-decision ${cls}">${result.decision}</span> — ` +
@@ -106,7 +109,9 @@ export function addStatChangeToast(changes) {
     if (delta === 0) continue;
     const cls = delta > 0 ? "positive" : "negative";
     const sign = delta > 0 ? "+" : "";
-    parts.push(`<span class="${cls}">${sign}${delta} ${STAT_LABELS[key] || key}</span>`);
+    parts.push(
+      `<span class="${cls}">${sign}${delta} ${STAT_LABELS[key] || key}</span>`,
+    );
   }
   if (parts.length === 0) return;
 
@@ -121,11 +126,11 @@ export function addStatChangeToast(changes) {
 
 export function addFlagToast(action, decision) {
   const flagMessages = {
-    follow_player:     "🚶 Elara is now following you",
+    follow_player: "🚶 Elara is now following you",
     become_apprentice: "📖 Elara became your apprentice",
-    move_in:           "🏠 Elara moved in with you",
-    marry:             "💍 You and Elara are now married",
-    join_war:          "⚔️ Elara joined the war effort",
+    move_in: "🏠 Elara moved in with you",
+    marry: "💍 You and Elara are now married",
+    join_war: "⚔️ Elara joined the war effort",
   };
 
   if (decision !== "ALLOWED" || !flagMessages[action]) return;
@@ -145,8 +150,7 @@ export function showProcessing(label) {
   hideProcessing();
   processingDiv = document.createElement("div");
   processingDiv.className = "processing-indicator";
-  processingDiv.innerHTML =
-    `<div class="dots"><span></span><span></span><span></span></div> ${label}`;
+  processingDiv.innerHTML = `<div class="dots"><span></span><span></span><span></span></div> ${label}`;
   chatEl.appendChild(processingDiv);
   scrollToBottom();
 }
@@ -176,8 +180,9 @@ export function updateStatsPanel(engine) {
 
   // Flags
   const flagsEl = document.getElementById("flags-container");
-  const activeFlags = Object.entries(engine.flags)
-    .filter(([, v]) => v === true || (typeof v === "string" && v));
+  const activeFlags = Object.entries(engine.flags).filter(
+    ([, v]) => v === true || (typeof v === "string" && v),
+  );
   if (activeFlags.length === 0) {
     flagsEl.innerHTML = '<div class="inventory-empty">None</div>';
   } else {
@@ -190,9 +195,7 @@ export function updateStatsPanel(engine) {
     };
     flagsEl.innerHTML =
       '<ul class="inventory-list">' +
-      activeFlags
-        .map(([k]) => `<li>${flagLabels[k] || k}</li>`)
-        .join("") +
+      activeFlags.map(([k]) => `<li>${flagLabels[k] || k}</li>`).join("") +
       "</ul>";
   }
 
@@ -214,13 +217,18 @@ export function addEngineLogEntry(request, result, rawResponse) {
   const entry = document.createElement("div");
   entry.className = "engine-log-entry";
   const cls =
-    result.decision === "ALLOWED" ? "en-allowed"
-    : result.decision === "DENIED" ? "en-denied"
-    : "en-conditional";
+    result.decision === "ALLOWED"
+      ? "en-allowed"
+      : result.decision === "DENIED"
+        ? "en-denied"
+        : "en-conditional";
 
   const breakdownHtml = result.breakdown
     ? Object.entries(result.breakdown)
-        .map(([s, b]) => `<span class="el-stat">${s}: ${b.value}×${b.weight}=${b.contribution}</span>`)
+        .map(
+          ([s, b]) =>
+            `<span class="el-stat">${s}: ${b.value}×${b.weight}=${b.contribution}</span>`,
+        )
         .join(" · ")
     : "";
 

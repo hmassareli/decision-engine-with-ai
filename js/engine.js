@@ -3,13 +3,13 @@
 // ═══════════════════════════════════════════════
 
 import {
-  PRICES,
   ACTION_DEFS,
-  SERIOUSNESS_THRESHOLDS,
-  EFFECTS,
-  RELATIONSHIP_TIERS,
-  MOOD_EFFECTS,
   CONVERSATION_MILESTONES,
+  EFFECTS,
+  MOOD_EFFECTS,
+  PRICES,
+  RELATIONSHIP_TIERS,
+  SERIOUSNESS_THRESHOLDS,
 } from "./config.js";
 
 export class GameEngine {
@@ -28,9 +28,9 @@ export class GameEngine {
 
     this.inventory = [];
     this.flags = npc ? { ...npc.flags } : {};
-    this.log = [];            // full decision log
-    this.textExchanges = 0;   // count of text-only exchanges (for milestones)
-    this._listeners = [];     // onChange callbacks
+    this.log = []; // full decision log
+    this.textExchanges = 0; // count of text-only exchanges (for milestones)
+    this._listeners = []; // onChange callbacks
   }
 
   // ── Observable ─────────────────────────────
@@ -69,7 +69,10 @@ export class GameEngine {
    */
   evaluate(request) {
     const { action, target } = request;
-    const seriousness = Math.min(10, Math.max(0, parseInt(request.seriousness) || 0));
+    const seriousness = Math.min(
+      10,
+      Math.max(0, parseInt(request.seriousness) || 0),
+    );
 
     // Look up action definition (fallback to generic)
     const def = ACTION_DEFS[action] || this._genericDef(seriousness);
@@ -87,7 +90,9 @@ export class GameEngine {
         return this._result(
           "DENIED",
           `Item "${target}" is not available. Available options: ${available}.`,
-          0, 0, 0
+          0,
+          0,
+          0,
         );
       }
     }
@@ -104,7 +109,9 @@ export class GameEngine {
             return this._result(
               "DENIED",
               `${this.npc?.template?.name || "NPC"} can't afford it. Needs ${cost}, has ${npcGold}.`,
-              0, 0, cost
+              0,
+              0,
+              cost,
             );
           }
         } else {
@@ -113,7 +120,9 @@ export class GameEngine {
             return this._result(
               "DENIED",
               `Not enough gold. Needs ${cost}, has ${this.stats.gold}.`,
-              0, 0, cost
+              0,
+              0,
+              cost,
             );
           }
         }
@@ -131,7 +140,9 @@ export class GameEngine {
         return this._result(
           "DENIED",
           `Hard requirement failed: ${stat} is ${this.stats[stat]}, needs ${minVal}.`,
-          0, this.stats[stat], minVal
+          0,
+          this.stats[stat],
+          minVal,
         );
       }
     }
@@ -160,7 +171,15 @@ export class GameEngine {
       decision = "CONDITIONAL";
     }
 
-    const reason = this._buildReason(decision, score, roll, finalScore, threshold, breakdown, seriousness);
+    const reason = this._buildReason(
+      decision,
+      score,
+      roll,
+      finalScore,
+      threshold,
+      breakdown,
+      seriousness,
+    );
 
     return {
       decision,
@@ -186,7 +205,7 @@ export class GameEngine {
     const deltas = { ...(effectDef[decisionKey] || {}) };
 
     // Deduct gold for allowed purchases (only if player pays)
-    if (decision === "ALLOWED" && (ACTION_DEFS[action]?.costType === "gold")) {
+    if (decision === "ALLOWED" && ACTION_DEFS[action]?.costType === "gold") {
       const paidBy = request.paidBy || "player";
       const cost = this.getCost(action, target);
       if (cost > 0) {
@@ -276,7 +295,10 @@ export class GameEngine {
   recordMemory(action, target, decision) {
     if (!this.npc || !this.world) return;
     const summary = `${action} → ${target} → ${decision}`;
-    this.npc.addMemory(summary, this.world.dayCount, [action, decision.toLowerCase()]);
+    this.npc.addMemory(summary, this.world.dayCount, [
+      action,
+      decision.toLowerCase(),
+    ]);
   }
 
   /**
@@ -303,7 +325,9 @@ export class GameEngine {
           case "stat":
             if (this.stats[event.effect.key] !== undefined) {
               this.stats[event.effect.key] = this._clamp(
-                this.stats[event.effect.key] + event.effect.delta, 0, 100
+                this.stats[event.effect.key] + event.effect.delta,
+                0,
+                100,
               );
             }
             break;
@@ -314,14 +338,16 @@ export class GameEngine {
             const amt = event.effect.amount;
             const stolen = Math.min(
               this.stats.gold,
-              Math.floor(Math.random() * (amt.max - amt.min + 1)) + amt.min
+              Math.floor(Math.random() * (amt.max - amt.min + 1)) + amt.min,
             );
             this.stats.gold -= stolen;
             event.stolenAmount = stolen;
             break;
           }
           case "memory":
-            this.npc.addMemory(event.effect.text, this.world.dayCount, [event.behaviorId]);
+            this.npc.addMemory(event.effect.text, this.world.dayCount, [
+              event.behaviorId,
+            ]);
             break;
         }
       }
@@ -331,7 +357,7 @@ export class GameEngine {
         this.world.addReputationEvent(
           event.eventText,
           event.reputationImpact.impact,
-          event.reputationImpact.tag
+          event.reputationImpact.tag,
         );
       }
     }
@@ -398,7 +424,11 @@ export class GameEngine {
     for (const [stat, weight] of Object.entries(def.stats || {})) {
       const val = this.stats[stat] ?? 0;
       const contribution = val * weight;
-      breakdown[stat] = { value: val, weight, contribution: Math.round(contribution * 10) / 10 };
+      breakdown[stat] = {
+        value: val,
+        weight,
+        contribution: Math.round(contribution * 10) / 10,
+      };
       score += contribution;
     }
     return { score, breakdown };
@@ -414,7 +444,15 @@ export class GameEngine {
     };
   }
 
-  _buildReason(decision, score, roll, finalScore, threshold, breakdown, seriousness) {
+  _buildReason(
+    decision,
+    score,
+    roll,
+    finalScore,
+    threshold,
+    breakdown,
+    seriousness,
+  ) {
     const statsUsed = Object.entries(breakdown)
       .map(([s, b]) => `${s}=${b.value}(×${b.weight}→${b.contribution})`)
       .join(", ");
@@ -429,7 +467,15 @@ export class GameEngine {
   }
 
   _result(decision, reason, roll, score, threshold) {
-    return { decision, reason, roll, score, finalScore: score, threshold, breakdown: {} };
+    return {
+      decision,
+      reason,
+      roll,
+      score,
+      finalScore: score,
+      threshold,
+      breakdown: {},
+    };
   }
 
   _clamp(val, min, max) {

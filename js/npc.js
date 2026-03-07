@@ -16,13 +16,13 @@ export const NPC_TEMPLATES = {
 
     // ── Personality traits (0–100 scale) ──
     traits: {
-      loyalty: 70,       // how loyal once trust is earned
-      aggression: 30,    // tendency to fight / get angry
-      greed: 20,         // desire for gold, willingness to overcharge
-      honesty: 75,       // how truthful they are
-      romanticism: 40,   // openness to romance
-      bravery: 60,       // willingness to take risks
-      suspicion: 45,     // how easily they distrust people
+      loyalty: 70, // how loyal once trust is earned
+      aggression: 30, // tendency to fight / get angry
+      greed: 20, // desire for gold, willingness to overcharge
+      honesty: 75, // how truthful they are
+      romanticism: 40, // openness to romance
+      bravery: 60, // willingness to take risks
+      suspicion: 45, // how easily they distrust people
       betrayalChance: 5, // % chance of betraying per major trust event
     },
 
@@ -55,7 +55,8 @@ export const NPC_TEMPLATES = {
         description: "Elara closes the tavern early if she feels unsafe",
         trigger: "worldReputation < -30",
         chance: 0.3, // 30% chance per tick
-        eventText: "Elara closed the tavern early tonight. The streets feel too dangerous.",
+        eventText:
+          "Elara closed the tavern early tonight. The streets feel too dangerous.",
         effect: { type: "flag", key: "tavern_closed", value: true },
       },
       {
@@ -63,7 +64,8 @@ export const NPC_TEMPLATES = {
         description: "Elara gives a free drink to a trusted friend",
         trigger: "friendship >= 50",
         chance: 0.15,
-        eventText: "Elara poured you a drink on the house. She seems to trust you.",
+        eventText:
+          "Elara poured you a drink on the house. She seems to trust you.",
         effect: { type: "stat", key: "friendship", delta: 3 },
       },
       {
@@ -71,13 +73,18 @@ export const NPC_TEMPLATES = {
         description: "Elara overhears something and wants to share",
         trigger: "trust >= 25",
         chance: 0.2,
-        eventText: "Elara leans in close — she has heard something interesting.",
-        effect: { type: "memory", text: "Elara heard a rumor about smugglers at the docks." },
+        eventText:
+          "Elara leans in close — she has heard something interesting.",
+        effect: {
+          type: "memory",
+          text: "Elara heard a rumor about smugglers at the docks.",
+        },
       },
     ],
 
     // ── First message override (optional) ──
-    firstMessage: "Another traveler walks in... Welcome to the Broken Lamp. Want a drink, some food, or just a place to sit?",
+    firstMessage:
+      "Another traveler walks in... Welcome to the Broken Lamp. Want a drink, some food, or just a place to sit?",
   },
 
   // ── EXAMPLE: A thief NPC (shows how different NPCs work) ──
@@ -158,9 +165,9 @@ export class NPC {
       trust: 5,
     };
 
-    this.gold = template.gold ?? 100;  // NPC's own currency
-    this.flags = {};          // married, following, etc.
-    this.memory = [];         // interaction history: { day, summary, tags[] }
+    this.gold = template.gold ?? 100; // NPC's own currency
+    this.flags = {}; // married, following, etc.
+    this.memory = []; // interaction history: { day, summary, tags[] }
     this.currentMood = "neutral";
 
     // ── Autonomous event tracking ──
@@ -188,9 +195,7 @@ export class NPC {
   getRecentMemories(count = 8) {
     const recent = this.memory.slice(-count);
     if (recent.length === 0) return "No previous interactions.";
-    return recent
-      .map(m => `- Day ${m.day}: ${m.summary}`)
-      .join("\n");
+    return recent.map((m) => `- Day ${m.day}: ${m.summary}`).join("\n");
   }
 
   // ── Autonomous behavior ────────────────────
@@ -247,15 +252,28 @@ export class NPC {
       else if (key in this.flags) actual = this.flags[key];
       else actual = 0;
 
-      const target = val === "true" ? true : val === "false" ? false : parseFloat(val);
+      const target =
+        val === "true" ? true : val === "false" ? false : parseFloat(val);
 
       switch (op) {
-        case ">=": if (!(actual >= target)) return false; break;
-        case "<=": if (!(actual <= target)) return false; break;
-        case ">":  if (!(actual > target))  return false; break;
-        case "<":  if (!(actual < target))  return false; break;
-        case "==": if (actual !== target)    return false; break;
-        case "!=": if (actual === target)    return false; break;
+        case ">=":
+          if (!(actual >= target)) return false;
+          break;
+        case "<=":
+          if (!(actual <= target)) return false;
+          break;
+        case ">":
+          if (!(actual > target)) return false;
+          break;
+        case "<":
+          if (!(actual < target)) return false;
+          break;
+        case "==":
+          if (actual !== target) return false;
+          break;
+        case "!=":
+          if (actual === target) return false;
+          break;
       }
     }
 
@@ -306,13 +324,22 @@ ${this.getRecentMemories(8)}`;
     const t = this.template.traits;
     const traitLines = [];
 
-    if (t.suspicion >= 60) traitLines.push("- You are very suspicious of strangers");
-    if (t.greed >= 60) traitLines.push("- You value gold highly and drive hard bargains");
-    if (t.aggression >= 60) traitLines.push("- You are quick to anger and ready to fight");
-    if (t.honesty <= 30) traitLines.push("- You have no problem lying to get what you want");
-    if (t.romanticism >= 60) traitLines.push("- You are open to romance and flirting");
-    if (t.bravery >= 70) traitLines.push("- You are brave and willing to take dangerous risks");
-    if (t.loyalty >= 70) traitLines.push("- Once someone earns your trust, you are fiercely loyal");
+    if (t.suspicion >= 60)
+      traitLines.push("- You are very suspicious of strangers");
+    if (t.greed >= 60)
+      traitLines.push("- You value gold highly and drive hard bargains");
+    if (t.aggression >= 60)
+      traitLines.push("- You are quick to anger and ready to fight");
+    if (t.honesty <= 30)
+      traitLines.push("- You have no problem lying to get what you want");
+    if (t.romanticism >= 60)
+      traitLines.push("- You are open to romance and flirting");
+    if (t.bravery >= 70)
+      traitLines.push("- You are brave and willing to take dangerous risks");
+    if (t.loyalty >= 70)
+      traitLines.push(
+        "- Once someone earns your trust, you are fiercely loyal",
+      );
 
     if (traitLines.length === 0) return "";
 

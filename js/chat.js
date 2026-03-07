@@ -2,18 +2,28 @@
 //  CHAT — LLM communication and two-pass flow
 // ═══════════════════════════════════════════════
 
-import { API_URL, MODEL, MAX_HISTORY, LLM_TEMPERATURE, LLM_MAX_TOKENS, buildSystemPrompt, PROMPT_FORMAT, PROMPT_RULES, PROMPT_FIRST_MESSAGE } from "./config.js";
+import {
+  API_URL,
+  buildSystemPrompt,
+  LLM_MAX_TOKENS,
+  LLM_TEMPERATURE,
+  MAX_HISTORY,
+  MODEL,
+  PROMPT_FIRST_MESSAGE,
+  PROMPT_FORMAT,
+  PROMPT_RULES,
+} from "./config.js";
 import { parseReply } from "./parser.js";
 import {
-  addMessage,
-  addStreamingMessage,
-  addEngineNotification,
-  addStatChangeToast,
-  addFlagToast,
-  showProcessing,
-  hideProcessing,
-  updateStatsPanel,
   addEngineLogEntry,
+  addEngineNotification,
+  addFlagToast,
+  addMessage,
+  addStatChangeToast,
+  addStreamingMessage,
+  hideProcessing,
+  showProcessing,
+  updateStatsPanel,
 } from "./ui.js";
 
 let conversationHistory = []; // { role, content }[]
@@ -86,7 +96,9 @@ async function callLLMStream(messages, onToken) {
           fullText += delta;
           if (onToken) onToken(fullText);
         }
-      } catch { /* skip malformed chunks */ }
+      } catch {
+        /* skip malformed chunks */
+      }
     }
   }
 
@@ -105,7 +117,9 @@ function extractVisibleText(raw) {
   // Check if this is a request (no visible text to show)
   if (/<block[^>]*type\s*=\s*["']request["']/i.test(text)) return null;
   // Extract text content from <block type="text">
-  const match = text.match(/<block[^>]*type\s*=\s*["']text["'][^>]*>([\s\S]*?)(<\/block>|$)/i);
+  const match = text.match(
+    /<block[^>]*type\s*=\s*["']text["'][^>]*>([\s\S]*?)(<\/block>|$)/i,
+  );
   if (match) return match[1].trim();
   // If no block tags yet, return nothing (still building XML)
   return "";
@@ -205,7 +219,11 @@ async function processLLMResponse(engine) {
     let engineExtra = "";
 
     // For share_rumor: inject actual rumor content so LLM doesn't invent
-    if (request.action === "share_rumor" && result.decision === "ALLOWED" && engine.world) {
+    if (
+      request.action === "share_rumor" &&
+      result.decision === "ALLOWED" &&
+      engine.world
+    ) {
       const rumor = engine.world.getRumor(request.target);
       engineExtra = `\nRumor you know about "${request.target}": "${rumor}"\nTell this rumor in your own words. Do NOT invent a different rumor.`;
     }
@@ -226,8 +244,8 @@ async function processLLMResponse(engine) {
     ];
 
     const statusLabels = {
-      ALLOWED:     "Engine approved — Elara reacts...",
-      DENIED:      "Engine denied — Elara reacts...",
+      ALLOWED: "Engine approved — Elara reacts...",
+      DENIED: "Engine denied — Elara reacts...",
       CONDITIONAL: "Engine conditional — Elara reacts...",
     };
     showProcessing(statusLabels[result.decision] || "Elara reacts...");
@@ -270,7 +288,10 @@ async function processLLMResponse(engine) {
 
     // Guard: don't recurse if reaction has another request
     if (reaction.requests.length > 0) {
-      console.warn("LLM sent request inside engine reaction — ignoring to prevent loop.", reaction.requests);
+      console.warn(
+        "LLM sent request inside engine reaction — ignoring to prevent loop.",
+        reaction.requests,
+      );
     }
   }
 }
@@ -297,7 +318,12 @@ export async function initialGreeting(engine) {
   const identity = engine.npc
     ? engine.npc.buildIdentityPrompt()
     : PROMPT_FORMAT;
-  const greetingPrompt = [identity, PROMPT_FORMAT, PROMPT_RULES, PROMPT_FIRST_MESSAGE].join("\n\n");
+  const greetingPrompt = [
+    identity,
+    PROMPT_FORMAT,
+    PROMPT_RULES,
+    PROMPT_FIRST_MESSAGE,
+  ].join("\n\n");
 
   let streamBubble = null;
 
@@ -315,13 +341,16 @@ export async function initialGreeting(engine) {
         }
         streamBubble.update(visible);
       }
-    }
+    },
   );
 
   hideProcessing();
 
   // Add the dummy user message to history so subsequent calls have valid user→assistant ordering
-  conversationHistory.push({ role: "user", content: "*A traveler walks into the tavern.*" });
+  conversationHistory.push({
+    role: "user",
+    content: "*A traveler walks into the tavern.*",
+  });
   conversationHistory.push({ role: "assistant", content: raw });
 
   const parsed = parseReply(raw);
