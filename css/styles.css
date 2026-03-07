@@ -1,0 +1,575 @@
+/* ═══════════════════════════════════════════════
+   STYLES — The Broken Lamp Tavern
+   ═══════════════════════════════════════════════ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background: #0a0a0f;
+  color: #e0e0e0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr 600px;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+}
+
+/* ── Header ────────────────────────────────── */
+
+header {
+  grid-column: 1 / -1;
+  background: #12121a;
+  border-bottom: 1px solid #1f1f2e;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+header .dot {
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+header h1 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f0e6d2;
+}
+
+header .model-tag {
+  margin-left: auto;
+  font-size: 12px;
+  color: #666;
+  background: #1a1a24;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #2a2a3a;
+}
+
+/* ── Stats Panel (left) ───────────────────── */
+
+#stats-panel {
+  grid-row: 2 / 4;
+  background: #0e0e16;
+  border-right: 1px solid #1f1f2e;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#stats-panel h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.stat-label span:last-child {
+  color: #f0e6d2;
+  font-weight: 600;
+}
+
+.stat-bar {
+  height: 6px;
+  background: #1a1a28;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition:
+    width 0.6s ease,
+    background 0.4s ease;
+}
+
+.bar-friendship .stat-bar-fill {
+  background: #f472b6;
+}
+.bar-respect .stat-bar-fill {
+  background: #60a5fa;
+}
+.bar-trust .stat-bar-fill {
+  background: #a78bfa;
+}
+.bar-health .stat-bar-fill {
+  background: #4ade80;
+}
+
+.stat-gold {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #fbbf24;
+  font-weight: 600;
+  padding: 8px 0;
+}
+.stat-gold span {
+  font-size: 18px;
+}
+
+/* ── Relationship Badge ───────────────────── */
+
+.relationship-badge {
+  text-align: center;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid;
+}
+
+.rel-stranger {
+  color: #888;
+  border-color: #333;
+  background: #1a1a1a;
+}
+.rel-acquaintance {
+  color: #60a5fa;
+  border-color: #1e3a5f;
+  background: #111827;
+}
+.rel-regular {
+  color: #a78bfa;
+  border-color: #3b2d6e;
+  background: #1a1030;
+}
+.rel-friend {
+  color: #f472b6;
+  border-color: #6e2d4a;
+  background: #2a1020;
+}
+.rel-trusted {
+  color: #fbbf24;
+  border-color: #6e5a1a;
+  background: #2a2010;
+}
+
+/* ── Inventory & Flags ────────────────────── */
+
+.inventory-list {
+  list-style: none;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.inventory-list li {
+  padding: 4px 0;
+  border-bottom: 1px solid #1a1a28;
+}
+
+.inventory-list li::before {
+  content: "◆ ";
+  color: #555;
+}
+
+.inventory-empty {
+  font-size: 12px;
+  color: #444;
+  font-style: italic;
+}
+
+/* ── Chat Area (center) ──────────────────── */
+
+#chat-area {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#chat::-webkit-scrollbar {
+  width: 5px;
+}
+#chat::-webkit-scrollbar-track {
+  background: transparent;
+}
+#chat::-webkit-scrollbar-thumb {
+  background: #2a2a3a;
+  border-radius: 3px;
+}
+
+/* ── Messages ─────────────────────────────── */
+
+.message {
+  max-width: 78%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  line-height: 1.55;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message.user {
+  align-self: flex-end;
+  background: #1e3a5f;
+  color: #bfdbfe;
+  border-bottom-right-radius: 4px;
+}
+
+.message.assistant {
+  align-self: flex-start;
+  background: #1a1a26;
+  border: 1px solid #2a2a3a;
+  color: #d4d4d4;
+  border-bottom-left-radius: 4px;
+}
+
+.message.assistant.streaming::after {
+  content: "▊";
+  animation: blink-cursor 0.6s step-end infinite;
+  color: #f5c542;
+  margin-left: 2px;
+}
+
+@keyframes blink-cursor {
+  50% { opacity: 0; }
+}
+
+/* ── Engine Notification ──────────────────── */
+
+.message.engine-notification {
+  align-self: center;
+  max-width: 90%;
+  background: #111118;
+  border: 1px dashed #2a2a44;
+  color: #777;
+  font-size: 12px;
+  text-align: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.engine-notification .en-decision {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.en-allowed {
+  color: #4ade80;
+}
+.en-denied {
+  color: #f87171;
+}
+.en-conditional {
+  color: #fbbf24;
+}
+
+/* ── Stat Change Toast ────────────────────── */
+
+.stat-change-toast {
+  align-self: center;
+  font-size: 11px;
+  color: #666;
+  padding: 2px 8px;
+  animation: fadeIn 0.3s ease;
+}
+
+.stat-change-toast .positive {
+  color: #4ade80;
+}
+.stat-change-toast .negative {
+  color: #f87171;
+}
+
+/* ── Processing Indicator ─────────────────── */
+
+.processing-indicator {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #1a1a26;
+  border: 1px solid #2a2a3a;
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  font-size: 13px;
+  color: #666;
+  animation: fadeIn 0.2s ease;
+}
+
+.processing-indicator .dots span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #555;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+.processing-indicator .dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.processing-indicator .dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ── Welcome ──────────────────────────────── */
+
+.welcome {
+  text-align: center;
+  color: #555;
+  margin: auto;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.welcome h2 {
+  font-size: 22px;
+  color: #f0e6d2;
+  margin-bottom: 8px;
+}
+
+/* ── Input Area ───────────────────────────── */
+
+#input-area {
+  background: #12121a;
+  border-top: 1px solid #1f1f2e;
+  padding: 14px 24px;
+  display: flex;
+  gap: 10px;
+}
+
+#input-area textarea {
+  flex: 1;
+  min-width: 0;
+  background: #1a1a28;
+  border: 1px solid #2a2a3a;
+  color: #e0e0e0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  min-height: 44px;
+  max-height: 120px;
+  transition: border-color 0.2s;
+}
+
+#input-area textarea:focus {
+  border-color: #3b4f8a;
+}
+#input-area textarea::placeholder {
+  color: #555;
+}
+
+#send-btn {
+  background: #2a3a6a;
+  color: #bfdbfe;
+  border: none;
+  border-radius: 10px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#send-btn:hover {
+  background: #3b4f8a;
+}
+#send-btn:disabled {
+  background: #1a1a28;
+  color: #444;
+  cursor: not-allowed;
+}
+
+/* ── Engine Log Panel (right) ─────────────── */
+
+#engine-panel {
+  grid-row: 2 / 4;
+  background: #0e0e16;
+  border-left: 1px solid #1f1f2e;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#engine-panel h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #666;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1f1f2e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#engine-panel h3 .toggle-raw {
+  font-size: 10px;
+  color: #444;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+#engine-panel h3 .toggle-raw:hover {
+  color: #888;
+}
+
+/* ── Engine Log Entry ─────────────────────── */
+
+.engine-log-entry {
+  background: #111118;
+  border: 1px solid #1a1a2e;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+.engine-log-entry .el-time {
+  color: #444;
+  font-size: 10px;
+}
+.engine-log-entry .el-action {
+  color: #a78bfa;
+  font-weight: 600;
+  margin: 4px 0;
+}
+.engine-log-entry .el-target {
+  color: #60a5fa;
+}
+.engine-log-entry .el-context {
+  color: #555;
+  font-size: 11px;
+}
+.engine-log-entry .el-decision {
+  font-weight: 700;
+  margin-top: 4px;
+}
+.engine-log-entry .el-score {
+  color: #666;
+  font-size: 11px;
+  margin-top: 2px;
+}
+.engine-log-entry .el-breakdown {
+  color: #555;
+  font-size: 10px;
+  margin-top: 2px;
+}
+.engine-log-entry .el-stat {
+  color: #888;
+}
+.engine-log-entry .el-reason {
+  color: #555;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.raw-response {
+  display: none;
+  background: #0a0a12;
+  border: 1px solid #1a1a2e;
+  border-radius: 6px;
+  padding: 8px;
+  font-family: "Consolas", "Fira Code", monospace;
+  font-size: 11px;
+  color: #555;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.raw-response.visible {
+  display: block;
+}
+
+/* ── Responsive ───────────────────────────── */
+
+@media (max-width: 900px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+  #stats-panel,
+  #engine-panel {
+    display: none;
+  }
+}
