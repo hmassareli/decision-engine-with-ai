@@ -2,17 +2,21 @@
 
 Voce e meu arquiteto de jogo para The Broken Lamp.
 Objetivo: montar um monorepo com duas camadas desacopladas:
+
 - `core/`: simulacao narrativa deterministica (engine, world, npc, gossip, economia, combate, parser, chat llm adapter)
 - `game-phaser/`: cliente visual em Phaser (mapa, movimento, colisao, input, HUD e dialogo in-world)
 
 ## Regras de arquitetura
+
 - O LLM NUNCA decide regra de jogo.
 - O `core` decide tudo: `ALLOWED`, `DENIED`, `CONDITIONAL`, custo, dano, reputacao, deeds, flags, economia, consequencias.
 - O LLM so interpreta personagem e gera fala/intent estruturada.
 - O cliente Phaser nunca altera estado direto: ele envia intents e aplica apenas o retorno do `core`.
 
 ## Contratos de API (obrigatorio)
+
 Defina e use contratos TS/JSDoc claros:
+
 - `PlayerIntent`:
   - `action: string`
   - `target?: string`
@@ -30,6 +34,7 @@ Defina e use contratos TS/JSDoc claros:
   - `request?: PlayerIntent`
 
 ## Entregas
+
 1. Estrutura de pastas completa.
 2. Arquivos base com TODOs reais (sem boilerplate vazio).
 3. Adaptador `game-phaser/src/adapters/coreAdapter.*` consumindo `core`.
@@ -43,6 +48,7 @@ Defina e use contratos TS/JSDoc claros:
 7. Script de execucao para modo debug (`chat`) e modo jogo (`phaser`).
 
 ## Qualidade
+
 - Codigo modular, legivel e testavel.
 - Comentarios curtos somente onde agregar.
 - Sem dependencia de backend remoto obrigatoria.

@@ -2,10 +2,9 @@
 // Keeps scene code simple and centralizes state synchronization rules.
 
 import { GameEngine } from "../../../core/engine.js";
-import { NPC } from "../../../core/npc.js";
-import { NPC_TEMPLATES } from "../../../core/npc.js";
-import { WorldState } from "../../../core/world.js";
 import { createInWorldChatBridge } from "../../../core/llmBridge.js";
+import { NPC, NPC_TEMPLATES } from "../../../core/npc.js";
+import { WorldState } from "../../../core/world.js";
 
 /**
  * @typedef {Object} PlayerIntent

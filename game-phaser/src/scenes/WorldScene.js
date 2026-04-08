@@ -119,7 +119,9 @@ export class WorldScene extends Phaser.Scene {
       canvasTexture.drawFrame("gv-grass-tiles", 0);
       canvasTexture.refresh();
     }
-    const grassKey = this.textures.exists("grass-single") ? "grass-single" : "tile-grass";
+    const grassKey = this.textures.exists("grass-single")
+      ? "grass-single"
+      : "tile-grass";
     this.add.tileSprite(600, 450, 1200, 900, grassKey).setDepth(0);
 
     this.walls = this.physics.add.staticGroup();
@@ -181,7 +183,9 @@ export class WorldScene extends Phaser.Scene {
 
     for (const seed of npcSeeds) {
       const texture =
-        seed.texture && this.textures.exists(seed.texture) ? seed.texture : null;
+        seed.texture && this.textures.exists(seed.texture)
+          ? seed.texture
+          : null;
       const npc = new NpcActor(
         this,
         seed.x,
@@ -265,7 +269,9 @@ export class WorldScene extends Phaser.Scene {
       );
 
       const finalText = chatResult.chat?.assistantText || "(No text returned)";
-      this._setDialoguePreview(`${this.nearestNpc.label}: ${finalText}\n\n[E] Close`);
+      this._setDialoguePreview(
+        `${this.nearestNpc.label}: ${finalText}\n\n[E] Close`,
+      );
     } catch (error) {
       this._setDialoguePreview(`Dialogue error: ${error.message}\n\n[E] Close`);
     }

@@ -17,7 +17,9 @@ function extractMessageText(data) {
   if (!Array.isArray(data?.output)) return "";
 
   return data.output
-    .filter((item) => item?.type === "message" && typeof item.content === "string")
+    .filter(
+      (item) => item?.type === "message" && typeof item.content === "string",
+    )
     .map((item) => item.content)
     .join("\n\n")
     .trim();
@@ -42,7 +44,13 @@ function parseSseEvent(rawEvent) {
   return { eventType, data: dataLines.join("\n") };
 }
 
-export async function requestLmStudioChat({ apiUrl, model, systemPrompt, messages, onToken }) {
+export async function requestLmStudioChat({
+  apiUrl,
+  model,
+  systemPrompt,
+  messages,
+  onToken,
+}) {
   const shouldStream = typeof onToken === "function";
   const res = await fetch(apiUrl, {
     method: "POST",
@@ -85,7 +93,10 @@ export async function requestLmStudioChat({ apiUrl, model, systemPrompt, message
         try {
           const json = JSON.parse(parsed.data);
 
-          if (parsed.eventType === "message.delta" && typeof json?.content === "string") {
+          if (
+            parsed.eventType === "message.delta" &&
+            typeof json?.content === "string"
+          ) {
             fullText += json.content;
             onToken(fullText);
             continue;

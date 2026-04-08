@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════
 
 import { initialGreeting, sendUserMessage } from "./chat.js";
-import { AVAILABLE_MODELS, setModel, requestModelLoad, isModelReady } from "./config.js";
+import { AVAILABLE_MODELS, isModelReady, requestModelLoad } from "./config.js";
 import { GameEngine } from "./engine.js";
 import { NPC } from "./npc.js";
 import {
@@ -54,7 +54,8 @@ modelSelect.addEventListener("change", async () => {
   modelSelect.disabled = true;
   sendBtn.disabled = true;
   const origText = modelSelect.options[modelSelect.selectedIndex].text;
-  modelSelect.options[modelSelect.selectedIndex].text = `⏳ Loading ${origText}…`;
+  modelSelect.options[modelSelect.selectedIndex].text =
+    `⏳ Loading ${origText}…`;
   try {
     await requestModelLoad(id);
     modelSelect.options[modelSelect.selectedIndex].text = origText;

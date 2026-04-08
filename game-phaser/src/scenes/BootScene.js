@@ -59,7 +59,10 @@ export class BootScene extends Phaser.Scene {
     for (const [alias, relativePath, fw, fh] of spritesheets) {
       const asset = getGodewAssetByRelativePath(relativePath);
       if (asset) {
-        this.load.spritesheet(alias, asset.url, { frameWidth: fw, frameHeight: fh });
+        this.load.spritesheet(alias, asset.url, {
+          frameWidth: fw,
+          frameHeight: fh,
+        });
       }
     }
   }

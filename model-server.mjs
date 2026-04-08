@@ -4,8 +4,8 @@
 //  Usage: node model-server.mjs
 // ═══════════════════════════════════════════════
 
-import http from "node:http";
 import { exec } from "node:child_process";
+import http from "node:http";
 import { promisify } from "node:util";
 
 const run = promisify(exec);
@@ -32,11 +32,16 @@ const MODELS = {
     port: 8000,
     args: [
       "--language-model-only",
-      "--gpu-memory-utilization", "0.7",
-      "--max-model-len", "16384",
-      "--max-num-seqs", "1",
-      "--max-num-batched-tokens", "512",
-      "--attention-backend", "TRITON_ATTN",
+      "--gpu-memory-utilization",
+      "0.7",
+      "--max-model-len",
+      "16384",
+      "--max-num-seqs",
+      "1",
+      "--max-num-batched-tokens",
+      "512",
+      "--attention-backend",
+      "TRITON_ATTN",
     ],
   },
 };
@@ -79,9 +84,9 @@ async function startDocker(cfg) {
   const extraArgs = (cfg.args || []).join(" ");
   await shell(
     `docker run --rm -d --gpus all --ipc=host ` +
-    `-p ${cfg.port}:8000 ` +
-    `--name ${cfg.container} ` +
-    `${cfg.image} --model ${cfg.modelArg} ${extraArgs}`
+      `-p ${cfg.port}:8000 ` +
+      `--name ${cfg.container} ` +
+      `${cfg.image} --model ${cfg.modelArg} ${extraArgs}`,
   );
 }
 
@@ -91,7 +96,9 @@ async function waitForReady(url, maxWaitMs = 120_000) {
     try {
       const res = await fetch(url);
       if (res.ok) return true;
-    } catch { /* not ready yet */ }
+    } catch {
+      /* not ready yet */
+    }
     await new Promise((r) => setTimeout(r, 2000));
   }
   return false;
@@ -128,9 +135,7 @@ async function loadModel(id) {
   } else {
     await startDocker(cfg);
     console.log(`[load] Waiting for ${id} to become ready...`);
-    const ready = await waitForReady(
-      `http://localhost:${cfg.port}/v1/models`
-    );
+    const ready = await waitForReady(`http://localhost:${cfg.port}/v1/models`);
     if (!ready) throw new Error(`${id} failed to start within timeout`);
     activeModel = id;
     return { status: "loaded" };
@@ -153,7 +158,11 @@ function json(res, code, data) {
 
 const server = http.createServer(async (req, res) => {
   cors(res);
-  if (req.method === "OPTIONS") { res.writeHead(204); res.end(); return; }
+  if (req.method === "OPTIONS") {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
 
   const url = new URL(req.url, `http://localhost:${PORT}`);
 
@@ -167,7 +176,9 @@ const server = http.createServer(async (req, res) => {
     let body = "";
     for await (const chunk of req) body += chunk;
     let parsed;
-    try { parsed = JSON.parse(body); } catch {
+    try {
+      parsed = JSON.parse(body);
+    } catch {
       return json(res, 400, { error: "invalid JSON" });
     }
     const modelId = parsed.model;
