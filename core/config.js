@@ -2,25 +2,10 @@
 //  CONFIG — central configuration for the game
 // ═══════════════════════════════════════════════
 
-export const API_URL = "http://localhost:1234/v1/chat/completions";
-export const PARO_API_URL = "http://localhost:8000/v1/chat/completions";
+export const API_URL = "http://localhost:1234/api/v1/chat";
 export const MODEL_SERVER_URL = "http://localhost:3100";
 
 export const AVAILABLE_MODELS = [
-  {
-    id: "qwen3.5-4b-paro",
-    label: "Qwen3.5-4B-PARO",
-    apiUrl: PARO_API_URL,
-    modelName: "z-lab/Qwen3.5-4B-PARO",
-    loadMode: "direct",
-  },
-  {
-    id: "qwen3.5-9b-paro",
-    label: "Qwen3.5-9B-PARO",
-    apiUrl: PARO_API_URL,
-    modelName: "z-lab/Qwen3.5-9B-PARO",
-    loadMode: "model-server",
-  },
   {
     id: "qwen3.5-4b",
     label: "Qwen3.5-4B",
@@ -36,15 +21,19 @@ export function getModel() {
   const m = AVAILABLE_MODELS.find((x) => x.id === _currentModel);
   return m ? m.modelName : null;
 }
-export function isModelReady() { return _modelReady; }
+export function isModelReady() {
+  return _modelReady;
+}
 export function getApiUrl() {
   const m = AVAILABLE_MODELS.find((m) => m.id === _currentModel);
   return m ? m.apiUrl : API_URL;
 }
-export function setModel(id) { _currentModel = id; }
+export function setModel(id) {
+  _currentModel = id;
+}
 
 function modelsEndpoint(apiUrl) {
-  return apiUrl.replace(/\/chat\/completions$/, "/models");
+  return apiUrl.replace(/\/api\/v1\/chat$/, "/api/v1/models");
 }
 
 async function waitForModelReady(apiUrl, expectedModel, maxWaitMs = 20_000) {
@@ -56,8 +45,17 @@ async function waitForModelReady(apiUrl, expectedModel, maxWaitMs = 20_000) {
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json().catch(() => ({}));
-        const listed = Array.isArray(data?.data) ? data.data.map((x) => x.id) : [];
-        if (listed.length > 0 && (!expectedModel || listed.includes(expectedModel))) {
+        const listed = Array.isArray(data?.models)
+          ? data.models.flatMap((model) =>
+              Array.isArray(model?.loaded_instances)
+                ? model.loaded_instances.map((instance) => instance.id)
+                : [],
+            )
+          : [];
+        if (
+          listed.length > 0 &&
+          (!expectedModel || listed.includes(expectedModel))
+        ) {
           return;
         }
       }
@@ -80,21 +78,16 @@ export async function requestModelLoad(id) {
 
   _modelReady = false;
 
-  if (m.loadMode === "model-server") {
-    const res = await fetch(`${MODEL_SERVER_URL}/load`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: id }),
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || `Model server error ${res.status}`);
-    }
-    await waitForModelReady(m.apiUrl, m.modelName);
-  } else {
-    // Direct mode: external process is already serving this endpoint.
-    await waitForModelReady(m.apiUrl, m.modelName);
+  const res = await fetch(`${MODEL_SERVER_URL}/load`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ model: id }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || `Model server error ${res.status}`);
   }
+  await waitForModelReady(m.apiUrl, m.modelName);
 
   _currentModel = id;
   _modelReady = true;

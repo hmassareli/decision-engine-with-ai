@@ -1,0 +1,33 @@
+# Python virtual environments
+.venv/
+.venv*/
+venv/
+.conda/
+
+# Local permission/experiment envs
+.perm_venv/
+.perm_test/
+
+# Python cache/artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node artifacts
+node_modules/
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+
+# Local API test payloads
+chat_test*.json
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

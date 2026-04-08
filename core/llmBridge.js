@@ -1,11 +1,10 @@
 import {
-  getApiUrl,
   buildSystemPrompt,
-  LLM_MAX_TOKENS,
-  LLM_TEMPERATURE,
-  MAX_HISTORY,
+  getApiUrl,
   getModel,
+  MAX_HISTORY,
 } from "./config.js";
+import { requestLmStudioChat } from "./lmStudioChat.js";
 import { parseReply } from "./parser.js";
 
 function trimHistory(history) {
@@ -15,8 +14,7 @@ function trimHistory(history) {
 }
 
 function extractVisibleText(raw) {
-  let text = raw.replace(/<think>[\s\S]*?<\/think>/gi, "");
-  text = text.replace(/<think>[\s\S]*/gi, "");
+  const text = raw.trim();
   if (/<block[^>]*type\s*=\s*["']request["']/i.test(text)) return null;
   const match = text.match(
     /<block[^>]*type\s*=\s*["']text["'][^>]*>([\s\S]*?)(<\/block>|$)/i,
@@ -26,122 +24,13 @@ function extractVisibleText(raw) {
 }
 
 async function callLLMStream(messages, onToken) {
-  const res = await fetch(getApiUrl(), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: getModel(),
-      messages,
-      temperature: LLM_TEMPERATURE,
-      max_tokens: LLM_MAX_TOKENS,
-      stream: true,
-    }),
+  return requestLmStudioChat({
+    apiUrl: getApiUrl(),
+    model: getModel(),
+    systemPrompt: buildSystemPrompt(messages.engine),
+    messages: messages.history,
+    onToken,
   });
-
-  if (!res.ok) {
-    throw new Error(`API Error ${res.status}: ${res.statusText}`);
-  }
-
-  const reader = res.body.getReader();
-  const decoder = new TextDecoder();
-  let fullText = "";
-  let buffer = "";
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-
-    buffer += decoder.decode(value, { stream: true });
-
-    const events = buffer.split(/\r?\n\r?\n/);
-    buffer = events.pop() || "";
-
-    for (const ev of events) {
-      const parsed = parseSseEvent(ev);
-      if (!parsed?.data || parsed.data === "[DONE]") continue;
-
-      try {
-        const json = JSON.parse(parsed.data);
-        const delta = extractDeltaText(json, parsed.eventType);
-        if (!delta) continue;
-
-        fullText += delta;
-        if (onToken) onToken(fullText);
-      } catch {
-        // Ignore malformed chunk.
-      }
-    }
-  }
-
-  return fullText;
-}
-
-function parseSseEvent(rawEvent) {
-  const lines = rawEvent.split(/\r?\n/);
-  let eventType = "";
-  const dataLines = [];
-
-  for (const line of lines) {
-    if (line.startsWith("event:")) {
-      eventType = line.slice(6).trim();
-      continue;
-    }
-    if (line.startsWith("data:")) {
-      dataLines.push(line.slice(5).trimStart());
-    }
-  }
-
-  if (dataLines.length === 0) return null;
-  return { eventType, data: dataLines.join("\n") };
-}
-
-function extractDeltaText(json, eventType = "") {
-  // Never stream reasoning traces to callers.
-  if (eventType === "reasoning.delta" || eventType === "response.reasoning.delta") {
-    return "";
-  }
-
-  const deltaContent = json?.choices?.[0]?.delta?.content;
-  if (typeof deltaContent === "string") return deltaContent;
-  if (Array.isArray(deltaContent)) {
-    const joined = deltaContent
-      .map((part) => {
-        if (typeof part === "string") return part;
-        if (typeof part?.text === "string") return part.text;
-        return "";
-      })
-      .join("");
-    if (joined) return joined;
-  }
-
-  if (typeof json?.content === "string") return json.content;
-  if (Array.isArray(json?.content)) {
-    const joined = json.content
-      .map((part) => {
-        if (typeof part === "string") return part;
-        if (typeof part?.text === "string") return part.text;
-        if (typeof part?.content === "string") return part.content;
-        return "";
-      })
-      .join("");
-    if (joined) return joined;
-  }
-
-  if (typeof json?.delta === "string") return json.delta;
-
-  // Legacy completion-like chunk.
-  if (typeof json?.choices?.[0]?.text === "string") {
-    return json.choices[0].text;
-  }
-
-  if (
-    eventType === "message.delta" &&
-    typeof json?.content === "string"
-  ) {
-    return json.content;
-  }
-
-  return "";
 }
 
 /**
@@ -158,13 +47,10 @@ export function createInWorldChatBridge() {
     history.push({ role: "user", content: text });
     trimHistory(history);
 
-    const pass1Raw = await callLLMStream(
-      [{ role: "system", content: buildSystemPrompt(engine) }, ...history],
-      (fullSoFar) => {
-        const visible = extractVisibleText(fullSoFar);
-        if (visible !== null && onToken) onToken(visible, 1);
-      },
-    );
+    const pass1Raw = await callLLMStream({ history, engine }, (fullSoFar) => {
+      const visible = extractVisibleText(fullSoFar);
+      if (visible !== null && onToken) onToken(visible, 1);
+    });
 
     history.push({ role: "assistant", content: pass1Raw });
     trimHistory(history);
@@ -213,13 +99,10 @@ export function createInWorldChatBridge() {
       history.push({ role: "user", content: engineMsg });
       trimHistory(history);
 
-      const pass2Raw = await callLLMStream(
-        [{ role: "system", content: buildSystemPrompt(engine) }, ...history],
-        (fullSoFar) => {
-          const visible = extractVisibleText(fullSoFar);
-          if (visible !== null && onToken) onToken(visible, 2);
-        },
-      );
+      const pass2Raw = await callLLMStream({ history, engine }, (fullSoFar) => {
+        const visible = extractVisibleText(fullSoFar);
+        if (visible !== null && onToken) onToken(visible, 2);
+      });
 
       history.push({ role: "assistant", content: pass2Raw });
       trimHistory(history);

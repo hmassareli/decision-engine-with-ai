@@ -3,16 +3,15 @@
 // ═══════════════════════════════════════════════
 
 import {
-  getApiUrl,
   buildSystemPrompt,
-  LLM_MAX_TOKENS,
-  LLM_TEMPERATURE,
-  MAX_HISTORY,
+  getApiUrl,
   getModel,
+  MAX_HISTORY,
   PROMPT_FIRST_MESSAGE,
   PROMPT_FORMAT,
   PROMPT_RULES,
 } from "./config.js";
+import { requestLmStudioChat } from "./lmStudioChat.js";
 import { parseReply } from "./parser.js";
 import {
   addEngineLogEntry,
@@ -27,181 +26,23 @@ import {
 } from "./ui.js";
 
 let conversationHistory = []; // { role, content }[]
-const LLM_STOP = ["</reply>"];
 
-function buildPayload(messages, stream) {
-  return {
+async function callLLM(messages, systemPrompt, onToken) {
+  return requestLmStudioChat({
+    apiUrl: getApiUrl(),
     model: getModel(),
+    systemPrompt,
     messages,
-    temperature: LLM_TEMPERATURE,
-    max_tokens: LLM_MAX_TOKENS,
-    stop: LLM_STOP,
-    stream,
-  };
-}
-
-function buildNoThinkPayload(messages, stream) {
-  return {
-    ...buildPayload(messages, stream),
-    // OpenAI-like hint (ignored by unsupported backends).
-    reasoning_effort: "low",
-    // Qwen/vLLM-like hint (ignored by unsupported backends).
-    chat_template_kwargs: { enable_thinking: false },
-  };
-}
-
-async function postLLM(messages, stream) {
-  const apiUrl = getApiUrl();
-  const tryPayload = async (payload) => {
-    return fetch(apiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-  };
-
-  let res = await tryPayload(buildNoThinkPayload(messages, stream));
-
-  // Fallback if backend rejects non-standard fields.
-  if (!res.ok && (res.status === 400 || res.status === 422)) {
-    res = await tryPayload(buildPayload(messages, stream));
-  }
-
-  return res;
-}
-
-// ── LLM API call (non-streaming, kept for fallback) ──
-
-async function callLLM(messages) {
-  const res = await postLLM(messages, false);
-  if (!res.ok) throw new Error(`API Error ${res.status}: ${res.statusText}`);
-  const data = await res.json();
-  return data.choices[0].message.content;
-}
-
-// ── LLM API call (streaming) ──
-
-/**
- * Stream an LLM response. Calls onToken(fullTextSoFar) with each chunk.
- * Returns the complete text when the stream finishes.
- */
-async function callLLMStream(messages, onToken) {
-  const res = await postLLM(messages, true);
-  if (!res.ok) throw new Error(`API Error ${res.status}: ${res.statusText}`);
-
-  const reader = res.body.getReader();
-  const decoder = new TextDecoder();
-  let fullText = "";
-  let buffer = "";
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-
-    buffer += decoder.decode(value, { stream: true });
-
-    // Parse complete SSE events; keep partial tail in buffer.
-    const events = buffer.split(/\r?\n\r?\n/);
-    buffer = events.pop() || "";
-
-    for (const ev of events) {
-      const parsed = parseSseEvent(ev);
-      if (!parsed?.data || parsed.data === "[DONE]") continue;
-
-      try {
-        const json = JSON.parse(parsed.data);
-        const delta = extractDeltaText(json, parsed.eventType);
-        if (!delta) continue;
-
-        fullText += delta;
-        if (onToken) onToken(fullText);
-      } catch {
-        /* skip malformed chunks */
-      }
-    }
-  }
-
-  return fullText;
-}
-
-function parseSseEvent(rawEvent) {
-  const lines = rawEvent.split(/\r?\n/);
-  let eventType = "";
-  const dataLines = [];
-
-  for (const line of lines) {
-    if (line.startsWith("event:")) {
-      eventType = line.slice(6).trim();
-      continue;
-    }
-    if (line.startsWith("data:")) {
-      dataLines.push(line.slice(5).trimStart());
-    }
-  }
-
-  if (dataLines.length === 0) return null;
-  return { eventType, data: dataLines.join("\n") };
-}
-
-function extractDeltaText(json, eventType = "") {
-  // Never stream reasoning traces to UI.
-  if (eventType === "reasoning.delta" || eventType === "response.reasoning.delta") {
-    return "";
-  }
-
-  const deltaContent = json?.choices?.[0]?.delta?.content;
-  if (typeof deltaContent === "string") return deltaContent;
-  if (Array.isArray(deltaContent)) {
-    const joined = deltaContent
-      .map((part) => {
-        if (typeof part === "string") return part;
-        if (typeof part?.text === "string") return part.text;
-        return "";
-      })
-      .join("");
-    if (joined) return joined;
-  }
-
-  if (typeof json?.content === "string") return json.content;
-  if (Array.isArray(json?.content)) {
-    const joined = json.content
-      .map((part) => {
-        if (typeof part === "string") return part;
-        if (typeof part?.text === "string") return part.text;
-        if (typeof part?.content === "string") return part.content;
-        return "";
-      })
-      .join("");
-    if (joined) return joined;
-  }
-
-  if (typeof json?.delta === "string") return json.delta;
-
-  // Legacy completion-like chunk.
-  if (typeof json?.choices?.[0]?.text === "string") {
-    return json.choices[0].text;
-  }
-
-  // Some providers stream with event types like message.delta/reasoning.delta.
-  if (
-    eventType === "message.delta" &&
-    typeof json?.content === "string"
-  ) {
-    return json.content;
-  }
-
-  return "";
+    onToken,
+  });
 }
 
 /**
- * Extract visible text from a (possibly incomplete) raw LLM response.
- * Strips XML tags, <think> blocks, and returns only the spoken dialogue.
+ * Extract visible text from a raw LLM response.
+ * Returns only the spoken dialogue block content.
  */
 function extractVisibleText(raw) {
-  // Strip <think>...</think>
-  let text = raw.replace(/<think>[\s\S]*?<\/think>/gi, "");
-  // If there's an unclosed <think>, hide everything after it
-  text = text.replace(/<think>[\s\S]*/gi, "");
+  const text = raw.trim();
   // Check if this is a request (no visible text to show)
   if (/<block[^>]*type\s*=\s*["']request["']/i.test(text)) return null;
   // Extract text content from <block type="text">
@@ -230,27 +71,27 @@ function trimHistory() {
  */
 async function processLLMResponse(engine) {
   const systemPrompt = buildSystemPrompt(engine);
-  const messages = [
-    { role: "system", content: systemPrompt },
-    ...conversationHistory,
-  ];
 
   // ── Pass 1 (streamed) ──
   showProcessing("Elara is thinking...");
 
   let streamBubble = null;
 
-  const rawPass1 = await callLLMStream(messages, (fullSoFar) => {
-    const visible = extractVisibleText(fullSoFar);
-    if (visible === null) return; // request detected — don't show
-    if (visible && visible.length > 0) {
-      if (!streamBubble) {
-        hideProcessing();
-        streamBubble = addStreamingMessage("assistant");
+  const rawPass1 = await callLLM(
+    conversationHistory,
+    systemPrompt,
+    (fullSoFar) => {
+      const visible = extractVisibleText(fullSoFar);
+      if (visible === null) return; // request detected — don't show
+      if (visible && visible.length > 0) {
+        if (!streamBubble) {
+          hideProcessing();
+          streamBubble = addStreamingMessage("assistant");
+        }
+        streamBubble.update(visible);
       }
-      streamBubble.update(visible);
-    }
-  });
+    },
+  );
 
   hideProcessing();
 
@@ -326,10 +167,6 @@ async function processLLMResponse(engine) {
 
     // ── Pass 2: LLM reacts to engine decision ──
     const systemPrompt2 = buildSystemPrompt(engine);
-    const messages2 = [
-      { role: "system", content: systemPrompt2 },
-      ...conversationHistory,
-    ];
 
     const statusLabels = {
       ALLOWED: "Engine approved — Elara reacts...",
@@ -340,17 +177,21 @@ async function processLLMResponse(engine) {
 
     let streamBubble2 = null;
 
-    const rawPass2 = await callLLMStream(messages2, (fullSoFar) => {
-      const visible = extractVisibleText(fullSoFar);
-      if (visible === null) return;
-      if (visible && visible.length > 0) {
-        if (!streamBubble2) {
-          hideProcessing();
-          streamBubble2 = addStreamingMessage("assistant");
+    const rawPass2 = await callLLM(
+      conversationHistory,
+      systemPrompt2,
+      (fullSoFar) => {
+        const visible = extractVisibleText(fullSoFar);
+        if (visible === null) return;
+        if (visible && visible.length > 0) {
+          if (!streamBubble2) {
+            hideProcessing();
+            streamBubble2 = addStreamingMessage("assistant");
+          }
+          streamBubble2.update(visible);
         }
-        streamBubble2.update(visible);
-      }
-    });
+      },
+    );
 
     hideProcessing();
 
@@ -415,14 +256,14 @@ export async function initialGreeting(engine) {
 
   let streamBubble = null;
 
-  const raw = await callLLMStream(
+  const raw = await callLLM(
     [
-      { role: "system", content: greetingPrompt },
       {
         role: "user",
         content: "*Another traveler walks into the tavern.*",
       },
     ],
+    greetingPrompt,
     (fullSoFar) => {
       const visible = extractVisibleText(fullSoFar);
       if (visible && visible.length > 0) {

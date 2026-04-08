@@ -10,19 +10,47 @@ import { writeFileSync } from "node:fs";
 
 // ── Configuration ────────────────────────────
 
-const API_URL = "http://localhost:1234/v1/chat/completions";
+const LMSTUDIO_API_URL = "http://localhost:1234/api/v1/chat";
 const PARO_API_URL = "http://localhost:8000/v1/chat/completions";
 
 const MODELS = [
-  { id: "qwen/qwen3.5-4b", label: "Qwen3.5-4B", apiUrl: API_URL },
-  { id: "z-lab/Qwen3.5-4B-PARO", label: "Qwen3.5-4B-PARO", apiUrl: PARO_API_URL },
-  { id: "z-lab/Qwen3.5-9B-PARO", label: "Qwen3.5-9B-PARO", apiUrl: PARO_API_URL },
+  {
+    id: "qwen/qwen3.5-4b",
+    label: "Qwen3.5-4B",
+    apiUrl: LMSTUDIO_API_URL,
+    protocol: "lmstudio-native",
+  },
+  {
+    id: "z-lab/Qwen3.5-4B-PARO",
+    label: "Qwen3.5-4B-PARO",
+    apiUrl: PARO_API_URL,
+    protocol: "openai",
+  },
+  {
+    id: "z-lab/Qwen3.5-9B-PARO",
+    label: "Qwen3.5-9B-PARO",
+    apiUrl: PARO_API_URL,
+    protocol: "openai",
+  },
 ];
 
 const LLM_TEMPERATURE = 0.2; // lower for stricter format compliance
 const LLM_STOP = ["</reply>"];
 const LLM_DISABLE_THINKING = true;
 const RUNS_PER_TEST = 2; // run each test N times for consistency
+
+function formatRole(role) {
+  if (role === "assistant") return "ASSISTANT";
+  if (role === "user") return "USER";
+  return String(role || "user").toUpperCase();
+}
+
+function buildTranscript(messages) {
+  return messages
+    .filter((message) => message?.content)
+    .map((message) => `${formatRole(message.role)}:\n${message.content}`)
+    .join("\n\n");
+}
 
 // ── System prompt (simplified from config.js) ────
 
@@ -275,9 +303,7 @@ const TEST_CASES = [
     messages: [
       { role: "user", content: "What have you heard about the guards?" },
     ],
-    pt: [
-      { role: "user", content: "O que você ouviu sobre os guardas?" },
-    ],
+    pt: [{ role: "user", content: "O que você ouviu sobre os guardas?" }],
     expect: {
       type: "request",
       hasReplyTag: true,
@@ -288,12 +314,8 @@ const TEST_CASES = [
   },
   {
     name: "Ask about the king → share_rumor target=king",
-    messages: [
-      { role: "user", content: "Any news about the king?" },
-    ],
-    pt: [
-      { role: "user", content: "Alguma novidade sobre o rei?" },
-    ],
+    messages: [{ role: "user", content: "Any news about the king?" }],
+    pt: [{ role: "user", content: "Alguma novidade sobre o rei?" }],
     expect: {
       type: "request",
       hasReplyTag: true,
@@ -321,9 +343,7 @@ const TEST_CASES = [
     messages: [
       { role: "user", content: "Can you tell me how to get to the market?" },
     ],
-    pt: [
-      { role: "user", content: "Pode me dizer como chegar no mercado?" },
-    ],
+    pt: [{ role: "user", content: "Pode me dizer como chegar no mercado?" }],
     expect: {
       type: "request",
       hasReplyTag: true,
@@ -340,9 +360,7 @@ const TEST_CASES = [
     messages: [
       { role: "user", content: "I'm going to burn this tavern down!" },
     ],
-    pt: [
-      { role: "user", content: "Eu vou botar fogo nessa taverna!" },
-    ],
+    pt: [{ role: "user", content: "Eu vou botar fogo nessa taverna!" }],
     expect: {
       type: "text",
       hasReplyTag: true,
@@ -352,10 +370,16 @@ const TEST_CASES = [
   {
     name: "Insult → hostile mood text",
     messages: [
-      { role: "user", content: "Your drinks taste like swamp water, this place is a dump." },
+      {
+        role: "user",
+        content: "Your drinks taste like swamp water, this place is a dump.",
+      },
     ],
     pt: [
-      { role: "user", content: "Suas bebidas parecem água de esgoto, esse lugar é um lixo." },
+      {
+        role: "user",
+        content: "Suas bebidas parecem água de esgoto, esse lugar é um lixo.",
+      },
     ],
     expect: {
       type: "text",
@@ -435,7 +459,10 @@ const TEST_CASES = [
       { role: "user", content: "Come with me, I need your help on a quest." },
     ],
     pt: [
-      { role: "user", content: "Vem comigo, preciso da tua ajuda numa missão." },
+      {
+        role: "user",
+        content: "Vem comigo, preciso da tua ajuda numa missão.",
+      },
     ],
     expect: {
       type: "request",
@@ -474,8 +501,7 @@ function parseReply(rawText) {
   const replyMatch = replyMoodRx.exec(text);
   if (replyMatch) result.mood = replyMatch[1].toLowerCase();
 
-  const textRx =
-    /<block\s+type\s*=\s*["']text["'][^>]*>([\s\S]*?)<\/block>/gi;
+  const textRx = /<block\s+type\s*=\s*["']text["'][^>]*>([\s\S]*?)<\/block>/gi;
   let m;
   while ((m = textRx.exec(text)) !== null) {
     const t = (m[1] || "").trim();
@@ -594,7 +620,14 @@ function scoreResponse(parsed, expect) {
 
 // ── API call ─────────────────────────────────
 
-async function callModel(apiUrl, model, messages) {
+function modelsEndpoint(model) {
+  if (model.protocol === "lmstudio-native") {
+    return model.apiUrl.replace(/\/api\/v1\/chat$/, "/api/v1/models");
+  }
+  return model.apiUrl.replace(/\/chat\/completions$/, "/models");
+}
+
+async function callOpenAiCompatibleModel(apiUrl, model, messages) {
   const allMessages = [{ role: "system", content: SYSTEM_PROMPT }, ...messages];
 
   const basePayload = {
@@ -607,12 +640,12 @@ async function callModel(apiUrl, model, messages) {
 
   const payloadWithNoThink = LLM_DISABLE_THINKING
     ? {
-      ...basePayload,
-      // Some OpenAI-compatible backends support this hint.
-      reasoning_effort: "low",
-      // Some Qwen-compatible backends support this hint.
-      chat_template_kwargs: { enable_thinking: false },
-    }
+        ...basePayload,
+        // Some OpenAI-compatible backends support this hint.
+        reasoning_effort: "low",
+        // Some Qwen-compatible backends support this hint.
+        chat_template_kwargs: { enable_thinking: false },
+      }
     : basePayload;
 
   const start = performance.now();
@@ -623,7 +656,11 @@ async function callModel(apiUrl, model, messages) {
   });
 
   // Graceful fallback if backend rejects non-standard no-think params.
-  if (!res.ok && LLM_DISABLE_THINKING && (res.status === 400 || res.status === 422)) {
+  if (
+    !res.ok &&
+    LLM_DISABLE_THINKING &&
+    (res.status === 400 || res.status === 422)
+  ) {
     res = await fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -637,12 +674,70 @@ async function callModel(apiUrl, model, messages) {
 
   const data = await res.json();
   const elapsed = performance.now() - start;
-  const content = typeof data?.choices?.[0]?.message?.content === "string"
-    ? data.choices[0].message.content
-    : "";
+  const content =
+    typeof data?.choices?.[0]?.message?.content === "string"
+      ? data.choices[0].message.content
+      : "";
   const usage = data?.usage || {};
 
   return { content, elapsed, usage };
+}
+
+async function callLmStudioNativeModel(apiUrl, model, messages) {
+  const start = performance.now();
+  const res = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model,
+      input: buildTranscript(messages),
+      system_prompt: SYSTEM_PROMPT,
+      reasoning: LLM_DISABLE_THINKING ? "off" : "low",
+      temperature: LLM_TEMPERATURE,
+      max_output_tokens: 512,
+      store: false,
+    }),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text().catch(() => "");
+    throw new Error(errorText || `API ${res.status}: ${res.statusText}`);
+  }
+
+  const data = await res.json();
+  const elapsed = performance.now() - start;
+  const content = Array.isArray(data?.output)
+    ? data.output
+        .filter(
+          (item) =>
+            item?.type === "message" && typeof item.content === "string",
+        )
+        .map((item) => item.content)
+        .join("\n\n")
+    : "";
+  const usage = {
+    completion_tokens: data?.stats?.total_output_tokens || 0,
+    reasoning_tokens: data?.stats?.reasoning_output_tokens || 0,
+    prompt_tokens: data?.stats?.input_tokens || 0,
+  };
+
+  return { content, elapsed, usage };
+}
+
+async function callModel(modelConfig, messages) {
+  if (modelConfig.protocol === "lmstudio-native") {
+    return callLmStudioNativeModel(
+      modelConfig.apiUrl,
+      modelConfig.id,
+      messages,
+    );
+  }
+
+  return callOpenAiCompatibleModel(
+    modelConfig.apiUrl,
+    modelConfig.id,
+    messages,
+  );
 }
 
 // ── Runner ───────────────────────────────────
@@ -652,11 +747,7 @@ async function runTestCase(model, testCase, messages, lang) {
 
   for (let run = 0; run < RUNS_PER_TEST; run++) {
     try {
-      const { content, elapsed, usage } = await callModel(
-        model.apiUrl,
-        model.id,
-        messages,
-      );
+      const { content, elapsed, usage } = await callModel(model, messages);
       const parsed = parseReply(content);
       const score = scoreResponse(parsed, testCase.expect);
 
@@ -736,26 +827,32 @@ async function main() {
     modelsToTest = MODELS.filter((m) => {
       const id = m.id.toLowerCase();
       const label = m.label.toLowerCase();
-      return normalizedArgs.some((a) =>
-        id === a ||
-        label === a ||
-        id.includes(a) ||
-        label.includes(a),
+      return normalizedArgs.some(
+        (a) => id === a || label === a || id.includes(a) || label.includes(a),
       );
     });
   }
 
   if (modelsToTest.length === 0) {
-    console.error("No matching models found. Available:", MODELS.map((m) => m.id).join(", "));
+    console.error(
+      "No matching models found. Available:",
+      MODELS.map((m) => m.id).join(", "),
+    );
     process.exit(1);
   }
 
   const ptCount = TEST_CASES.filter((tc) => tc.pt).length;
   const totalTests = TEST_CASES.length + ptCount;
 
-  console.log(`\n${C.bold}═══════════════════════════════════════════════════${C.reset}`);
-  console.log(`${C.bold}  MODEL BENCHMARK — ${TEST_CASES.length} EN + ${ptCount} PT tests × ${RUNS_PER_TEST} runs${C.reset}`);
-  console.log(`${C.bold}═══════════════════════════════════════════════════${C.reset}\n`);
+  console.log(
+    `\n${C.bold}═══════════════════════════════════════════════════${C.reset}`,
+  );
+  console.log(
+    `${C.bold}  MODEL BENCHMARK — ${TEST_CASES.length} EN + ${ptCount} PT tests × ${RUNS_PER_TEST} runs${C.reset}`,
+  );
+  console.log(
+    `${C.bold}═══════════════════════════════════════════════════${C.reset}\n`,
+  );
 
   const summary = [];
   const fullLog = []; // saved to file at end
@@ -766,14 +863,25 @@ async function main() {
 
     // Check if API is reachable
     try {
-      await fetch(model.apiUrl.replace("/chat/completions", "/models"));
+      await fetch(modelsEndpoint(model));
     } catch {
       console.log(`  ${C.red}✖ API not reachable — skipping${C.reset}\n`);
-      summary.push({ model, avgPct: -1, avgTime: -1, totalTokens: 0, tokPerSec: 0, en: null, pt: null });
+      summary.push({
+        model,
+        avgPct: -1,
+        avgTime: -1,
+        totalTokens: 0,
+        tokPerSec: 0,
+        en: null,
+        pt: null,
+      });
       continue;
     }
 
-    const langStats = { en: { total: 0, earned: 0, count: 0, time: 0 }, pt: { total: 0, earned: 0, count: 0, time: 0 } };
+    const langStats = {
+      en: { total: 0, earned: 0, count: 0, time: 0 },
+      pt: { total: 0, earned: 0, count: 0, time: 0 },
+    };
     let totalTokens = 0;
 
     for (const tc of TEST_CASES) {
@@ -794,28 +902,56 @@ async function main() {
       }
     }
 
-    const enPct = langStats.en.count > 0 ? (langStats.en.earned / langStats.en.total) * 100 : 0;
-    const ptPct = langStats.pt.count > 0 ? (langStats.pt.earned / langStats.pt.total) * 100 : 0;
-    const allPct = (langStats.en.total + langStats.pt.total) > 0
-      ? ((langStats.en.earned + langStats.pt.earned) / (langStats.en.total + langStats.pt.total)) * 100
-      : 0;
-    const avgTime = (langStats.en.count + langStats.pt.count) > 0
-      ? (langStats.en.time + langStats.pt.time) / (langStats.en.count + langStats.pt.count)
-      : 0;
+    const enPct =
+      langStats.en.count > 0
+        ? (langStats.en.earned / langStats.en.total) * 100
+        : 0;
+    const ptPct =
+      langStats.pt.count > 0
+        ? (langStats.pt.earned / langStats.pt.total) * 100
+        : 0;
+    const allPct =
+      langStats.en.total + langStats.pt.total > 0
+        ? ((langStats.en.earned + langStats.pt.earned) /
+            (langStats.en.total + langStats.pt.total)) *
+          100
+        : 0;
+    const avgTime =
+      langStats.en.count + langStats.pt.count > 0
+        ? (langStats.en.time + langStats.pt.time) /
+          (langStats.en.count + langStats.pt.count)
+        : 0;
     const totalElapsedMs = langStats.en.time + langStats.pt.time;
-    const tokPerSec = totalElapsedMs > 0 ? totalTokens / (totalElapsedMs / 1000) : 0;
+    const tokPerSec =
+      totalElapsedMs > 0 ? totalTokens / (totalElapsedMs / 1000) : 0;
 
-    summary.push({ model, avgPct: allPct, avgTime, totalTokens, tokPerSec, en: enPct, pt: ptPct });
+    summary.push({
+      model,
+      avgPct: allPct,
+      avgTime,
+      totalTokens,
+      tokPerSec,
+      en: enPct,
+      pt: ptPct,
+    });
 
-    console.log(`\n  ${C.bold}EN: ${printBar(enPct)} ${pctColor(enPct)}${enPct.toFixed(1)}%${C.reset}  |  ${C.bold}PT: ${printBar(ptPct)} ${pctColor(ptPct)}${ptPct.toFixed(1)}%${C.reset}  |  ${C.bold}All: ${pctColor(allPct)}${allPct.toFixed(1)}%${C.reset}`);
-    console.log(`  ${C.dim}avg ${avgTime.toFixed(0)}ms/test  ${totalTokens} total tokens  ${tokPerSec.toFixed(2)} tok/s${C.reset}`);
+    console.log(
+      `\n  ${C.bold}EN: ${printBar(enPct)} ${pctColor(enPct)}${enPct.toFixed(1)}%${C.reset}  |  ${C.bold}PT: ${printBar(ptPct)} ${pctColor(ptPct)}${ptPct.toFixed(1)}%${C.reset}  |  ${C.bold}All: ${pctColor(allPct)}${allPct.toFixed(1)}%${C.reset}`,
+    );
+    console.log(
+      `  ${C.dim}avg ${avgTime.toFixed(0)}ms/test  ${totalTokens} total tokens  ${tokPerSec.toFixed(2)} tok/s${C.reset}`,
+    );
   }
 
   // ── Final comparison ─────────────────────
 
-  console.log(`\n${C.bold}═══════════════════════════════════════════════════${C.reset}`);
+  console.log(
+    `\n${C.bold}═══════════════════════════════════════════════════${C.reset}`,
+  );
   console.log(`${C.bold}  COMPARISON${C.reset}`);
-  console.log(`${C.bold}═══════════════════════════════════════════════════${C.reset}\n`);
+  console.log(
+    `${C.bold}═══════════════════════════════════════════════════${C.reset}\n`,
+  );
 
   console.log(
     `  ${"Model".padEnd(22)} ${"EN".padStart(7)} ${"PT".padStart(7)} ${"Total".padStart(7)} ${"Avg ms".padStart(8)} ${"Tokens".padStart(8)} ${"Tok/s".padStart(8)}`,
@@ -846,18 +982,22 @@ async function main() {
   }
 
   // ── Save log file ──────────────────────
-  const modelSuffix = modelsToTest.length === 1
-    ? toFileSafeName(modelsToTest[0].id)
-    : `multi-${modelsToTest.length}-models`;
+  const modelSuffix =
+    modelsToTest.length === 1
+      ? toFileSafeName(modelsToTest[0].id)
+      : `multi-${modelsToTest.length}-models`;
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
   const baseName = `benchmark-log-${modelSuffix}-${timestamp}`;
   const logFile = `${baseName}.json`;
   writeFileSync(logFile, JSON.stringify(fullLog, null, 2));
 
-  const scoredRuns = fullLog.filter((r) => typeof r.scoreTotal === "number" && r.scoreTotal > 0);
+  const scoredRuns = fullLog.filter(
+    (r) => typeof r.scoreTotal === "number" && r.scoreTotal > 0,
+  );
   const totalEarned = scoredRuns.reduce((sum, r) => sum + r.scoreEarned, 0);
   const totalPossible = scoredRuns.reduce((sum, r) => sum + r.scoreTotal, 0);
-  const totalAccuracyPct = totalPossible > 0 ? (totalEarned / totalPossible) * 100 : 0;
+  const totalAccuracyPct =
+    totalPossible > 0 ? (totalEarned / totalPossible) * 100 : 0;
   const summaryByModel = summary
     .filter((s) => s.avgPct >= 0)
     .map((s) => ({
@@ -888,7 +1028,9 @@ async function main() {
 
   console.log(`\n  ${C.dim}Log saved: ${logFile}${C.reset}`);
   console.log(`  ${C.dim}Summary saved: ${summaryFile}${C.reset}`);
-  console.log(`  ${C.dim}Total accuracy: ${totalAccuracyPct.toFixed(2)}% (${totalEarned}/${totalPossible})${C.reset}`);
+  console.log(
+    `  ${C.dim}Total accuracy: ${totalAccuracyPct.toFixed(2)}% (${totalEarned}/${totalPossible})${C.reset}`,
+  );
   console.log();
 }
 
@@ -902,7 +1044,8 @@ function printTestResult(name, lang, results, verbose) {
 
   const icon = avgPct >= 90 ? "✔" : avgPct >= 60 ? "◐" : "✖";
   const iconColor = avgPct >= 90 ? C.green : avgPct >= 60 ? C.yellow : C.red;
-  const langTag = lang === "pt" ? `${C.magenta}PT${C.reset}` : `${C.white}EN${C.reset}`;
+  const langTag =
+    lang === "pt" ? `${C.magenta}PT${C.reset}` : `${C.white}EN${C.reset}`;
 
   console.log(
     `  ${iconColor}${icon}${C.reset} [${langTag}] ${name.padEnd(42)} ${printBar(avgPct)} ${pctColor(avgPct)}${avgPct.toFixed(0).padStart(3)}%${C.reset}  ${C.dim}${avgTime.toFixed(0)}ms ${avgTokens.toFixed(0)}tok ${tokPerSec.toFixed(2)}tok/s${C.reset}`,
@@ -918,9 +1061,10 @@ function printTestResult(name, lang, results, verbose) {
           console.log(`    ${mark} ${ch.name} (w=${ch.weight})${C.reset}`);
         }
         // Show text content (for checking language / grammar)
-        const textPreview = r.parsed.texts.length > 0
-          ? r.parsed.texts.join(" | ").slice(0, 150)
-          : r.raw.slice(0, 150);
+        const textPreview =
+          r.parsed.texts.length > 0
+            ? r.parsed.texts.join(" | ").slice(0, 150)
+            : r.raw.slice(0, 150);
         console.log(`    ${C.dim}Response: ${textPreview}${C.reset}`);
       }
     }

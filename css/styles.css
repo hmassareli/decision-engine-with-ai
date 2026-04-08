@@ -67,6 +67,29 @@ header .model-tag {
   padding: 4px 10px;
   border-radius: 6px;
   border: 1px solid #2a2a3a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+header .model-tag select {
+  background: #12121c;
+  color: #c8b89a;
+  border: 1px solid #2a2a3a;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+header .model-tag select:hover {
+  border-color: #4a4a5a;
+}
+
+header .model-tag select:focus {
+  border-color: #d4a853;
 }
 
 /* ── Stats Panel (left) ───────────────────── */

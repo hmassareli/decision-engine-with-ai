@@ -5,18 +5,13 @@
 /**
  * Parse the LLM's raw response into { texts: string[], requests: object[] }.
  *
- * Supports (in priority order):
- *   1. <block type="text">...</block>  and  <block type="request" .../>
- *   2. Legacy [ENGINE_REQUEST]...[/ENGINE_REQUEST]
+ * Supports:
+ *   1. <block type="text">...</block>
+ *   2. <block type="request" .../>
  *   3. Plain text fallback
- *
- * Also strips Qwen <think>...</think> tokens.
  */
 export function parseReply(rawText) {
-  // 1. Strip <think>...</think>
-  let text = rawText.replace(/<think>[\s\S]*?<\/think>/gi, "");
-  // Also handle truncated outputs where <think> is opened but never closed.
-  text = text.replace(/<think>[\s\S]*/gi, "").trim();
+  const text = rawText.trim();
 
   const result = { texts: [], requests: [], mood: "neutral" };
 
@@ -43,23 +38,13 @@ export function parseReply(rawText) {
     if (attrs.action) result.requests.push(attrs);
   }
 
-  // 4. Fallback: legacy [ENGINE_REQUEST]...[/ENGINE_REQUEST]
-  if (result.requests.length === 0) {
-    const legacyRx = /\[ENGINE_REQUEST\]([\s\S]*?)\[\/ENGINE_REQUEST\]/gi;
-    while ((m = legacyRx.exec(text)) !== null) {
-      const attrs = _parseLegacyRequest(m[1]);
-      if (attrs?.action) result.requests.push(attrs);
-    }
-  }
-
-  // 5. Fallback: if nothing found, clean raw → treat as text
+  // 4. Fallback: if nothing found, clean raw → treat as text
   if (result.texts.length === 0 && result.requests.length === 0) {
     const cleaned = text
-      .replace(/<\/?reply>/gi, "")
+      .replace(/<reply[^>]*>/gi, "")
+      .replace(/<\/reply>/gi, "")
       .replace(/<block[^>]*?\/?>/gi, "")
       .replace(/<\/block>/gi, "")
-      .replace(/\[ENGINE_REQUEST\][\s\S]*?\[\/ENGINE_REQUEST\]/gi, "")
-      .replace(/\[ENGINE_RESPONSE\][\s\S]*?\[\/ENGINE_RESPONSE\]/gi, "")
       .trim();
     if (cleaned) result.texts.push(cleaned);
   }
@@ -74,20 +59,5 @@ function _parseAttrs(str) {
   const rx = /(\w+)\s*=\s*"([^"]*)"/g;
   let m;
   while ((m = rx.exec(str)) !== null) attrs[m[1]] = m[2];
-  return attrs;
-}
-
-function _parseLegacyRequest(body) {
-  const attrs = {};
-  for (const line of body.trim().split("\n")) {
-    const eq = line.indexOf("=");
-    if (eq > 0) {
-      const key = line.slice(0, eq).trim();
-      attrs[key] = line
-        .slice(eq + 1)
-        .trim()
-        .replace(/^["']|["']$/g, "");
-    }
-  }
   return attrs;
 }
