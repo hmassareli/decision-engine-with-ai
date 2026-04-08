@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-03-13T00:23:13.716Z",
+  "modelsTested": [
+    "qwen3.5-4b",
+    "z-lab/Qwen3.5-4B-PARO"
+  ],
+  "runsPerTest": 2,
+  "totalRuns": 80,
+  "scoredRuns": 80,
+  "totalEarned": 409,
+  "totalPossible": 572,
+  "totalAccuracyPct": 71.5034965034965,
+  "byModel": [
+    {
+      "model": "qwen3.5-4b",
+      "modelLabel": "Qwen3.5-4B",
+      "enPct": 71.57534246575342,
+      "ptPct": 71.42857142857143,
+      "totalPct": 71.5034965034965,
+      "avgMs": 33582.977645000006,
+      "totalTokens": 59803,
+      "tokPerSec": 22.25941689572893
+    }
+  ]
+}

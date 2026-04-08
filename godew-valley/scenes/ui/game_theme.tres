@@ -1,0 +1,42 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://rhcgh2v8xs3h"]
+
+[ext_resource type="FontFile" uid="uid://pctatblkht3m" path="res://graphics/fonts/HomeVideo-Regular.ttf" id="1_5x5vq"]
+[ext_resource type="Texture2D" uid="uid://c8w5bgiupw84o" path="res://graphics/ui/frame.png" id="2_6q0ak"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5x5vq"]
+texture = ExtResource("2_6q0ak")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5x5vq"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.90588236, 0.90588236, 0.90588236, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_vrpuy"]
+base_font = ExtResource("1_5x5vq")
+spacing_glyph = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6q0ak"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6naka"]
+texture = ExtResource("2_6q0ak")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[resource]
+Button/styles/normal = SubResource("StyleBoxTexture_5x5vq")
+FocusPanel/base_type = &"Panel"
+FocusPanel/styles/panel = SubResource("StyleBoxFlat_5x5vq")
+Label/colors/font_color = Color(0.023529412, 0.023529412, 0.023529412, 1)
+Label/font_sizes/font_size = 30
+Label/fonts/font = SubResource("FontVariation_vrpuy")
+Panel/styles/panel = SubResource("StyleBoxFlat_6q0ak")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_6naka")

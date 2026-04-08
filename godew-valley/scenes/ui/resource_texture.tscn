@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4m5i8hgi2jbx"]
+
+[ext_resource type="Texture2D" uid="uid://bldxvi5dvro6k" path="res://graphics/icons/apple.png" id="1_24mxq"]
+[ext_resource type="Script" uid="uid://5humojxra8r8" path="res://scenes/ui/resource_texture.gd" id="2_liu6v"]
+[ext_resource type="Theme" uid="uid://rhcgh2v8xs3h" path="res://scenes/ui/game_theme.tres" id="3_28lly"]
+[ext_resource type="FontFile" uid="uid://pctatblkht3m" path="res://graphics/fonts/HomeVideo-Regular.ttf" id="4_vokg7"]
+
+[sub_resource type="FontVariation" id="FontVariation_husxo"]
+base_font = ExtResource("4_vokg7")
+spacing_glyph = -6
+
+[node name="ResourceTexture" type="TextureRect"]
+custom_minimum_size = Vector2(60, 60)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_24mxq")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("2_liu6v")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_28lly")
+theme_override_colors/font_color = Color(0.2901961, 0.2901961, 0.2901961, 1)
+theme_override_fonts/font = SubResource("FontVariation_husxo")
+theme_override_font_sizes/font_size = 50
+text = "12"
+horizontal_alignment = 1

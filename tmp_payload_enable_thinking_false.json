@@ -1,0 +1,9 @@
+﻿{
+  "model": "qwen/qwen3.5-4b",
+  "messages": [
+    {"role": "user", "content": "Say hi in one short sentence."}
+  ],
+  "max_tokens": 80,
+  "stream": false,
+  "enable_thinking": false
+}

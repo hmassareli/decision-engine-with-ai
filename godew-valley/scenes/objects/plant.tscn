@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://boqy2w11hcfuy"]
+
+[ext_resource type="Script" uid="uid://cuw65y0bis5fr" path="res://scenes/objects/plant.gd" id="1_fvfks"]
+[ext_resource type="PackedScene" uid="uid://b1a4cl0kv3lpw" path="res://scenes/vfx/flash_sprite_2d.tscn" id="2_7bmar"]
+[ext_resource type="Shader" uid="uid://b6nm5dtkeitqy" path="res://shaders/flash.tres" id="3_0a33w"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fvfks"]
+radius = 3.0
+height = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fvfks"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yb5fs"]
+resource_local_to_scene = true
+shader = ExtResource("3_0a33w")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
+[node name="Plant" type="StaticBody2D" groups=["Plants"]]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_fvfks")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_fvfks")
+
+[node name="CollisionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
+shape = SubResource("CircleShape2D_fvfks")
+
+[node name="FlashSprite2D" parent="." instance=ExtResource("2_7bmar")]
+material = SubResource("ShaderMaterial_yb5fs")
+position = Vector2(0, -9)
+hframes = 4
+
+[connection signal="body_entered" from="CollisionArea" to="." method="_on_collision_area_body_entered"]

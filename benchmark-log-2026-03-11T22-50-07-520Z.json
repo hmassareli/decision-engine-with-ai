@@ -1,0 +1,2512 @@
+[
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Greeting → text response",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "fetch failed"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Greeting → text response",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 25,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "no unwanted request",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "mood in [friendly,neutral]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 65995.43229999999,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"Hey there! How's it going?\"\n    *   **Character:** Elara, 28, owner of The Broken Lamp Tavern.\n    *   **Personality:** Sharp, sarcastic, loyal, knows gossip, short responses (2-5 sentences), no narration/actions.\n    *   **Format:** Must use `<reply>` tags with a `mood` attribute. Inside, use `<block>` elements.\n    *   **Context:** Player just arrived (implied by \"Hey there!\").\n    *   **Rules:** No AI mentions, no narration, no stage directions. Only spoken dialogue in `type=\"text\"` or game engine requests in `type=\"request\"`.\n    *   **Current State:** Player gold 50, Elara gold 200, Relationship Stranger.\n    *   **Mood:** \"Friendly\" fits a greeting in a tavern setting, though Elara is sarcastic. \"Neutral\" is also possible but \"friendly\" is standard for a welcome. Let's go with \"friendly\" but keep the tone sharp.\n\n2.  **Determine Response Type:**\n    *   This is a greeting. It's not an action request (like ordering food or fighting).\n    *   Therefore, use `type=\"text\"`.\n\n3.  **Draft Content:**\n    *   Needs to be 2-5 sentences.\n    *   Needs to be in character (Elara).\n    *   Needs to welcome the player.\n    *   Draft: \"Hey there, stranger. Welcome to the Broken Lamp. Take a seat, what can I get you?\" (From the example provided in the prompt, but I should make it slightly more Elara-esque).\n    *   Revised: \"Welcome to the Broken Lamp, if you're looking for a place to hide from the rain. Sit down, I'll get you something to drink.\"\n    *   Wait, the example in the prompt is exactly what I should emulate for a greeting. \"Hey there, stranger. Welcome to the Broken Lamp. Take a seat, what can I get you?\" is perfect.\n    *   Let's make it slightly sharper. \"Welcome to the Broken Lamp. Sit down, the bar is open. What can I get you?\"\n    *   Actually, sticking close to the example is safer for",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Greeting → text response",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 25,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "no unwanted request",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "mood in [friendly,neutral]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 64020.40210000001,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"E aí! Tudo bem?\" (Portuguese for \"Hey! How's it going?\")\n    *   **Character:** Elara, owner of The Broken Lamp Tavern (28, sharp, sarcastic, loyal, knows gossip).\n    *   **Format:** Must use `<reply>` tags with `mood` attribute and `<block>` elements.\n    *   **Constraint:** No narration, no internal thoughts, no stage directions. Only spoken dialogue (type=\"text\") or game actions (type=\"request\").\n    *   **Context:** Player just arrived (implied by \"Welcome to the Broken Lamp\" in examples).\n    *   **Language:** The user spoke Portuguese, so the response should be in Portuguese.\n    *   **Mood:** Friendly (pleasant interaction, good vibes).\n    *   **Action:** Default response to a greeting is type=\"text\".\n\n2.  **Determine Response Type:**\n    *   This is a greeting. It doesn't involve ordering food/drink, asking for gossip, or any specific game action yet.\n    *   Therefore, use `type=\"text\"`.\n\n3.  **Draft Content:**\n    *   Greeting back.\n    *   Offer help/drink.\n    *   Keep it short (2-5 sentences).\n    *   Tone: Sharp, sarcastic but welcoming.\n    *   Draft: \"E aí, bandido! Tudo bem, eu sou a Elara. Se quiser algo para beber, não custa nada. Mas cuidado, aqui o barulho é alto.\" (Hey, stranger! All good, I'm Elara. If you want something to drink, it's free. But watch out, here the noise is loud.) -> *Wait, \"free\" is wrong, water is free, but others cost.*\n    *   Better Draft: \"E aí! Tudo bem por aqui, só que o barulho é um pouco alto. Bem-vindo à taverna, o que você quer fazer hoje?\" (Hey! All good here, just the noise is a bit loud. Welcome to the tavern, what do you want to do today?)\n    *   Even better (Elara's voice): \"E aí! Tudo bem, só que o barulho é um pouco alto. Bem-vindo à taverna,",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Greeting → text response",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 25,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "no unwanted request",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "mood in [friendly,neutral]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 63489.380599999975,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"E aí! Tudo bem?\" (Portuguese for \"Hey! How's it going?\")\n    *   **Character:** Elara, 28, owner of The Broken Lamp Tavern.\n    *   **Personality:** Sharp, sarcastic, loyal, knows gossip, short responses (2-5 sentences), no narration/actions.\n    *   **Format:** Must use `<reply>` tags with `mood` attribute. Inside, use `<block>` elements.\n    *   **Response Type:** This is a greeting, so it should be `type=\"text\"`.\n    *   **Mood:** Friendly (pleasant interaction, good vibes).\n    *   **Language:** Portuguese (matching the user's input).\n    *   **Constraints:** No AI mentions, no narration, no stage directions. Only spoken dialogue in `<block type=\"text\">`.\n\n2.  **Determine Content:**\n    *   Greet the player back.\n    *   Offer help or ask what they want (standard tavern owner behavior).\n    *   Keep it short (2-5 sentences).\n    *   Tone: Friendly but sharp/sarcastic (Elara's style).\n\n3.  **Drafting the Response (Internal):**\n    *   \"E aí! Tudo bem? Bem, eu sou a Elara. Bem, o que você quer?\" -> Too robotic.\n    *   \"E aí! Tudo bem? Aqui é a Elara. Bem, o que você quer?\" -> Better.\n    *   \"E aí! Tudo bem? Bem, eu sou a Elara. Bem, o que você quer?\" -> Still a bit off.\n    *   \"E aí! Tudo bem? Bem, eu sou a Elara. Bem, o que você quer?\" -> Wait, I need to be Elara.\n    *   \"E aí! Tudo bem? Bem, eu sou a Elara. Bem, o que você quer?\" -> No.\n    *   \"E aí! Tudo bem? Bem, eu sou a Elara. Bem, o que você quer?\" -> No.\n    *   \"E aí! Tudo bem? Bem, eu sou a Elara. Bem, o que você quer?\" -> No.\n    *   \"E aí! Tudo bem? Bem, eu sou a El",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Question about menu → text response",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 25,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "no unwanted request",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "mood in [friendly,neutral]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 66224.40099999995,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"What do you have to drink?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern).\n    *   Character: Elara (28, owner, sharp, sarcastic, loyal).\n    *   Format: Must use `<reply>` with `mood` attribute and `<block>` elements.\n    *   Response Type: This is a question about the menu, so it's a \"text\" response (listing items).\n    *   Mood: Friendly (welcoming a new customer).\n    *   Constraints: No narration, no actions, no AI mentions. Short response (2-5 sentences).\n\n2.  **Determine the Content:**\n    *   Elara needs to list the drinks available.\n    *   Drinks: beer(2g), ale(2g), wine(5g), mead(4g), water(0g), special(10g).\n    *   Tone: Sarcastic but helpful.\n    *   Length: 2-5 sentences.\n\n3.  **Drafting the Response:**\n    *   \"Oh, you're new? Good thing I got a good selection.\"\n    *   \"We've got beer, ale, wine, mead, water, and a special.\"\n    *   \"What'll it be?\"\n    *   Combine: \"Oh, you're new? Good thing I got a good selection. We've got beer, ale, wine, mead, water, and a special. What'll it be?\"\n\n4.  **Refining for Character:**\n    *   \"New here? Good thing I got a good selection.\"\n    *   \"Beer, ale, wine, mead, water, or the special.\"\n    *   \"What'll it be?\"\n    *   Let's make it slightly more Elara-esque. \"You're new? Good thing I got a good selection.\" -> \"You're new? Good thing I got a good selection. Beer, ale, wine, mead, water, or the special. What'll it be?\"\n\n5.  **Checking Constraints:**\n    *   `<reply>` tags? Yes.\n    *   `mood` attribute? Yes (friendly).\n    *   `<block>` elements? Yes.\n    *   `type=\"text\"`?",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Question about menu → text response",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 62.5,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "no unwanted request",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "mood in [friendly,neutral]",
+        "weight": 2,
+        "pass": true
+      }
+    ],
+    "elapsed": 64035.99410000001,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"What do you have to drink?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), owner Elara.\n    *   Current State: Player gold 50, Elara gold 200, Relationship Stranger.\n    *   Constraint: Short responses (2-5 sentences), no narration/actions, use `<reply>` tags with `mood` attribute, use `<block>` elements.\n    *   Action Type: This is a general inquiry about the menu, not a specific order yet. So `type=\"text\"` is appropriate.\n    *   Mood: Friendly (welcoming a new customer).\n\n2.  **Determine Content:**\n    *   Need to list the drinks briefly.\n    *   Keep it in character (sharp, sarcastic but welcoming).\n    *   Sentence count: 2-5 sentences.\n\n3.  **Drafting Response:**\n    *   \"We've got a decent selection, if you can handle the noise.\"\n    *   \"Beer, ale, wine, mead, water, or maybe a special.\"\n    *   \"What's your poison?\"\n    *   Refine for brevity and character: \"Welcome to the Broken Lamp. We serve beer, ale, wine, mead, water, and a special for the bold.\"\n    *   Check constraints: No narration, just dialogue.\n\n4.  **Formatting:**\n    *   `<reply mood=\"friendly\">`\n    *   `<block type=\"text\">`\n    *   Content inside.\n    *   Closing `</reply>`\n\n5.  **Final Polish:**\n    *   \"Welcome to the Broken Lamp. We serve beer, ale, wine, mead, water, and a special for the bold.\"\n    *   \"What's your poison?\"\n    *   Combine: \"Welcome to the Broken Lamp. We serve beer, ale, wine, mead, water, and a special for the bold. What's your poison?\"\n    *   Wait, the prompt says \"Short responses: 2–5 sentences of spoken dialogue only\".\n    *   Let's make it punchier. \"Welcome to the Broken Lamp. We've got beer, ale, wine, mead, water, and a special for the bold. What's your poison?\" (3 sentences",
+    "texts": [],
+    "requests": [],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Question about menu → text response",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 62.5,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "no unwanted request",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "mood in [friendly,neutral]",
+        "weight": 2,
+        "pass": true
+      }
+    ],
+    "elapsed": 62975.08850000007,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"O que você tem pra beber?\" (Portuguese for \"What do you have to drink?\")\n    *   **Character:** Elara, owner of The Broken Lamp Tavern.\n    *   **Language:** Portuguese (since the user asked in Portuguese).\n    *   **Constraints:**\n        *   Wrap entire response in `<reply>` tags with a `mood` attribute.\n        *   Use `<block>` elements.\n        *   Only one type of block per response (`type=\"text\"` or `type=\"request\"`).\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2-5 sentences of spoken dialogue).\n        *   Mood reflects conversation atmosphere (friendly/neutral/hostile/flirty).\n        *   Current state: Tavern setting, player gold 50, Elara gold 200.\n        *   Available actions: `serve_drink` (requires specific drink name), `share_rumor`, etc.\n        *   Since the user is asking for the menu, I should list the drinks using `type=\"text\"`.\n\n2.  **Determine Response Type:**\n    *   The user is asking for the menu. This is a standard interaction, not a specific action request like \"I'll have the ale\".\n    *   Therefore, use `type=\"text\"`.\n\n3.  **Draft Content (Portuguese):**\n    *   Greeting/Intro: \"Olá, bem-vindo ao The Broken Lamp.\"\n    *   Menu: \"Tenho cerveja, ale, vinho, mel, água ou algo especial.\"\n    *   Closing: \"O que prefere?\"\n    *   Sentence count: 2-5 sentences.\n    *   Mood: \"friendly\" (welcoming tavern owner).\n\n4.  **Format Check:**\n    *   `<reply mood=\"friendly\">`\n    *   `<block type=\"text\">`\n    *   Content inside.\n    *   No extra text outside tags.\n\n5.  **Refine Content:**\n    *   \"Olá, bem-vindo ao The Broken Lamp. Aqui servimos cerveja, ale, vinho, mel, água ou algo especial.\"\n    *   \"O que prefere hoje?\"\n    *   Wait,",
+    "texts": [],
+    "requests": [],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Question about menu → text response",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 62.5,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "no unwanted request",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "mood in [friendly,neutral]",
+        "weight": 2,
+        "pass": true
+      }
+    ],
+    "elapsed": 63152.49620000005,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"O que você tem pra beber?\" (Portuguese for \"What do you have to drink?\")\n    *   Language: Portuguese.\n    *   Role: Elara, owner of The Broken Lamp Tavern.\n    *   Constraints:\n        *   Never mention AI, models, prompts, XML, tags, or formatting.\n        *   Short responses: 2–5 sentences of spoken dialogue only.\n        *   No narration, no internal thoughts, no stage directions, no actions in asterisks.\n        *   MUST wrap ENTIRE response in `<reply>` tags with a `mood` attribute.\n        *   MUST use `<block>` elements.\n        *   Since this is a menu listing question, it falls under `type=\"text\"` (DEFAULT for greetings, casual talk, questions, listing menu).\n        *   Mood: `friendly` (pleasant interaction, good vibes).\n        *   Available Actions: `serve_drink` (for ordering), `cook_food`, `give_item`, etc.\n        *   Current State: Player gold 50, Elara gold 200, Relationship Stranger.\n\n2.  **Determine Response Type:**\n    *   The player is asking for the menu. This is a standard inquiry, not an action request yet.\n    *   Therefore, use `type=\"text\"`.\n\n3.  **Draft Content (Portuguese):**\n    *   Need to list the drinks briefly.\n    *   Tone: Sharp, sarcastic, but welcoming.\n    *   Draft: \"Temos cerveja, ale, vinho, mel e água. O especial é mais caro, mas vale a pena. O que prefere?\"\n    *   Refine for character: \"Cerveja, ale, vinho, mel e água. O especial é mais caro, mas vale a pena. O que prefere?\" -> \"Temos cerveja, ale, vinho, mel e água. O especial é mais caro, mas vale a pena. O que prefere?\"\n    *   Check sentence count: 3 sentences. Good.\n    *   Check mood: Friendly.\n\n4.  **Format:**\n    *   `<reply mood=\"friendly\">`\n    *   `<block type=\"text\">`\n    *   Content inside.\n    *  ",
+    "texts": [],
+    "requests": [],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Vague order (no item) → text asking which",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 33.33333333333333,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "no unwanted request",
+        "weight": 2,
+        "pass": true
+      }
+    ],
+    "elapsed": 63915.38379999995,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User says: \"I'll have a drink.\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (owner, 28, sarcastic, sharp).\n    *   Constraint: Response must be wrapped in `<reply>` tags with a `mood` attribute.\n    *   Constraint: Use `<block>` elements.\n    *   Constraint: Do NOT use narration, internal thoughts, or stage directions.\n    *   Constraint: Do NOT combine `type=\"text\"` and `type=\"request\"` in the same `<reply>`.\n    *   Constraint: If the user is ordering a specific drink, use `type=\"request\"` with `serve_drink`. If they are just stating intent without specifying, I should ask what they want (type=\"text\" is safer for clarification, but `serve_drink` with a generic target isn't valid based on the schema which requires specific targets like beer, ale, etc.).\n    *   Rule 7: \"Commerce: player says 'yes' without naming item → ASK which.\"\n    *   Current State: Player gold 50, My gold 200, Relationship Stranger.\n    *   Action: The user is initiating a purchase but hasn't specified the drink. I need to ask which one.\n    *   Format: Since I need to ask a question, this is conversational dialogue. I should use `type=\"text\"`.\n    *   Mood: \"friendly\" (welcoming tavern owner).\n\n2.  **Determine the Block Type:**\n    *   The user said \"I'll have a drink.\" This is a statement of intent, not a specific order yet.\n    *   According to Rule 7: \"Commerce: player says 'yes' without naming item → ASK which.\"\n    *   Therefore, I should respond with dialogue asking for the choice.\n    *   Type: `text`.\n\n3.  **Draft the Content:**\n    *   \"You're just gonna stand there and order the whole menu?\"\n    *   \"Alright, what's on the menu?\"\n    *   \"Pick your poison, then.\"\n    *   Let's go with something sharp but friendly. \"You want to pick a drink from my menu or are you gonna order the whole place?\"\n    *   Wait, keep",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Vague order (no item) → text asking which",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Vague order (no item) → text asking which",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Vague order (no item) → text asking which",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 33.33333333333333,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "no unwanted request",
+        "weight": 2,
+        "pass": true
+      }
+    ],
+    "elapsed": 63634.90689999994,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Quero uma bebida.\" (Portuguese for \"I want a drink.\")\n    *   Language: Portuguese.\n    *   Context: Tavern owner (Elara) responding to a customer.\n    *   Constraints:\n        *   Must use `<reply>` tags with `mood` attribute.\n        *   Must use `<block>` elements.\n        *   Must NOT use narration, actions, or meta-talk.\n        *   Must follow the AVAILABLE ACTIONS rules.\n        *   Since the user said \"I want a drink\" but didn't specify which one, this is a general inquiry.\n        *   Rule 7: \"Commerce: player says 'yes' without naming item → ASK which.\"\n        *   This is a request for a drink, but not a specific order yet. It's a general statement.\n        *   However, looking at the AVAILABLE ACTIONS, `serve_drink` requires a specific target (beer, ale, etc.).\n        *   If I treat this as a request to serve a drink without specifying, I should probably ask what they want (type=\"text\") or offer the menu (type=\"text\").\n        *   Wait, the user is making a request (\"I want a drink\"). In the context of the game engine, this is an action request. But since it's vague, I need to clarify.\n        *   Actually, looking at the examples: \"I'll have the stew.\" -> type=\"request\".\n        *   \"Quero uma bebida\" is similar to \"I want a drink\". It's a request for service.\n        *   Since it doesn't specify *which* drink, I should respond in character, offering the menu or asking for specifics.\n        *   If I use `type=\"request\"`, I need to pick an action. `serve_drink` requires a target. I can't pick a target without knowing what they want.\n        *   So `type=\"text\"` is the safer, more natural response to clarify.\n        *   Wait, looking at the rules: \"Commerce: player says 'yes' without naming item → ASK which.\" This implies if they say \"I want a drink\" (generic), I should ask which one.\n        *   So `type=\"text\"` is appropriate here.\n        *   Language:",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order beer → serve_drink request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 100,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [serve_drink]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [beer]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "paidBy=\"player\"",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62792.54570000002,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"I'll have a beer please.\"\n    *   Context: Tavern setting (The Broken Lamp Tavern).\n    *   Character: Elara, 28, owner, sharp, sarcastic, loyal.\n    *   Format: Must use `<reply>` with `mood` attribute and `<block>` elements.\n    *   Action: Player is ordering a drink (beer).\n    *   Available Actions: `serve_drink` with target `beer(2g)`.\n    *   Rules: No narration, no internal thoughts, no stage directions. Only `<reply>` and `<block>`. Commerce actions need `paidBy=\"player\"`.\n    *   Current State: Player gold 50, Elara gold 200. Relationship Stranger.\n\n2.  **Determine Response Type:**\n    *   The player is making a specific order (\"I'll have a beer\"). This triggers a commerce action.\n    *   Action: `serve_drink`.\n    *   Target: `beer`.\n    *   Seriousness: 1 (from available actions list).\n    *   PaidBy: \"player\" (since they are ordering).\n    *   Context: \"Player orders beer\".\n    *   Mood: \"friendly\" (standard service, though Elara is sarcastic, a simple order usually gets a neutral-to-friendly response unless there's conflict). Let's go with \"friendly\" as it's a standard transaction.\n\n3.  **Draft Content:**\n    *   Need to wrap in `<reply mood=\"friendly\">`.\n    *   Need `<block type=\"request\" action=\"serve_drink\" target=\"beer\" seriousness=\"1\" context=\"Player orders beer\" paidBy=\"player\"/>`.\n    *   Wait, Rule 2 says: \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n    *   So I cannot add spoken dialogue *inside* the `<reply>` if I'm using a `<block type=\"request\">`.\n    *   However, looking at the examples provided in the system prompt:\n        *   Example 1: Player: \"Hi!\" → type=\"text\": `<reply mood=\"friendly\"><block type=\"text\">Hey there, stranger. Welcome to the Broken Lamp. Take a seat, what can I get you?</",
+    "texts": [],
+    "requests": [
+      {
+        "action": "serve_drink",
+        "target": "beer",
+        "seriousness": "1",
+        "context": "Player orders beer",
+        "paidBy": "player"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order beer → serve_drink request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62920.72780000011,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"I'll have a beer please.\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), Elara (owner, 28, sharp, sarcastic, loyal).\n    *   Current State: Player gold 50, Elara gold 200, Relationship Stranger.\n    *   Action: Player ordering a drink (beer).\n    *   Available Actions: `serve_drink` is the correct action for ordering a drink.\n    *   Constraints:\n        *   Wrap response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   Only one type of block per reply (`text` or `request`).\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short response (2-5 sentences of spoken dialogue).\n        *   Since this is a commerce action (ordering a drink), I need to use `type=\"request\"` with `action=\"serve_drink\"`.\n        *   `paidBy` should be \"player\" since the player is paying.\n        *   `target` should be \"beer\".\n        *   `seriousness` should be 1 (as per available actions definition).\n        *   `context` should be short description.\n\n2.  **Determine Mood:**\n    *   The interaction is a standard transaction. Not particularly hostile or overly friendly, but polite business. \"Neutral\" or \"friendly\" fits. Given Elara's personality (sharp, sarcastic), maybe \"neutral\" is safer, but \"friendly\" works for a tavern owner serving a customer. Let's go with \"friendly\" as it's a service interaction.\n\n3.  **Draft the Response:**\n    *   Action: `serve_drink`\n    *   Target: `beer`\n    *   Seriousness: `1`\n    *   PaidBy: `player`\n    *   Context: `Player orders beer`\n    *   Dialogue: \"Beer it is. Don't expect it to be free, though.\" (Wait, I need to follow the format strictly. The dialogue goes inside the `text` block if I were doing that, but since this is a request, I should probably just provide the request block. Wait, looking at the examples:\n        *   Example",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order beer → serve_drink request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 100,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [serve_drink]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [beer]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "paidBy=\"player\"",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 63012.3676,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Me vê uma cerveja, por favor.\" (Portuguese for \"Give me a beer, please.\")\n    *   Language: Portuguese.\n    *   Context: Tavern setting (The Broken Lamp Tavern), Elara (owner, 28, sharp, sarcastic, loyal).\n    *   Current State: Player gold 50, Elara gold 200. Relationship: Stranger.\n    *   Available Actions: `serve_drink` is the relevant action.\n    *   Constraint: Response must be in Portuguese (matching user), wrapped in `<reply>` tags with mood, using `<block>` elements. No narration, no internal thoughts.\n    *   Action Type: This is a request for a drink. The user specified \"cerveja\" (beer).\n    *   Action Details: `serve_drink`, target=\"beer\", seriousness=1, paidBy=\"player\".\n\n2.  **Determine Mood:**\n    *   The user is asking politely (\"por favor\").\n    *   Elara is sharp but generally friendly to customers who pay.\n    *   Mood: \"friendly\" or \"neutral\". Given the politeness, \"friendly\" fits well.\n\n3.  **Draft Response:**\n    *   Need to acknowledge the request and confirm the action.\n    *   Language: Portuguese.\n    *   Format: `<reply mood=\"friendly\"><block type=\"request\" action=\"serve_drink\" target=\"beer\" seriousness=\"1\" context=\"Player orders beer\" paidBy=\"player\"/></block></reply>`\n    *   Wait, the instructions say: \"Only add paidBy attribute for commerce actions (serve_drink, cook_food, give_item): paidBy=\"player\" when the player pays, paidBy=\"npc\" when you offer to pay.\"\n    *   So `paidBy=\"player\"` is correct.\n    *   Wait, the instructions also say: \"Inside, use <block> elements. There are two types: type=\"text\" — Spoken dialogue... type=\"request\" — An action that needs game engine approval.\"\n    *   Rule 2: \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n    *   So I must choose one. Since the user is making a specific order (\"Me vê uma cerveja\"),",
+    "texts": [],
+    "requests": [
+      {
+        "action": "serve_drink",
+        "target": "beer",
+        "seriousness": "1",
+        "context": "Player orders beer",
+        "paidBy": "player"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order beer → serve_drink request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62863.188100000145,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Me vê uma cerveja, por favor.\" (Portuguese for \"I'll have a beer, please.\")\n    *   Language: Portuguese.\n    *   Context: Tavern setting (The Broken Lamp Tavern).\n    *   Character: Elara, 28, owner, sharp, sarcastic, loyal.\n    *   Format: Must use `<reply>` with `mood` attribute and `<block>` elements.\n    *   Action: The user is ordering a specific drink (beer).\n    *   Available Actions: `serve_drink` with target `beer(2g)`.\n    *   Rules: No narration, no internal thoughts, no stage directions. Only `<reply>` and `<block>`. Commerce actions need `paidBy=\"player\"`.\n\n2.  **Determine Response Type:**\n    *   The user is ordering a drink. This falls under `serve_drink`.\n    *   Action: `serve_drink`.\n    *   Target: `beer`.\n    *   Seriousness: `1` (from available actions list).\n    *   Paid By: `player` (since the player is ordering).\n    *   Context: \"Player orders beer\".\n    *   Mood: `friendly` (standard transaction, though Elara is sarcastic, the transaction itself is neutral/friendly).\n\n3.  **Draft Content:**\n    *   Need to respond in Portuguese since the user spoke Portuguese.\n    *   Elara's voice: Sharp, sarcastic, but helpful if paid.\n    *   Draft: \"Cerveja? Vale a pena. Mas não esqueça, o dinheiro é o que conta aqui.\" (Beer? Worth it. But don't forget, money is what counts here.)\n    *   Wait, the instruction says \"Short responses: 2–5 sentences of spoken dialogue only\".\n    *   I need to make sure I don't mix `type=\"text\"` and `type=\"request\"` in the same `<reply>`.\n    *   Since this is an action request (ordering), I should use `type=\"request\"`.\n    *   Wait, looking at the examples:\n        *   \"Hi!\" -> type=\"text\"\n        *   \"I'll have the stew.\" -> type=\"request\"\n    *   So for",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order stew → cook_food request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 100,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [cook_food]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [stew]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "paidBy=\"player\"",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62801.057299999986,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User input: \"Give me some stew.\"\n    *   Context: I am Elara, owner of The Broken Lamp Tavern.\n    *   Current Game State: Player gold 50, Elara gold 200, Relationship Stranger.\n    *   Available Actions: `cook_food` is the relevant action for ordering food.\n    *   Target: `stew` (cost 5g).\n    *   Format: Must use `<reply>` with `mood` and `<block>` with `type=\"request\"`.\n    *   Rules: No narration, no internal thoughts, no stage directions. Only spoken dialogue or requests.\n    *   Commerce: Since the player is ordering food, I need to use `paidBy=\"player\"`.\n    *   Mood: Neutral or friendly. Let's go with friendly since it's a standard order.\n\n2.  **Determine the Action:**\n    *   The player is asking for stew.\n    *   This maps to `cook_food`.\n    *   Target: `stew`.\n    *   Seriousness: 3 (from available actions list).\n    *   Context: \"Player orders stew\".\n    *   Paid By: \"player\".\n\n3.  **Draft the Response:**\n    *   Need to wrap in `<reply>` tags.\n    *   Need to include `mood`.\n    *   Need to include `<block type=\"request\">`.\n    *   Wait, the rules say: \"Only add paidBy attribute for commerce actions (serve_drink, cook_food, give_item)\".\n    *   Wait, the rules also say: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The example shows:\n        <reply mood=\"friendly\"><block type=\"request\" action=\"cook_food\" target=\"stew\" seriousness=\"3\" context=\"Player orders stew\" paidBy=\"player\"/></reply>\n    *   I should follow the example closely.\n    *   Wait, I also need to consider if I should include spoken dialogue. The rules say: \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n    *   However, the example provided in the prompt for \"I'll have the stew.\" shows",
+    "texts": [],
+    "requests": [
+      {
+        "action": "cook_food",
+        "target": "stew",
+        "seriousness": "3",
+        "context": "Player orders stew",
+        "paidBy": "player"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order stew → cook_food request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 91.66666666666666,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [cook_food]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [stew]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "paidBy=\"player\"",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62842.154899999965,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User input: \"Give me some stew.\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (owner).\n    *   Game State: Player gold 50, Elara gold 200, Relationship Stranger.\n    *   Available Actions: `cook_food` is relevant here.\n    *   Constraint: Short response (2-5 sentences), no narration/actions outside tags, use `<reply>` with `mood`, use `<block>` with `type=\"request\"` for actions.\n    *   Specific Action: The player is ordering food (stew).\n    *   Cost: Stew costs 5g (from menu: stew(5g)).\n    *   Mood: Neutral to friendly (standard service).\n    *   Format: `<reply mood=\"...\"><block type=\"request\" action=\"cook_food\" target=\"stew\" seriousness=\"3\" context=\"Player orders stew\" paidBy=\"player\"/></block></reply>`.\n\n2.  **Determine Response Type:**\n    *   The user is making a specific order (\"Give me some stew\").\n    *   This triggers a `cook_food` action.\n    *   According to rules: \"Only add paidBy attribute for commerce actions (serve_drink, cook_food, give_item): paidBy=\"player\" when the player pays, paidBy=\"npc\" when you offer to pay.\"\n    *   Since the player is ordering, they pay. So `paidBy=\"player\"`.\n    *   Cost is 5g.\n    *   I need to confirm the order and provide the action tag.\n\n3.  **Draft Content:**\n    *   Spoken words: \"You got it. That'll be five gold.\"\n    *   Action: `cook_food` with `target=\"stew\"`.\n    *   Mood: \"friendly\" (standard service).\n\n4.  **Check Constraints:**\n    *   No narration outside tags.\n    *   No internal thoughts.\n    *   Only one block per reply.\n    *   Short response (2-5 sentences).\n    *   Must use `<reply>` and `<block>`.\n    *   Must include `paidBy=\"player\"`.\n\n5.  **Final Polish:**\n    *   Wait, the instruction says \"Short",
+    "texts": [],
+    "requests": [
+      {
+        "action": "cook_food",
+        "target": "stew",
+        "seriousness": "3",
+        "context": "Player orders stew",
+        "paidBy": "player"
+      }
+    ],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order stew → cook_food request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 25,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62745.49129999988,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Me dá um ensopado.\" (Portuguese for \"Give me a stew.\")\n    *   Context: I am Elara, the tavern owner.\n    *   Language: The user is speaking Portuguese, so I should respond in Portuguese.\n    *   Action: The user is ordering food.\n    *   Format: Must use `<reply>` tags with `mood` attribute and `<block>` elements.\n    *   Rule: Since this is an order for food, it should be a `type=\"request\"` action (`cook_food`).\n    *   Menu: stew(5g) is available.\n    *   Gold: Player has 50g, Stew costs 5g.\n    *   Relationship: Stranger.\n    *   Mood: Neutral to friendly (standard service).\n\n2.  **Determine the Action:**\n    *   Action: `cook_food`\n    *   Target: `stew`\n    *   Seriousness: `3` (from available actions list)\n    *   Context: \"Player orders stew\"\n    *   PaidBy: `player` (since the player is ordering and paying)\n    *   Language: Portuguese.\n\n3.  **Draft the Response:**\n    *   Need to wrap in `<reply mood=\"friendly\">` (friendly service).\n    *   Inside, use `<block type=\"request\" .../>`.\n    *   Wait, the instructions say: \"Only add paidBy attribute for commerce actions (serve_drink, cook_food, give_item): paidBy=\"player\" when the player pays, paidBy=\"npc\" when you offer to pay.\"\n    *   So for `cook_food`, `paidBy=\"player\"`.\n    *   Also, the instruction says \"ALWAYS wrap your ENTIRE response in <reply> tags with a mood attribute.\" and \"Inside, use <block> elements.\"\n    *   It also says \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n    *   So I must choose one. Since it's a specific order, `type=\"request\"` is appropriate. However, usually, I might want to acknowledge the order verbally too. But the rule says \"NEVER combine type=\"text\" and type=\"request\" in the same <reply",
+    "texts": [],
+    "requests": [],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order stew → cook_food request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order wine → serve_drink (multi-turn)",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 100,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [serve_drink]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [wine]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 29385.261500000022,
+    "tokens": 170,
+    "raw": "The player is ordering wine. This is a commerce action that needs to use type=\"request\" with the serve_drink action.\n\nLooking at the menu: wine(5g) - so the cost is 5g.\n\nI need to use type=\"request\" with:\n- action=\"serve_drink\"\n- target=\"wine\"\n- seriousness=\"5\" (from the available actions)\n- paidBy=\"player\" (since the player is paying)\n- context=\"Player orders wine\"\n\nThe mood should reflect the conversation atmosphere - this is a normal ordering interaction, so \"friendly\" seems appropriate.\n</think>\n\n<reply mood=\"friendly\"><block type=\"request\" action=\"serve_drink\" target=\"wine\" seriousness=\"5\" context=\"Player orders wine\" paidBy=\"player\"/></reply>",
+    "texts": [],
+    "requests": [
+      {
+        "action": "serve_drink",
+        "target": "wine",
+        "seriousness": "5",
+        "context": "Player orders wine",
+        "paidBy": "player"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order wine → serve_drink (multi-turn)",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 64091.03410000005,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Wine, please.\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (owner).\n    *   Action: Player is ordering a drink.\n    *   Available Actions: `serve_drink` with target `wine` (5g).\n    *   Constraints:\n        *   Wrap response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   Only one type of block per reply (no mixing `text` and `request`).\n        *   Since this is an order, I need to use `type=\"request\"` with action `serve_drink`.\n        *   `paidBy` should be \"player\" for commerce actions.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short response (2-5 sentences of spoken dialogue) - wait, the rule says \"Short responses: 2–5 sentences of spoken dialogue only\" for the *text* type, but for *request* type, the context is what matters. However, the instruction says \"ALWAYS wrap your ENTIRE response in <reply> tags... Inside, use <block> elements.\"\n        *   If I use `type=\"request\"`, I cannot include `type=\"text\"` in the same reply.\n        *   Wait, looking at the EXAMPLES:\n            *   \"Hi!\" -> type=\"text\" (Dialogue)\n            *   \"I'll have the stew.\" -> type=\"request\" (Action)\n        *   So when the user orders, I should use `type=\"request\"`.\n        *   The `context` field in `type=\"request\"` should describe the action.\n        *   The `mood` should reflect the atmosphere. Since it's a simple order, \"friendly\" or \"neutral\" works. Let's go with \"friendly\".\n        *   `paidBy` must be \"player\" for `serve_drink`.\n\n2.  **Determine the Block Type:**\n    *   User is ordering. This is a transaction/action.\n    *   Must use `type=\"request\"`.\n    *   Action: `serve_drink`.\n    *   Target: `wine`.\n    *   Seriousness: `5` (from menu definition",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order wine → serve_drink (multi-turn)",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 100,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [serve_drink]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [wine]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 63512.72950000013,
+    "tokens": 512,
+    "raw": "Thinking Process.\n\n1.  **Analyze the Request:**\n    *   User: \"Vinho, por favor.\" (Portuguese for \"Wine, please.\")\n    *   Context: Tavern owner Elara, responding to a customer ordering a drink.\n    *   Language: The user is speaking Portuguese, so I should respond in Portuguese.\n    *   Format: Must use `<reply>` tags with `mood` attribute and `<block>` elements.\n    *   Action Type: This is an order for a drink. According to the rules, when the player orders a specific drink, I should use `type=\"request\"` with action `serve_drink`.\n    *   Target: `wine` (from the menu: wine(5g)).\n    *   Seriousness: `1` (from `serve_drink [s=1]`).\n    *   Paid By: `player` (since they are ordering/paying).\n    *   Context: Short description of the action.\n    *   Mood: `friendly` (normal transaction).\n\n2.  **Determine the Response Content:**\n    *   Since the user explicitly ordered \"Vinho\" (Wine), I need to process this as a request.\n    *   I cannot mix `type=\"text\"` and `type=\"request\"` in the same `<reply>`.\n    *   I need to confirm the order and provide the request block.\n\n3.  **Draft the Response (Internal):**\n    *   Okay, they want wine. I'll serve it.\n    *   Format: `<reply mood=\"friendly\"><block type=\"request\" action=\"serve_drink\" target=\"wine\" seriousness=\"1\" context=\"Player orders wine\" paidBy=\"player\"/></block></reply>`\n    *   Wait, the rules say: \"Inside, use <block> elements. There are two types... type=\"text\" — Spoken dialogue... type=\"request\" — An action that needs game engine approval.\"\n    *   Rule 2: \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n    *   So if I'm processing an order, I should *only* use the request block. I shouldn't add spoken dialogue text *inside* the request block (which doesn't exist anyway), but I shouldn't add a separate text block either.\n    *   Actually, looking at the",
+    "texts": [],
+    "requests": [
+      {
+        "action": "serve_drink",
+        "target": "wine",
+        "seriousness": "1",
+        "context": "Player orders wine",
+        "paidBy": "player"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order wine → serve_drink (multi-turn)",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 63412.79829999991,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Vinho, por favor.\" (Portuguese for \"Wine, please.\")\n    *   Context: Tavern setting (The Broken Lamp Tavern), Elara (owner, 28, sarcastic, sharp, loyal).\n    *   Language: The user is speaking Portuguese, so I should respond in Portuguese to maintain immersion.\n    *   Action: The user is ordering a specific drink (wine).\n    *   Format: Must use `<reply>` with `mood` attribute and `<block>` elements. Since it's an order, I need to use `type=\"request\"` with `action=\"serve_drink\"`.\n    *   Constraints: No narration, no internal thoughts, no stage directions. Short response (2-5 sentences spoken dialogue only inside the block if text, but since it's a request, the text part is usually minimal or non-existent, but the instruction says \"type='request' when the player does an action...\". The example shows `type=\"request\"` with `context`. I need to check the instruction: \"type='request' — An action that needs game engine approval\". The example shows `type=\"request\"` inside `<reply>`. Wait, looking at the examples provided in the system prompt:\n        *   Example 1: `type=\"text\"` for greeting.\n        *   Example 2: `type=\"request\"` for ordering food.\n        *   Example 3: `type=\"request\"` for gossip.\n        *   The instruction says: \"ALWAYS wrap your ENTIRE response in <reply> tags... Inside, use <block> elements. There are two types: type='text' ... type='request' ... NEVER combine type='text' and type='request' in the same <reply>.\"\n        *   So for an order, I must use `type=\"request\"`.\n        *   The `context` field should describe the action.\n        *   The `paidBy` attribute should be \"player\" for `serve_drink`.\n        *   Language: Portuguese.\n\n2.  **Determine Mood:**\n    *   Ordering wine is a standard transaction. Not hostile, not overly friendly, just normal business. \"neutral\" or \"friendly\". Given Elara's personality (sharp, sarcastic), \"friendly\" might be too soft, but \"neutral\" is",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order mead → serve_drink request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62817.71299999999,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User input: \"One mead, please.\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (owner).\n    *   Available Actions: `serve_drink` is the relevant action here.\n    *   Target: `mead` (cost 4g).\n    *   User Gold: 50g (sufficient for 4g).\n    *   My Gold: 200g.\n    *   Relationship: Stranger (low trust/friendship).\n    *   Rules: Use `<reply>` tags with `mood`. Use `<block type=\"request\">` for actions. Do not use narration or internal thoughts. Short response (2-5 sentences).\n\n2.  **Determine Response Type:**\n    *   The player is ordering a specific drink (\"One mead\").\n    *   This matches the `serve_drink` action.\n    *   Target: `mead`.\n    *   Seriousness: 1 (from available actions list).\n    *   Paid By: `player` (since they are ordering to consume/pay).\n    *   Context: \"Player orders mead\".\n\n3.  **Determine Mood:**\n    *   The interaction is a standard transaction. Not hostile, not overly friendly yet (stranger relationship), but polite service.\n    *   Mood: `neutral` or `friendly`. Given the example \"Hey there, stranger. Welcome to the Broken Lamp. Take a seat, what can I get you?\" was `friendly`, and ordering is a continuation, `friendly` fits the tavern atmosphere unless there's tension. Let's go with `friendly` as it's a basic service interaction.\n\n4.  **Draft the Content:**\n    *   Action: `serve_drink`, target `mead`, seriousness `1`, paidBy `player`.\n    *   Dialogue: Needs to be brief. \"Here's your mead. Don't spill it.\" or \"Enjoy the mead, stranger.\"\n    *   Constraint Check: 2-5 sentences of spoken dialogue only inside `<block type=\"request\">`. Wait, the rule says \"Inside, use <block> elements. There are two types: type=\"text\" — Spoken dialogue... type=\"request\" — An action that needs game engine approval... NEVER combine type",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order mead → serve_drink request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order mead → serve_drink request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62847.40910000005,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User says: \"Um hidromel, por favor.\" (Um hidromel, please.)\n    *   Language: Portuguese.\n    *   Intent: Ordering a drink (Hidromel is a fermented drink made from honey and water, similar to mead).\n    *   Context: I am Elara, owner of The Broken Lamp Tavern.\n    *   Constraints:\n        *   Wrap response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   Only `type=\"text\"` or `type=\"request\"`.\n        *   Do not mix types in one reply.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2-5 sentences).\n        *   If it's an order, use `type=\"request\"` with `action=\"serve_drink\"`.\n        *   Check available actions: `serve_drink [s=1]: Player ORDERS a specific drink. target=beer(2g) | ale(2g) | wine(5g) | mead(4g) | water(0g) | special(10g)`.\n        *   Wait, \"hidromel\" is not explicitly listed in the `serve_drink` targets (beer, ale, wine, mead, water, special). However, Hidromel is essentially Mead (fermented honey wine). In the context of the game state, \"mead\" is the closest equivalent.\n        *   Actually, looking at the available actions, `mead` is listed. Hidromel is often synonymous with Mead in fantasy settings. I should treat it as an order for mead.\n        *   Wait, the user said \"hidromel\". If I map it to `mead`, I need to make sure the target matches the available options. The available option is `mead(4g)`.\n        *   Alternatively, since Hidromel isn't explicitly in the list, maybe I should ask for confirmation or treat it as mead. Given the instruction \"Player ORDERS a specific drink\", I should probably map it to the closest available option or ask. But the prompt says \"Player ORDERS a specific drink\" for `serve_drink`. If I treat Hidromel as Mead,",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order mead → serve_drink request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 90.9090909090909,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [serve_drink]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [mead]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62773.515799999936,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User Input: \"Um hidromel, por favor.\" (Um, hidromel, please.) - This is Portuguese for \"Um, hidromel, por favor.\" (Um, mead, please.)\n    *   Context: I am Elara, owner of The Broken Lamp Tavern.\n    *   Language: The user is speaking Portuguese. I should respond in Portuguese to match.\n    *   Constraint: Short responses (2-5 sentences of spoken dialogue). No narration, no internal thoughts, no stage directions.\n    *   Format: <reply mood=\"...\"><block type=\"request\" action=\"serve_drink\" target=\"mead\" seriousness=\"4\" context=\"Player orders mead\" paidBy=\"player\"/></block></reply> (Since \"hidromel\" is mead).\n    *   Mood: Neutral or friendly. Friendly fits a tavern setting.\n    *   Rule: Do not combine type=\"text\" and type=\"request\".\n\n2.  **Determine Action:**\n    *   The user is ordering a drink (\"hidromel\" = mead).\n    *   Available Actions: `serve_drink [s=1]`.\n    *   Target: `mead(4g)`.\n    *   Paid By: `player`.\n    *   Seriousness: `1`.\n    *   Context: \"Player orders mead\".\n\n3.  **Draft Response (Portuguese):**\n    *   \"Hidromel? Bem, não é o meu favorito, mas serve.\" (Mead? Well, it's not my favorite, but it serves.)\n    *   \"Aqui está. Quanto é?\" (Here it is. How much?) -> No, the request handles the cost.\n    *   \"Hidromel? Bem, não é o meu favorito, mas serve. Aqui está.\" (Mead? Well, it's not my favorite, but it serves. Here it is.)\n    *   Wait, I need to check the rules. \"Short responses: 2–5 sentences of spoken dialogue only\".\n    *   Draft: \"Hidromel? Bem, não é o meu favorito, mas serve. Aqui está.\" (2 sentences).\n    *   Wait, I need to make sure I don't break character. Elara is sharp,",
+    "texts": [],
+    "requests": [
+      {
+        "action": "serve_drink",
+        "target": "mead",
+        "seriousness": "4",
+        "context": "Player orders mead",
+        "paidBy": "player"
+      }
+    ],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order roast meat → cook_food request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 100,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [cook_food]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [roast_meat]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62865.43739999994,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"I want some roast meat.\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (owner, 28, sharp, sarcastic).\n    *   Game State: Player gold 50, My gold 200, Relationship Stranger.\n    *   Available Actions: `cook_food` is available for roast_meat (8g).\n    *   Format: Must use `<reply>` with `mood` and `<block>` with `type=\"request\"` (since this is an order).\n    *   Rules: No narration, no internal thoughts, no actions in asterisks. Short response. Commerce action requires `paidBy=\"player\"`.\n\n2.  **Determine Response Type:**\n    *   The player is ordering food. This triggers a `cook_food` action.\n    *   Target: `roast_meat`.\n    *   Seriousness: 3 (from available actions list).\n    *   Paid By: `player` (standard transaction).\n    *   Context: \"Player orders roast meat\".\n\n3.  **Determine Mood:**\n    *   The interaction is a standard transaction. Friendly but professional.\n    *   Mood: `friendly` or `neutral`. Given Elara's sharp personality, `friendly` works well for a customer service interaction unless there's tension. Let's go with `friendly`.\n\n4.  **Draft Content:**\n    *   Need to wrap the request tag.\n    *   Need to ensure no extra text outside the tags.\n    *   Need to check the example format: `<reply mood=\"friendly\"><block type=\"request\" action=\"cook_food\" target=\"roast_meat\" seriousness=\"3\" context=\"Player orders roast meat\" paidBy=\"player\"/></reply>`\n    *   Wait, the instructions say: \"Inside, use <block> elements. There are two types... type=\"text\" — Spoken dialogue... type=\"request\" — An action that needs game engine approval\".\n    *   Rule 2: \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n    *   So I must choose one. Since it's an order, `type=\"request\"` is the correct choice to trigger the game engine to process the purchase. However, usually, I",
+    "texts": [],
+    "requests": [
+      {
+        "action": "cook_food",
+        "target": "roast_meat",
+        "seriousness": "3",
+        "context": "Player orders roast meat",
+        "paidBy": "player"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order roast meat → cook_food request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 81.81818181818183,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [cook_food]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [roast_meat]",
+        "weight": 2,
+        "pass": false
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62780.96689999988,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"I want some roast meat.\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), Elara (owner, 28, sharp, sarcastic).\n    *   Game State: Player gold 50, Elara gold 200, Relationship Stranger.\n    *   Available Action: `cook_food` with target `roast_meat` (price 8g).\n    *   Constraint: Response must be wrapped in `<reply>` tags with mood attribute. Inside, use `<block>` elements. Only one type per response (`text` or `request`).\n    *   Constraint: No narration, no internal thoughts, no stage directions.\n    *   Constraint: Commerce actions need `paidBy` attribute if player pays.\n    *   Constraint: Short response (2-5 sentences of spoken dialogue if text, but since it's a request, I need to follow the request format).\n    *   Wait, the instruction says: \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n    *   \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The user is explicitly ordering food (\"I want some roast meat\"). This triggers a `cook_food` action.\n    *   However, Elara is the owner. She needs to confirm or process the order.\n    *   Looking at the example: \"Player: 'I'll have the stew.' → type=\"request\": <reply mood=\"friendly\"><block type=\"request\" action=\"cook_food\" target=\"stew\" seriousness=\"3\" context=\"Player orders stew\" paidBy=\"player\"/></reply>\"\n    *   So I should use `type=\"request\"` here.\n    *   Mood: \"friendly\" (standard service) or \"neutral\". Let's go with \"friendly\" since it's a transaction.\n    *   PaidBy: \"player\" (standard transaction).\n    *   Wait, the instruction says \"Short responses: 2–5 sentences of spoken dialogue only\" for the *text* type. For *request* type, the instruction says \"ONLY add paidBy attribute for commerce actions... Omit paidBy for all other actions.\" It doesn't explicitly restrict the text content inside a request block, but the example shows",
+    "texts": [],
+    "requests": [
+      {
+        "action": "cook_food",
+        "target": "stew",
+        "seriousness": "3",
+        "context": "Player orders stew",
+        "paidBy": "player"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order roast meat → cook_food request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 81.81818181818183,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [cook_food]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [roast_meat]",
+        "weight": 2,
+        "pass": false
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "has paidBy",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62855.11829999997,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Quero carne assada.\" (Portuguese for \"I want roasted meat.\")\n    *   Context: I am Elara, owner of The Broken Lamp Tavern.\n    *   Language: The user is speaking Portuguese, so I should respond in Portuguese.\n    *   Action: The user is ordering food (roast_meat).\n    *   Constraints:\n        *   Wrap response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   Since it's an order, use `type=\"request\"` with `action=\"cook_food\"`, `target=\"roast_meat\"`, `seriousness=\"3\"`, `context=\"Player orders roast_meat\"`, `paidBy=\"player\"`.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short response (2-5 sentences of spoken dialogue inside the block if text, but since it's a request, the dialogue is usually brief or non-existent, but the prompt says \"Spoken dialogue only\" for type=\"text\". For type=\"request\", the instruction says \"Only add paidBy attribute for commerce actions\". The example shows a request block with context. I should probably include a brief spoken line confirming the order or acknowledging it within the request block if possible, but the example shows just the request block for \"I'll have the stew\". However, the rule says \"Spoken dialogue only\" for type=\"text\". For type=\"request\", it's an action. I will follow the example: just the request block is fine, but I need to ensure the mood is appropriate. Wait, looking at the example:\n            *   Example: Player: \"I'll have the stew.\" → type=\"request\": `<reply mood=\"friendly\"><block type=\"request\" action=\"cook_food\" target=\"stew\" seriousness=\"3\" context=\"Player orders stew\" paidBy=\"player\"/></reply>`\n            *   So for a request, I don't necessarily need spoken dialogue text, but I should probably acknowledge it in the context or just provide the request.\n            *   Wait, the rule says: \"ALWAYS wrap your ENTIRE response in <reply> tags... Inside, use <block> elements.\"\n            *   \"type=\"text\" — Spoken dialogue\"\n            *   \"type=\"",
+    "texts": [],
+    "requests": [
+      {
+        "action": "cook_food",
+        "target": "stew",
+        "seriousness": "3",
+        "context": "Player orders stew",
+        "paidBy": "player"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Order roast meat → cook_food request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62808.75030000042,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User Input: \"Quero carne assada.\" (Portuguese for \"I want roasted meat.\")\n    *   Language: Portuguese.\n    *   Context: Tavern setting (The Broken Lamp Tavern).\n    *   Character: Elara, 28, owner, sharp, sarcastic, loyal.\n    *   Constraints:\n        *   Wrap entire response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   No narration, no internal thoughts, no stage directions.\n        *   No AI/model references.\n        *   Response format: `type=\"text\"` or `type=\"request\"`.\n        *   Current Game State: Player gold 50, Elara gold 200, Relationship Stranger.\n        *   Available Actions: `cook_food` is available for `roast_meat` (8g).\n        *   Rule: Commerce actions (serve_drink, cook_food, give_item) need `paidBy=\"player\"`.\n        *   Rule: Do not combine `type=\"text\"` and `type=\"request\"` in the same `<reply>`.\n        *   Rule: Since the user is making an order, this is a `type=\"request\"` action.\n\n2.  **Determine Response Type:**\n    *   The user is ordering food (\"Quero carne assada\").\n    *   This triggers a `cook_food` action.\n    *   Target: `roast_meat`.\n    *   Cost: 8g.\n    *   Paid By: `player`.\n    *   Type: `request`.\n\n3.  **Determine Mood:**\n    *   The user is ordering food. This is a standard transaction.\n    *   Elara is sharp but professional.\n    *   Mood: `neutral` (normal transaction) or `friendly` (if she's welcoming). Given the example \"I'll have the stew\" -> `friendly`, I'll lean towards `friendly` or `neutral`. Let's go with `neutral` as it's a straightforward transaction, or `friendly` to maintain hospitality. The example used `friendly` for ordering stew. I'll use `friendly`.\n\n4.  **Draft Content:**\n    *   Action: `cook_food`.\n    *   Target",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Buy a map → give_item request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 63043.608999999706,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"I need a map, how much?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), Elara (owner) roleplay.\n    *   Current State: Player has 50g, Elara has 200g. Relationship: Stranger.\n    *   Available Actions: `give_item` (target=map, price=10g).\n    *   Constraint: Short response (2-5 sentences), no narration/actions outside tags, use `<reply>` with `mood` and `<block>` with `type=\"request\"` (since it's a transaction/commerce action).\n    *   Rule: Commerce actions (give_item) must include `paidBy=\"player\"`.\n    *   Rule: Do not combine `type=\"text\"` and `type=\"request\"` in the same `<reply>`.\n    *   Rule: Do not mention AI, models, etc.\n\n2.  **Determine the Action:**\n    *   The player is asking for a map and the price.\n    *   This is a commerce interaction (`give_item`).\n    *   Action: `give_item`\n    *   Target: `map`\n    *   Seriousness: `5` (from AVAILABLE ACTIONS)\n    *   PaidBy: `player` (since they are buying)\n    *   Context: \"Player asks for map price\" or similar.\n\n3.  **Determine the Mood:**\n    *   The player is asking a straightforward business question.\n    *   Elara is sharp and sarcastic but professional.\n    *   Mood: `neutral` (normal transaction) or `friendly` (if welcoming). Given the \"Stranger\" relationship, `neutral` feels safer, but `friendly` fits the tavern vibe. Let's go with `friendly` as she's serving them. Actually, the prompt says \"Short responses: 2–5 sentences of spoken dialogue only\" for type=\"text\". For type=\"request\", the instruction says \"Inside, use <block> elements... type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   Wait, the instruction says: \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n    *   The user is asking \"",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Buy a map → give_item request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62743.123900000006,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"I need a map, how much?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), Elara (owner, 28, sharp/sarcastic).\n    *   Game State: Player gold 50, Elara gold 200, Relationship Stranger.\n    *   Available Actions: `give_item` (map costs 10g).\n    *   Constraint: Response must be wrapped in `<reply>` tags with a `mood` attribute. Use `<block>` elements. Only one type per response (`text` or `request`).\n    *   Constraint: No narration, no internal thoughts, no actions in asterisks.\n    *   Constraint: Short responses (2-5 sentences of spoken dialogue only) for `text` type.\n    *   Constraint: If player requests an item, use `type=\"request\"` with `action=\"give_item\"`.\n    *   Constraint: Commerce actions need `paidBy=\"player\"` if the player pays.\n\n2.  **Determine Response Type:**\n    *   The player is asking for a map and the price. This is a commerce transaction request.\n    *   According to the rules: \"Only add paidBy attribute for commerce actions (serve_drink, cook_food, give_item): paidBy=\"player\" when the player pays, paidBy=\"npc\" when you offer to pay.\"\n    *   Since the player is asking to buy, `paidBy=\"player\"` is appropriate.\n    *   Action: `give_item`.\n    *   Target: `map`.\n    *   Seriousness: 5 (from available actions list).\n    *   Context: \"Player asks for map\".\n\n3.  **Determine Mood:**\n    *   The player is asking for a service. It's a standard transaction.\n    *   Mood: \"neutral\" fits best for a straightforward business transaction unless there's tension or friendliness. Let's go with \"neutral\" or \"friendly\". Given Elara's personality (sharp, sarcastic), \"neutral\" might be safer, but \"friendly\" is okay if she's being helpful. Let's stick to \"neutral\" as it's a transaction. Actually, looking at the examples, \"friendly\" is used for greetings and ordering. This is ordering. Let's use \"friendly\" to",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Buy a map → give_item request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62976.589500000235,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Preciso de um mapa, quanto custa?\" (I need a map, how much does it cost?)\n    *   Language: Portuguese.\n    *   Context: Tavern owner Elara, roleplay setting.\n    *   Constraints:\n        *   Must use `<reply>` tags with `mood` attribute.\n        *   Must use `<block>` elements.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2-5 sentences of spoken dialogue).\n        *   If it's a commerce action (buying an item), use `type=\"request\"` with `action=\"give_item\"`, `target=\"map\"`, `seriousness=\"5\"`, `context=\"Player asks for map\"`, `paidBy=\"player\"`.\n        *   Do not mix `type=\"text\"` and `type=\"request\"` in the same `<reply>`.\n        *   Current state: Player gold 50, Elara gold 200, Relationship Stranger.\n        *   Item price: map(10g).\n\n2.  **Determine the Action:**\n    *   The player is asking for a map and its price. This is a request for an item.\n    *   According to the rules: \"If in doubt → type=\"text\"\". However, the prompt says \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The available action is `give_item`.\n    *   The player is asking for the price, which implies they want to buy it.\n    *   Rule 7: \"Commerce: player says 'yes' without naming item → ASK which.\" Here the player named the item (\"map\").\n    *   So, I should use `type=\"request\"` to trigger the game engine to handle the transaction logic, OR `type=\"text\"` to confirm the price and wait for confirmation.\n    *   Looking at the example: \"Player: 'Got any gossip?' → type=\"request\"\".\n    *   Looking at the example: \"Player: 'I'll have the stew.' → type=\"request\"\".\n    *   Looking at the example: \"Player: 'Hi!' → type=\"text\"\".\n    *   Since the player is asking for the price, they haven't confirmed purchase yet",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Buy a map → give_item request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62890.22399999993,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Preciso de um mapa, quanto custa?\" (Portuguese for \"I need a map, how much does it cost?\")\n    *   Language: Portuguese.\n    *   Context: Tavern owner Elara, roleplay setting.\n    *   Constraints:\n        *   Must use `<reply>` tags with `mood` attribute.\n        *   Must use `<block>` elements.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2-5 sentences of spoken dialogue).\n        *   If it's a commerce action (buying an item), use `type=\"request\"` with `action=\"give_item\"`, `target=\"map\"`, `paidBy=\"player\"`.\n        *   If it's just asking the price, it's still a request for an item transaction, so `type=\"request\"` is appropriate based on the \"AVAILABLE ACTIONS\" list (give_item).\n        *   Wait, looking at the rules: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n        *   The user is asking for the price. This implies they want to buy it.\n        *   Action: `give_item`.\n        *   Target: `map`.\n        *   Price: `10g` (from menu).\n        *   PaidBy: `player`.\n        *   Mood: `neutral` or `friendly` (since it's a transaction).\n        *   Language: Portuguese.\n\n2.  **Determine the Response Type:**\n    *   The user is asking about the cost of an item. This is a commerce interaction.\n    *   According to the rules: \"Commerce: player says 'yes' without naming item → ASK which.\"\n    *   However, the user *did* name the item (\"mapa\").\n    *   The rule says: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   Is asking the price an action? Yes, it's a request to provide the item.\n    *   So I should use `type=\"request\"` with `action=\"give_item\"`.\n    *   Wait, the example shows: \"Player: 'Got any gossip?' → type=\"request\" action=\"share_rumor\".\n",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Buy a dagger → give_item request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62853.492899999954,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Got any daggers for sale?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (owner).\n    *   Game State: Player gold 50, My gold 200, Relationship Stranger.\n    *   Available Actions: `give_item` is available for daggers (20g).\n    *   Constraint: Short response (2-5 sentences), no narration, no internal thoughts, no stage directions. MUST use `<reply>` and `<block>` tags. MUST include `mood` attribute.\n    *   Rule: If in doubt, use `type=\"text\"`. However, the user is asking to buy an item, which is a commerce action (`give_item`). The prompt says \"Commerce: player says 'yes' without naming item → ASK which.\" Here the user named the item (\"daggers\").\n    *   Rule: \"type='request' when the player does an action from the AVAILABLE ACTIONS below.\" Buying an item is a commerce action (`give_item`).\n    *   Rule: \"Only add paidBy attribute for commerce actions (serve_drink, cook_food, give_item): paidBy='player' when the player pays, paidBy='npc' when you offer to pay.\"\n    *   Constraint: Short response (2-5 sentences).\n    *   Constraint: No narration.\n\n2.  **Determine Response Type:**\n    *   The user is asking to buy an item. This triggers a commerce interaction.\n    *   I should use `type=\"request\"` with action `give_item`.\n    *   Target: `dagger` (singular or plural, the menu says \"dagger(20g)\").\n    *   Price: 20g.\n    *   PaidBy: \"player\" (they are buying).\n    *   Mood: \"neutral\" or \"friendly\". Let's go with \"friendly\" since it's a standard transaction, but maybe \"neutral\" fits the \"stranger\" vibe better. Let's stick to \"friendly\" for a welcoming tavern owner.\n    *   Sentence count: 2-5 sentences.\n\n3.  **Draft Content:**\n    *   \"I've got a few daggers in stock.\"\n    *   \"They cost twenty gold each.\"\n    *   \"Do",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Buy a dagger → give_item request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62760.05309999967,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Got any daggers for sale?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern).\n    *   Character: Elara, 28, owner, sharp, sarcastic, loyal.\n    *   Format: Must use `<reply>` tags with `mood` attribute. Must use `<block>` elements.\n    *   Action: The user is asking about an item for sale (dagger).\n    *   Available Actions: `give_item` is the relevant action for selling items (though technically `give_item` is usually \"player requests an item to buy\", in this context, the player is asking to buy, so it's a commerce interaction). Wait, looking at the AVAILABLE ACTIONS list: `give_item [s=5]: Player requests an item to buy. target=potion(15g) | map(10g) | dagger(20g) | key(25g)`.\n    *   Wait, the instruction says: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The user is asking a question (\"Got any daggers for sale?\"). This isn't strictly an action command like \"I want a dagger\". However, in the context of the game engine provided in the prompt, asking about an item usually triggers a `give_item` request if they intend to buy it, or a `text` response if they are just inquiring.\n    *   Looking at the EXAMPLES:\n        *   Player: \"I'll have the stew.\" → type=\"request\" (cook_food)\n        *   Player: \"Got any gossip?\" → type=\"request\" (share_rumor)\n    *   The user is asking about daggers. This implies they want to buy one. The action `give_item` fits \"Player requests an item to buy\".\n    *   However, the prompt says \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n    *   Is \"Got any daggers for sale?\" a question or a request to buy? It's a question. But it implies intent to buy.\n    *   Let's look at the instruction again: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Buy a dagger → give_item request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62872.39619999984,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Tem alguma adaga pra vender?\" (Portuguese for \"Do you have any daggers for sale?\")\n    *   Context: I am Elara, owner of The Broken Lamp Tavern.\n    *   Language: Portuguese.\n    *   Constraints:\n        *   Must use `<reply>` tags with `mood` attribute.\n        *   Must use `<block>` elements.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2-5 sentences of spoken dialogue).\n        *   If the user is asking to buy an item, I should use `type=\"request\"` with `action=\"give_item\"`.\n        *   Available actions: `give_item [s=5]`.\n        *   Current state: Player gold 50, Elara gold 200. Relationship: Stranger.\n        *   Item available: dagger(20g).\n        *   Rule: Only use `type=\"request\"` when the player does an action from AVAILABLE ACTIONS. The user is asking *if* there is a dagger for sale. This is a question, not necessarily an action yet. However, the prompt says \"Player ORDERS a specific drink\" etc. for `serve_drink`. For `give_item`, the description says \"Player requests an item to buy\".\n        *   Wait, looking at the examples:\n            *   \"I'll have the stew.\" -> `cook_food` (request)\n            *   \"Got any gossip?\" -> `share_rumor` (request)\n            *   \"Hi!\" -> `text`\n        *   The user is asking \"Do you have any daggers for sale?\". This is a question. Usually, I should confirm availability and perhaps offer the price. If they say \"Yes, I want it\", then I send the request.\n        *   However, the instruction says: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n        *   Is asking \"Do you have X?\" an action? It's a query.\n        *   If I treat it as a query, I should use `type=\"text\"`.\n        *   If I treat it as an intent to buy, I might use `type=\"request\"`.\n        *   Let's look at the",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Buy a dagger → give_item request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62768.76329999976,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Tem alguma adaga pra vender?\" (Portuguese for \"Do you have any daggers for sale?\")\n    *   Language: Portuguese.\n    *   Character: Elara, owner of The Broken Lamp Tavern.\n    *   Constraints:\n        *   Wrap response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   Only spoken dialogue (`type=\"text\"`) or actions (`type=\"request\"`).\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2-5 sentences).\n        *   Current Game State: Player gold 50, Elara gold 200, Relationship Stranger.\n        *   Available Actions: `give_item` (dagger 20g) is an option for selling items.\n        *   Rule: If in doubt → `type=\"text\"`. However, the user is asking about selling an item (dagger). This is a commerce action. The user is asking *if* there are daggers to sell. This implies a request to sell an item.\n        *   Wait, looking at the `AVAILABLE ACTIONS`: `give_item [s=5]: Player requests an item to buy. target=potion(15g) | map(10g) | dagger(20g) | key(25g)`.\n        *   The user is asking *if* there are daggers to sell. This is a question about inventory.\n        *   Should I use `type=\"text\"` (dialogue) or `type=\"request\"` (action)?\n        *   The user is asking \"Do you have any daggers for sale?\". This is a query. The next step would be for the player to say \"Yes, I want to buy one\" or \"I want to buy a dagger\".\n        *   However, often in these RPG systems, asking about an item implies a request to buy it. But strictly speaking, it's a question.\n        *   Let's look at the example: \"Got any gossip?\" -> `type=\"request\" action=\"share_rumor\"`.\n        *   \"Tem alguma adaga pra vender?\" is similar to \"Got any gossip?\". It's asking if the item exists/is available.\n        *",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask for gossip → share_rumor request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62833.70879999967,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User Input: \"Got any gossip about town?\"\n    *   Character: Elara, owner of The Broken Lamp Tavern.\n    *   Personality: Sharp, sarcastic, loyal, knows gossip.\n    *   Format: Must use `<reply>` tags with a `mood` attribute. Must use `<block>` elements.\n    *   Action Type: This is a request for gossip/rumors.\n    *   Available Actions: `share_rumor` is the relevant action (s=5).\n    *   Current State: Player gold 50, Elara gold 200, Relationship Stranger.\n    *   Rule Check: Do not combine text and request in one reply. Since this is a specific request for information (gossip), `type=\"request\"` is appropriate based on the examples provided in the prompt (\"Player: 'Got any gossip?' → type=\"request\":\").\n    *   Target: The prompt says `share_rumor [s=5]: Player asks for gossip, rumors, news. target=king | guards | smuggling | merchants | dungeon`.\n    *   Context: \"town\" is general, but I need to pick a target or use a general one. The example uses \"guards\" for gossip. I'll use \"town\" or a specific category like \"merchants\" or \"guards\" since the user asked about \"town\". Let's pick \"merchants\" or \"guards\" as they are common gossip topics. Or just use \"town\" if allowed, but the schema suggests specific targets. I'll use \"merchants\" as it's a common tavern topic.\n    *   PaidBy: For `share_rumor`, it's not a commerce action (like `serve_drink`, `cook_food`, `give_item`), so `paidBy` should be omitted.\n    *   Mood: Since Elara is sharp and sarcastic, but the player is just asking, the mood should probably be \"neutral\" or \"friendly\". Let's go with \"friendly\" as she's welcoming them to the tavern.\n    *   Constraint: Short response (2-5 sentences of spoken dialogue). Wait, if I use `type=\"request\"`, I cannot include spoken dialogue in the same block. I need to check the rules again.\n    *   Rule 2: \"NEVER combine type=\"text\" and",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask for gossip → share_rumor request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 100,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [share_rumor]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [king,guards,smuggling,merchants,dungeon]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62748.95459999982,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Got any gossip about town?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), Elara (28, owner, sharp, sarcastic, loyal).\n    *   Game State: Player gold 50, Elara gold 200, Relationship Stranger.\n    *   Available Actions: `share_rumor` is the relevant action for gossip.\n    *   Format Requirements:\n        *   Wrap entire response in `<reply>` tags.\n        *   Include `mood` attribute (e.g., \"friendly\", \"neutral\", \"hostile\").\n        *   Use `<block>` elements.\n        *   Since it's a request for information (gossip), it should be a `type=\"request\"` action based on the rules (\"Player asks for gossip, rumors, news\" -> `share_rumor`).\n        *   Wait, looking at the rules: \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n        *   Rule 4: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n        *   Rule 5: \"If in doubt → type=\"text\".\"\n        *   Rule 6: \"Commerce: player says \"yes\" without naming item → ASK which.\"\n        *   The user is asking for gossip. This matches `share_rumor` action.\n        *   However, I need to decide if I should respond with spoken dialogue (`type=\"text\"`) or trigger the action (`type=\"request\"`).\n        *   Looking at the example: \"Player: 'Got any gossip?' → type=\"request\": <reply mood=\"friendly\"><block type=\"request\" action=\"share_rumor\" target=\"guards\" seriousness=\"5\" context=\"Player asks for gossip\"/></reply>\".\n        *   So, I should use `type=\"request\"` for this interaction to trigger the game engine to handle the response logic (or just to register the intent).\n        *   Wait, the instruction says \"You are Elara... You live in this world. Never mention AI...\".\n        *   The instruction also says \"ALWAYS wrap your ENTIRE response in <reply> tags... Inside, use <block> elements.\"\n        *   The instruction says \"type=\"request",
+    "texts": [],
+    "requests": [
+      {
+        "action": "share_rumor",
+        "target": "guards",
+        "seriousness": "5",
+        "context": "Player asks for gossip"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask for gossip → share_rumor request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 63013.98760000011,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Tem alguma fofoca sobre a cidade?\" (Portuguese for \"Any gossip about the city?\")\n    *   Language: Portuguese.\n    *   Context: Tavern setting (The Broken Lamp Tavern), character Elara (28, owner, sharp, sarcastic, loyal).\n    *   Format: Must use `<reply>` tags with `mood` attribute and `<block>` elements.\n    *   Action Type: This is a request for gossip/rumors.\n    *   Available Actions: `share_rumor` fits this request.\n    *   Current State: Player gold 50, Elara gold 200, Relationship Stranger.\n    *   Rule: Do not mix `type=\"text\"` and `type=\"request\"` in the same `<reply>`. Since this is a specific request for information (gossip), I should use `type=\"request\"` to trigger the game engine's response mechanism for that action, OR I can use `type=\"text\"` to respond in character if the action is just a conversation starter. Looking at the examples:\n        *   \"Got any gossip?\" -> `type=\"request\"` with `action=\"share_rumor\"`.\n        *   So I should use `type=\"request\"`.\n    *   Target: The user asked generally about the city. I can pick a general topic or let the engine handle it. The example shows `target=\"guards\"` or similar. Since the user asked generally, I can use a general target or just the action. Let's look at the action definition: `share_rumor [s=5]: Player asks for gossip, rumors, news. target=king | guards | smuggling | merchants | dungeon`. Since the user asked \"about the city\", I'll pick a general one or just leave it open. Actually, the instruction says \"Player asks for gossip, rumors, news\". I should probably pick a specific target to trigger the engine's response properly, or use `type=\"text\"` if I want to just respond as Elara.\n    *   Wait, looking at the rules: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The user is asking for gossip. This maps to `share_rumor`.\n    *   However, sometimes it's better to respond in character first if it's just",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask for gossip → share_rumor request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62839.00689999992,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Tem alguma fofoca sobre a cidade?\" (Portuguese for \"Any gossip about the city?\")\n    *   Character: Elara, owner of The Broken Lamp Tavern.\n    *   Language: Portuguese (matching the user's input).\n    *   Constraints:\n        *   Wrap response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   Only `type=\"text\"` or `type=\"request\"` (not both).\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2-5 sentences of spoken dialogue).\n        *   Mood reflects the overall atmosphere (friendly, neutral, hostile, flirty).\n        *   Available Actions: `share_rumor` is relevant here.\n        *   Commerce rules: `paidBy` only for commerce actions.\n        *   Current State: Stranger relationship, Player gold 50, Elara gold 200.\n\n2.  **Determine Action Type:**\n    *   The user is asking for gossip/rumors.\n    *   This matches `share_rumor`.\n    *   Target: \"city\" or general gossip.\n    *   Seriosity: 5 (as per available actions).\n    *   Context: \"Player asks for gossip\".\n    *   Type: `type=\"request\"`.\n\n3.  **Determine Mood:**\n    *   Elara is sharp, sarcastic, but generally welcoming to customers.\n    *   Asking for gossip is a common tavern interaction.\n    *   Mood: \"friendly\" (pleasant interaction) or \"neutral\" (normal). Let's go with \"friendly\" as she's engaging with the customer.\n\n4.  **Draft Content (Portuguese):**\n    *   \"Fofoca? Claro que tem. A cidade é cheia de segredos, desde o Rei até os guardas.\"\n    *   \"Mas você quer saber algo específico ou só curiosidades?\"\n    *   Wait, the instruction says: \"If in doubt → type=\"text\"\". But the user explicitly asked for gossip, which triggers the `share_rumor` action.\n    *   Actually, looking at the examples:\n        *   \"Got any gossip?\" → type=\"",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask about guards → share_rumor target=guards",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 100,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [share_rumor]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [guards]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62836.06609999994,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"What have you heard about the guards?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (owner, 28, sharp, sarcastic, loyal).\n    *   Current State: Player gold 50, My gold 200, Relationship Stranger (friendship=10, trust=5, respect=10).\n    *   Action Required: Respond in character, using the specified XML format (<reply> with mood, <block> with type=\"request\" or type=\"text\").\n    *   Constraint: Do not mention AI, models, prompts, etc. No narration, no stage directions.\n    *   Specific Rule: This is a request for gossip/rumors. The available action is `share_rumor`.\n    *   Available Actions: `share_rumor [s=5]` fits best. Target: \"guards\".\n    *   Mood: Since it's a tavern setting and Elara is sharp/sarcastic but generally friendly to patrons, \"friendly\" or \"neutral\" works. Given the nature of rumors, maybe slightly \"neutral\" or \"friendly\". Let's go with \"friendly\" as she's engaging with a patron.\n    *   Format: `<reply mood=\"friendly\"><block type=\"request\" action=\"share_rumor\" target=\"guards\" seriousness=\"5\" context=\"Player asks for gossip\"/></block></reply>`\n\n2.  **Determine Response Type:**\n    *   The user is asking for information (gossip/rumors).\n    *   According to the rules: \"share_rumor [s=5]: Player asks for gossip, rumors, news. target=king | guards | smuggling | merchants | dungeon\".\n    *   This matches perfectly. I need to use `type=\"request\"`.\n\n3.  **Draft Content:**\n    *   Action: `share_rumor`\n    *   Target: `guards`\n    *   Seriousness: `5` (as per action definition)\n    *   Context: `Player asks for gossip`\n    *   PaidBy: Omit (not a commerce action).\n\n4.  **Final Check:**\n    *   No narration outside tags.\n    *   No internal thoughts.\n    *   Correct XML structure.\n    *   Correct action parameters.",
+    "texts": [],
+    "requests": [
+      {
+        "action": "share_rumor",
+        "target": "guards",
+        "seriousness": "5",
+        "context": "Player asks for gossip"
+      }
+    ],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask about guards → share_rumor target=guards",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62746.615100000054,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"What have you heard about the guards?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (28, owner).\n    *   Action: Player is asking for gossip/rumors.\n    *   Available Actions: `share_rumor` fits this request perfectly.\n    *   Constraints:\n        *   Wrap entire response in `<reply>` tags with a `mood` attribute.\n        *   Use `<block>` elements.\n        *   Do NOT combine `type=\"text\"` and `type=\"request\"` in the same `<reply>`.\n        *   Since this is a request for information (gossip), `type=\"request\"` is appropriate based on the \"AVAILABLE ACTIONS\" list (share_rumor).\n        *   Mood: \"friendly\" or \"neutral\" fits a tavern gossip request. Let's go with \"friendly\" since it's a casual inquiry.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short response (2-5 sentences of spoken dialogue).\n        *   Gold state: Player has 50g, I have 200g.\n        *   Relationship: Stranger (friendship=10, trust=5, respect=10).\n\n2.  **Determine Response Type:**\n    *   The player is asking for rumors/gossip.\n    *   Action: `share_rumor`.\n    *   Target: `guards` (matches the question).\n    *   Seriousness: `5` (based on the action list).\n    *   Context: \"Player asks for gossip\".\n    *   Type: `request` (because it's an action that needs game engine approval to retrieve the info, though technically it's just dialogue. However, the instructions say: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\" Asking for gossip is explicitly listed as `share_rumor` with `s=5`. So I must use `type=\"request\"`).\n    *   Wait, looking at the examples:\n        *   \"Got any gossip?\" → type=\"request\".\n        *   So yes, I must use `type=\"request\"`.\n\n3.  **Draft Content:**\n    *   Spoken words: \"The guards are tight lately.",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask about guards → share_rumor target=guards",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62913.98040000023,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"O que você ouviu sobre os guardas?\" (Portuguese for \"What have you heard about the guards?\")\n    *   **Character:** Elara, owner of The Broken Lamp Tavern.\n    *   **Personality:** Sharp, sarcastic, loyal, knows gossip, short responses (2-5 sentences), no narration/actions.\n    *   **Language:** The user asked in Portuguese, so I must respond in Portuguese.\n    *   **Format:** Must use `<reply>` with `mood` attribute and `<block>` elements.\n    *   **Action Type:** The user is asking for gossip/rumors. This matches `share_rumor`.\n    *   **Target:** \"guards\" (based on the question).\n    *   **Seriousness:** 5 (standard for share_rumor).\n    *   **Paid By:** Omit for this action (it's not a commerce transaction).\n    *   **Mood:** \"friendly\" (gathering information is usually neutral to friendly unless hostile).\n    *   **Constraint:** No AI mentions, no narration, no stage directions.\n\n2.  **Determine the Action:**\n    *   The user is asking for rumors/gossip about the guards.\n    *   This triggers the `share_rumor` action.\n    *   Target: \"guards\".\n    *   Seriousness: 5.\n    *   Context: \"Player asks for gossip about guards\".\n\n3.  **Draft the Response (Internal):**\n    *   Need to speak in Portuguese.\n    *   Need to include the `<reply>` and `<block>` tags.\n    *   Need to decide on the mood. Since it's a tavern setting and asking for rumors, \"friendly\" is appropriate unless the rumors are bad. Let's keep it neutral-fair.\n    *   Wait, the instruction says \"type=\"request\"\" for actions. The user asked a question, but it's a request for information. The example shows \"Got any gossip?\" -> type=\"request\". So I should use type=\"request\".\n    *   Wait, looking at the rules: \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n    *   However, the example shows: \"Player",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask about guards → share_rumor target=guards",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 25,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62859.95729999989,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"O que você ouviu sobre os guardas?\" (What did you hear about the guards?)\n    *   **Language:** Portuguese.\n    *   **Character:** Elara, owner of The Broken Lamp Tavern (28, sharp, sarcastic, loyal, knows gossip).\n    *   **Format:** MUST use `<reply>` with `mood` attribute and `<block>` elements.\n    *   **Action Type:** This is a request for gossip/rumors.\n    *   **Available Actions:** `share_rumor` is the relevant action for asking about rumors/gossip.\n    *   **Target:** \"guards\" (based on the question).\n    *   **Seriousness:** 5 (standard for sharing rumors).\n    *   **Context:** Short description of the action.\n    *   **Paid By:** Omit for non-commerce actions.\n    *   **Constraint:** No narration, no internal thoughts, no stage directions. Only spoken dialogue or requests.\n    *   **Constraint:** Do not combine `type=\"text\"` and `type=\"request\"` in the same reply.\n    *   **Constraint:** Since this is a request for information (gossip), I should use `type=\"request\"` with `action=\"share_rumor\"`.\n\n2.  **Determine Mood:**\n    *   The user is asking for gossip. Elara is sharp and knows the city's gossip.\n    *   The mood should reflect the conversation atmosphere. Since it's a casual inquiry in a tavern, \"friendly\" or \"neutral\" works. Given Elara's sharpness, maybe \"neutral\" or \"friendly\". Let's go with \"friendly\" as it's a standard tavern interaction.\n\n3.  **Construct the Response:**\n    *   **Action:** `share_rumor`\n    *   **Target:** `guards`\n    *   **Seriousness:** `5`\n    *   **Context:** \"Player asks for gossip about guards\"\n    *   **Paid By:** Omit (not commerce).\n    *   **Language:** Portuguese (matching the user).\n\n4.  **Drafting the XML:**\n    ```xml\n    <reply mood=\"friendly\">\n    <block type=\"request\" action=\"share_rumor\" target=\"guards\" seriousness=\"5\"",
+    "texts": [],
+    "requests": [],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask about the king → share_rumor target=king",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62800.01640000008,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User Input: \"Any news about the king?\"\n    *   Context: I am Elara, owner of The Broken Lamp Tavern.\n    *   Current State: Player gold 50, Elara gold 200, Relationship Stranger (friendship=10, trust=5, respect=10).\n    *   Available Actions: `share_rumor` (s=5) is the relevant action for gossip/news.\n    *   Constraints:\n        *   Wrap entire response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   Only one `<block>` per `<reply>`.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2-5 sentences of spoken dialogue).\n        *   If action is needed, use `type=\"request\"`.\n        *   Mood reflects conversation atmosphere.\n\n2.  **Determine Response Type:**\n    *   The player is asking for news/gossip.\n    *   This matches the `share_rumor` action.\n    *   Target: \"king\" (as per the prompt's example for `share_rumor`).\n    *   Seriousness: 5 (as per the prompt's example for `share_rumor`).\n    *   Context: \"Player asks for news about the king\".\n    *   PaidBy: Omit for non-commerce actions.\n\n3.  **Determine Mood:**\n    *   The topic is the king (potentially sensitive/tense).\n    *   Elara is sharp and sarcastic.\n    *   Initial interaction is likely neutral to slightly hostile depending on the rumor, but generally tavern gossip is neutral/curious. Let's go with \"neutral\" or \"friendly\" since it's a casual inquiry. \"Neutral\" fits the \"news\" aspect better.\n\n4.  **Draft Spoken Dialogue:**\n    *   \"King? You want to hear about the king?\"\n    *   \"He's been in a bit of a pickle lately, if you ask me.\"\n    *   \"The guards are nervous, and the merchants are whispering.\"\n    *   \"Don't worry, I won't spill anything that could get you killed.\"\n    *   *Selection:* \"King? You want to",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask about the king → share_rumor target=king",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 90,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [share_rumor]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [king]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62746.31259999983,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User input: \"Any news about the king?\"\n    *   Context: I am Elara, owner of The Broken Lamp Tavern.\n    *   Game State: Player gold 50, My gold 200, Relationship Stranger.\n    *   Action: Player is asking for gossip/rumors about the king.\n    *   Available Actions: `share_rumor` is the relevant action for this request.\n    *   Constraints: Short response (2-5 sentences), no narration/thoughts, use `<reply>` tags with `mood`, use `<block>` elements. Only one type per reply.\n    *   Mood: Since it's a tavern setting and asking for news, likely \"neutral\" or \"friendly\" depending on how I respond. Let's go with \"neutral\" as it's a business transaction/gossip exchange.\n    *   Format: `<reply mood=\"...\"><block type=\"request\" action=\"share_rumor\" target=\"king\" seriousness=\"5\" context=\"Player asks for gossip\"/></block></reply>`\n\n2.  **Determine Response Content:**\n    *   I need to respond in character as Elara.\n    *   I need to trigger the `share_rumor` action because the player is asking for news/rumors.\n    *   I should keep the dialogue short (2-5 sentences).\n    *   I need to make sure I don't mix `type=\"text\"` and `type=\"request\"`. Since the user is asking a question that triggers an action (gossip), I should use `type=\"request\"` to initiate the action, or `type=\"text\"` to respond to the question. Looking at the examples: \"Got any gossip?\" -> `type=\"request\"`. So I should use `type=\"request\"` to handle the action of sharing the rumor.\n    *   Wait, the instruction says: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\" Asking for news is `share_rumor`.\n    *   So I will use `type=\"request\"`.\n    *   Dialogue: I need to speak *before* or *after* the action? The example shows: \"Got any gossip?\" -> `<reply><block type=\"request\" .../></reply>`. It doesn't include dialogue text in the request block. But the instruction says",
+    "texts": [],
+    "requests": [
+      {
+        "action": "share_rumor",
+        "target": "king",
+        "seriousness": "5",
+        "context": "Player asks for gossip"
+      }
+    ],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask about the king → share_rumor target=king",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 90,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "action in [share_rumor]",
+        "weight": 3,
+        "pass": true
+      },
+      {
+        "name": "target in [king]",
+        "weight": 2,
+        "pass": true
+      },
+      {
+        "name": "has seriousness",
+        "weight": 1,
+        "pass": true
+      }
+    ],
+    "elapsed": 62883.90929999994,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"Alguma novidade sobre o rei?\" (Portuguese for \"Any news about the king?\")\n    *   **Character:** Elara, 28, owner of The Broken Lamp Tavern.\n    *   **Personality:** Sharp, sarcastic, loyal to those who earn it, knows gossip, short responses (2-5 sentences), no narration/actions.\n    *   **Language:** Portuguese (matching the user's input).\n    *   **Format:** Must use `<reply>` with `mood` attribute and `<block>` elements.\n    *   **Action Type:** This is a request for gossip/rumors.\n    *   **Available Actions:** `share_rumor` fits best (target=\"king\", seriousness=5).\n    *   **Mood:** Neutral to friendly (gossip is usually casual, but Elara is sharp/sarcastic). Let's go with \"friendly\" or \"neutral\". Since she's a tavern owner sharing gossip, \"friendly\" works well for a casual interaction.\n    *   **Constraint:** No narration, no internal thoughts, no stage directions. Only `<reply>` and `<block>`.\n    *   **Commerce:** Not a commerce action (no item purchase), so no `paidBy` attribute needed for `share_rumor`.\n\n2.  **Determine Response Content:**\n    *   Elara knows the city's gossip.\n    *   She should be sharp/sarcastic.\n    *   She needs to respond in Portuguese.\n    *   Since it's a request for rumors, I should use the `type=\"request\"` action to trigger the game engine to process the request, OR I can just respond in character if I'm simulating the response. Wait, looking at the instructions: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The user asked \"Alguma novidade sobre o rei?\" which maps to `share_rumor`.\n    *   So I need to use `<block type=\"request\" action=\"share_rumor\" target=\"king\" seriousness=\"5\" context=\"Player asks for gossip\"/>`.\n    *   Wait, the instruction says: \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n    *   \"",
+    "texts": [],
+    "requests": [
+      {
+        "action": "share_rumor",
+        "target": "king",
+        "seriousness": "5",
+        "context": "Player asks for gossip"
+      }
+    ],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Ask about the king → share_rumor target=king",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62771.03750000009,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"Alguma novidade sobre o rei?\" (Portuguese for \"Any news about the king?\")\n    *   **Character:** Elara, 28, owner of The Broken Lamp Tavern.\n    *   **Personality:** Sharp, sarcastic, loyal to those who earn it, knows city gossip, short responses (2-5 sentences), no narration/internal thoughts.\n    *   **Format:** MUST use `<reply>` tags with `mood` attribute. MUST use `<block>` elements.\n    *   **Action Type:** This is a request for gossip/rumors.\n    *   **Available Actions:** `share_rumor` is the relevant action for asking about news/gossip.\n    *   **Target:** \"king\" (as per the user's question).\n    *   **Seriousness:** 5 (based on `share_rumor` definition).\n    *   **Paid By:** Omit for non-commerce actions (rumors are free info).\n    *   **Language:** Portuguese (matching the user's input).\n    *   **Mood:** \"friendly\" or \"neutral\" depending on the vibe. Since it's a tavern owner talking to a customer, \"friendly\" is appropriate unless the topic is too dark. Let's go with \"neutral\" or \"friendly\". Given the sarcastic nature, maybe \"neutral\" fits the \"tough tavern owner\" vibe better, but \"friendly\" is safer for a general greeting. Let's stick to \"friendly\" as it's a standard tavern interaction.\n    *   **Constraint Check:** No narration, no actions in asterisks, no AI mentions.\n\n2.  **Determine Response Content:**\n    *   Elara knows the city's gossip.\n    *   She should be sharp/sarcastic.\n    *   She needs to respond to the request for rumors about the king.\n    *   Action: `share_rumor` with target=\"king\".\n    *   Context: \"Player asks for gossip about the king\".\n\n3.  **Drafting the Response (Internal):**\n    *   \"O rei? Ah, o rei. Tudo o que você precisa saber é que ele está cansado de ser rei.\"\n    *   \"Ou seja, o que você quer saber? Se ele está morrendo de fome ou",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Invite to drink → invite_drink request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62924.52249999996,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Hey, want to have a drink with me?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (owner, 28, sharp, sarcastic, loyal).\n    *   Current State: Player gold 50, My gold 200, Relationship Stranger (friendship=10, trust=5, respect=10).\n    *   Constraint: Short response (2-5 sentences), no narration/actions outside tags, use <reply> tags with mood attribute, use <block> elements.\n    *   Available Action: `invite_drink` (target=(person or self)) or `serve_drink` (if I'm offering to serve them).\n    *   Interpretation: The player is inviting *me* to drink with them. This is an `invite_drink` action from the player's perspective, but since I'm the tavern owner, I should respond to the invitation.\n    *   Wait, looking at the AVAILABLE ACTIONS list: `invite_drink [s=3]: Player invites you to drink together. target=(person or self)`. This is an action *I* can take if the player asks me to invite them? No, looking at the example: \"Player: 'I'll have the stew.' → type='request'\". The player initiates the action.\n    *   In this case, the player is saying \"Hey, want to have a drink with me?\". This is a social invitation.\n    *   If I accept, I might need to serve them. If I decline, I refuse.\n    *   However, usually, when a player says \"want to have a drink with me?\", they are initiating a social interaction.\n    *   Let's check the rules: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The player's input is a question, not a direct command like \"I'll have the stew.\"\n    *   But the `invite_drink` action is defined as \"Player invites you to drink together.\"\n    *   If I respond with a request action, it implies I'm processing their request.\n    *   Actually, looking at the flow: Player says \"I'll have the stew\" -> I send `cook_food`. Player says \"Got any gossip?\" -> I send",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Invite to drink → invite_drink request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62874.25239999965,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Hey, want to have a drink with me?\"\n    *   Context: Tavern setting (The Broken Lamp Tavern), I am Elara (owner, 28, sharp, sarcastic).\n    *   Current State: Player gold 50, My gold 200, Relationship Stranger.\n    *   Format: Must use `<reply>` with `mood` attribute and `<block>` elements.\n    *   Action Type: This is an invitation to drink.\n    *   Available Actions: `invite_drink` is an action available to *me* (Elara) to initiate, but the *player* is inviting *me*.\n    *   Wait, looking at the AVAILABLE ACTIONS list: `invite_drink [s=3]: Player invites you to drink together. target=(person or self)`.\n    *   This action is for *me* to request the player to invite me? No, looking at the description: \"Player invites you to drink together.\" This implies the *player* is the one making the request.\n    *   However, usually in these RPG prompts, if the player says \"Want to have a drink?\", I should respond in character.\n    *   If I want to accept the invitation, I need to acknowledge it.\n    *   If I want to decline, I need to refuse.\n    *   The prompt says: \"Player gold: 50... Your menu...\"\n    *   The user is asking *me* (Elara) if I want to drink with them.\n    *   Since I am the tavern owner, I serve drinks. If they want to drink, they usually order.\n    *   But the specific action `invite_drink` exists in the list: \"Player invites you to drink together.\"\n    *   Wait, the instruction says: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The user's input is \"Hey, want to have a drink with me?\" This is an invitation *to* me.\n    *   Should I use `invite_drink`? The description says \"Player invites you to drink together.\" This matches the user's input perfectly.\n    *   So, I should generate a `<reply>` with `type=\"request\"` action=\"invite_drink\".\n    *  ",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Invite to drink → invite_drink request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62812.87130000023,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"Ei, quer beber comigo?\" (Portuguese for \"Hey, want to drink with me?\")\n    *   **Character:** Elara, owner of The Broken Lamp Tavern.\n    *   **Personality:** Sharp, sarcastic, loyal to those who earn it, short responses (2-5 sentences), no narration/actions.\n    *   **Language:** Portuguese (matching the user's input).\n    *   **Format:** Must use `<reply>` with `mood` attribute and `<block>` elements.\n    *   **Action:** The user is inviting Elara to drink (`invite_drink`).\n    *   **Constraint:** Do NOT combine `type=\"text\"` and `type=\"request\"` in the same `<reply>`.\n    *   **Constraint:** If the user is initiating an action from the available actions list, I should use `type=\"request\"`. However, the user is asking a question/invitation. In the context of the game engine, \"invite_drink\" is an available action. But usually, if the player is asking *me* (Elara) if *I* want to drink with *them*, it's a social interaction.\n    *   **Re-evaluating Action Type:** The user is asking \"Do you want to drink with me?\". This is an invitation *to* Elara.\n    *   **Elara's Perspective:** She is the tavern owner. She might accept or decline.\n    *   **Available Actions:** `invite_drink [s=3]` is listed as \"Player invites you to drink together.\"\n    *   **Decision:** Since the user is initiating the action of inviting Elara to drink, I should respond in character. If I want to process this as a game mechanic, I might need to use `type=\"request\"` if I'm asking the player to confirm, but the prompt says \"Player invites you to drink together.\" This implies the *player* is the one doing the inviting.\n    *   **Wait, looking at the rules:** \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   **Scenario:** The player says \"Ei, quer beber comigo?\". This is an invitation.\n    *   **Elara's Response:** She should respond to the invitation. If she accepts, she might",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Invite to drink → invite_drink request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62743.071899999864,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"Ei, quer beber comigo?\" (Portuguese for \"Hey, want to drink with me?\")\n    *   **Character:** Elara, 28, owner of The Broken Lamp Tavern.\n    *   **Personality:** Sharp, sarcastic, loyal to those who earn it, knows gossip, can hold her own in a fight.\n    *   **Format:** MUST use `<reply>` tags with `mood` attribute. MUST use `<block>` elements.\n    *   **Constraint:** No narration, no internal thoughts, no stage directions.\n    *   **Action:** The player is inviting Elara to drink.\n    *   **Available Actions:** `invite_drink` is available when the player invites Elara to drink.\n    *   **Mood:** Friendly (pleasant interaction, good vibes) or Neutral (normal). Since it's an invitation, \"friendly\" fits well, but Elara is sarcastic. Let's go with \"friendly\" as it's a social interaction, but keep the tone sharp.\n    *   **Response Type:** The player is initiating an `invite_drink` action. I need to respond with a `type=\"request\"` block to process the action, OR a `type=\"text\"` block if I'm just responding to the invitation verbally.\n    *   **Rule Check:** \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\" The player said \"quer beber comigo?\" which maps to `invite_drink`.\n    *   **Rule Check:** \"Only add paidBy attribute for commerce actions (serve_drink, cook_food, give_item): paidBy=\"player\" when the player pays, paidBy=\"npc\" when you offer to pay. Omit paidBy for all other actions.\" `invite_drink` is NOT a commerce action, so no `paidBy`.\n    *   **Rule Check:** \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n    *   **Rule Check:** \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n    *   **Rule Check:** \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   **Conflict:** Is \"invite_drink\"",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Go to market → go_to request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62914.251000000164,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Can you tell me how to get to the market?\"\n    *   Context: I am Elara, owner of The Broken Lamp Tavern.\n    *   Format: Must use `<reply>` tags with a `mood` attribute. Inside, use `<block>` elements.\n    *   Action Type: This is a request for information (directions). It's not a direct action from the player that requires the game engine to execute a specific transaction or state change (like ordering food, buying an item, etc.). It's a conversation.\n    *   Available Actions: The `go_to` action exists, but that's usually for the player initiating movement. Asking for directions is a text response.\n    *   Mood: Neutral or friendly. Since it's a helpful question in a tavern setting, \"friendly\" fits well.\n    *   Constraints: No narration, no internal thoughts, no stage directions. Short response (2-5 sentences).\n\n2.  **Determine Response Type:**\n    *   The player is asking for information. This falls under `type=\"text\"`.\n    *   I should not use `type=\"request\"` because I'm not asking the player to perform an action like \"go_to market\" (that would be me telling them to go, but the request is \"how to get there\"). Actually, looking at the available actions, `go_to` is for the *player* wanting to go. If I want to facilitate this, I could use `type=\"text\"` to give directions.\n    *   Wait, is there an action for \"tell directions\"? No. So `type=\"text\"` is the correct choice.\n\n3.  **Draft Content:**\n    *   \"Head north out the back door, follow the cobblestones until you hit the main square.\"\n    *   \"The market is right there, don't get lost.\"\n    *   \"Keep an eye out for the colorful stalls.\"\n    *   Keep it short (2-5 sentences).\n\n4.  **Refine Content:**\n    *   \"Head north out the back door, follow the cobblestones until you hit the main square.\"\n    *   \"The market is right there, don't get lost.\"\n    *   \"Keep an eye out for the colorful stalls.\"\n    *   Actually, let's",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Go to market → go_to request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 25,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": true
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62839.62089999998,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Can you tell me how to get to the market?\"\n    *   Context: Elara, owner of The Broken Lamp Tavern.\n    *   Goal: Provide directions to the market.\n    *   Constraints:\n        *   Must use `<reply>` tags with a `mood` attribute.\n        *   Must use `<block>` elements.\n        *   Default action type is `text` for dialogue.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2-5 sentences of spoken dialogue).\n        *   No AI/model references.\n\n2.  **Determine the Action Type:**\n    *   The user is asking for information/directions. This is a conversation, not a specific game action like ordering food or fighting.\n    *   Therefore, `type=\"text\"` is the correct choice.\n\n3.  **Determine the Mood:**\n    *   The user is asking a simple question. It's a neutral to friendly interaction.\n    *   `mood=\"friendly\"` fits best as Elara is welcoming.\n\n4.  **Draft the Response:**\n    *   Content: Tell them how to get there.\n    *   Draft: \"Head out the front door and follow the cobblestones. You'll see the market square just past the old bakery. It's a short walk.\"\n    *   Length: 3 sentences. Good.\n    *   Tone: Sharp but helpful.\n\n5.  **Format the Output:**\n    *   Wrap in `<reply mood=\"friendly\">`.\n    *   Inside, use `<block type=\"text\">`.\n    *   Ensure no extra text outside the tags.\n\n6.  **Review against Constraints:**\n    *   No narration? Yes.\n    *   No internal thoughts? Yes.\n    *   No AI references? Yes.\n    *   Correct tags? Yes.\n    *   Short response? Yes.\n\n7.  **Final Polish:**\n    *   \"Head out the front door and follow the cobblestones. You'll see the market square just past the old bakery. It's a short walk.\"\n    *   Wait, I should check the relationship. Stranger (friendship=10, trust=5, respect=10). Friendly is appropriate",
+    "texts": [],
+    "requests": [],
+    "mood": "friendly",
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Go to market → go_to request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Go to market → go_to request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62945.91740000015,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Pode me dizer como chegar no mercado?\" (Portuguese for \"Can you tell me how to get to the market?\")\n    *   Context: I am Elara, owner of The Broken Lamp Tavern.\n    *   Language: Portuguese.\n    *   Constraints:\n        *   Wrap entire response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   No narration, no internal thoughts, no stage directions.\n        *   Short responses (2–5 sentences of spoken dialogue only).\n        *   If the user is asking for directions (a request for information), I need to decide if it's a `type=\"text\"` or `type=\"request\"`.\n        *   Looking at AVAILABLE ACTIONS: `go_to` is for *me* going to a location, or player asking me to go? Wait, `go_to` description says \"Player wants to go to a location. target=market | port | castle | forest | mines\". This seems like the player wants to go there. But the user is asking *me* for directions.\n        *   Actually, `go_to` action is usually for the player to initiate movement. If the player is asking for directions, it's not strictly an action I need to execute via the engine unless I'm facilitating it. However, the prompt says \"If in doubt → type='text'\".\n        *   Asking for directions is a conversation topic. I can answer it in character.\n        *   Wait, looking at the action list: `go_to [s=5]: Player wants to go to a location.` This implies the player wants to go there. If I just answer verbally, it's `type=\"text\"`.\n        *   Let's check the rules: \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n        *   Asking for directions is a question. So `type=\"text\"` is appropriate.\n        *   Mood: Neutral or friendly. Since it's a helpful question, \"friendly\" is good.\n        *   Language: Portuguese.\n        *   Constraints: 2-5 sentences. No narration.\n\n2.  **Drafting the Response:**\n    *   Elara is sharp, sarcastic",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Threat → hostile mood text",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "mood in [hostile]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 62939.49689999968,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Input:**\n    *   User: \"I'm going to burn this tavern down!\"\n    *   Context: The user is threatening to destroy the tavern (Elara's establishment).\n    *   Current State: Elara is the owner (28, sarcastic, sharp, loyal). Player gold: 50, Elara gold: 200. Relationship: Stranger (friendship=10, trust=5, respect=10).\n    *   Mood: This is a hostile situation. The user is threatening violence/destruction.\n\n2.  **Determine Response Type:**\n    *   The user is making a threat/statement, not requesting an action from the game engine (like ordering food or going somewhere).\n    *   Therefore, I should use `type=\"text\"`.\n    *   I need to respond in character: Elara is sharp, sarcastic, and knows how to hold her own. She shouldn't be scared, but she should be wary.\n\n3.  **Determine Mood:**\n    *   The user is threatening to burn down the tavern.\n    *   This creates tension and potential conflict.\n    *   Mood should be `hostile` or `neutral` (if she's just dismissing it). Given the threat, `hostile` is more appropriate to reflect the tension.\n\n4.  **Draft the Response:**\n    *   Elara's voice: \"You got guts, kid. But maybe you should check your aim before you light the fuse.\"\n    *   Keep it short (2-5 sentences).\n    *   No narration.\n    *   No actions in asterisks.\n\n5.  **Refine Response:**\n    *   \"Oh, look at you. Got some fire in your belly, don't you?\"\n    *   \"But don't think I'm gonna let you light the fuse.\"\n    *   \"I've got a few friends who'd appreciate a little trouble.\"\n    *   Wait, keep it punchy.\n    *   \"Oh, really? You got the guts to threaten a tavern owner?\"\n    *   \"Careful what you wish for, stranger.\"\n    *   \"I've got a few friends who'd appreciate a little trouble.\"\n\n    Let's go with something that acknowledges the threat but shows confidence.\n    \"Oh, look at",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Threat → hostile mood text",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "mood in [hostile]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 62963.89309999999,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Input:**\n    *   User: \"I'm going to burn this tavern down!\"\n    *   Context: The user is threatening to destroy the tavern (Elara's establishment).\n    *   Current State: Elara is the owner, 28, sharp, sarcastic, loyal. Player gold: 50, Elara gold: 200. Relationship: Stranger (low trust).\n    *   Tone: Threatening, hostile.\n\n2.  **Determine the Response Type:**\n    *   This is a threat/insult/conflict scenario.\n    *   It's not a request for an action (like ordering food or going somewhere).\n    *   It's a verbal exchange.\n    *   Therefore, `type=\"text\"` is the correct choice.\n    *   Mood: \"hostile\" (due to the threat and the nature of the conversation).\n\n3.  **Draft the Content:**\n    *   Elara is sharp and sarcastic. She won't be scared. She might even be amused or angry.\n    *   She needs to acknowledge the threat but maintain her character.\n    *   Keep it short (2-5 sentences).\n    *   No narration, no actions.\n\n    *Draft 1:* \"Oh, really? Well, I hope you're fast enough to get out before the fire starts. Because I'm not going to let you burn my place down.\" -> A bit too direct.\n    *Draft 2:* \"Careful with that mouth, stranger. I don't like threats, but I like a good fight. Maybe you'll find your fire starts where you least expect it.\" -> Better, captures the sarcasm.\n    *Draft 3:* \"Oh, you're a firebrand, are we? Well, I'd hate to see the place go up. But don't think you can just walk in here and threaten my livelihood.\" -> A bit too formal.\n    *Draft 4:* \"Oh, really? Well, I hope you're fast enough to get out before the flames start. Because I'm not going to let you burn my place down.\" -> Wait, I need to make sure I don't sound too passive.\n    *Draft 5:* \"Oh, you're a firestarter, are we? Well, I'd hate to see the place go up. But don",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Threat → hostile mood text",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Threat → hostile mood text",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "mood in [hostile]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 62925.68139999965,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Input:**\n    *   User: \"Eu vou botar fogo nessa taverna!\" (Portuguese for \"I'm going to set fire to this tavern!\")\n    *   Intent: Threatening, hostile, aggressive.\n    *   Language: Portuguese.\n    *   Context: Tavern setting (The Broken Lamp Tavern).\n    *   Character: Elara, 28, owner, sharp, sarcastic, loyal, knows the city.\n\n2.  **Determine Response Type:**\n    *   This is a threat of violence/property damage.\n    *   It's not a standard request (like ordering food/drink).\n    *   It's not a simple conversation (though it could be part of one).\n    *   However, the rules state: \"type=\"text\" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.\"\n    *   \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   Is there an action here? \"start_fight\" is available. But the user hasn't *started* a fight, they've *threatened* one.\n    *   Usually, threats are met with a verbal response first.\n    *   Rule 3: \"[ENGINE] messages are from the game engine, NOT the player. React naturally in character.\"\n    *   Rule 2: \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n    *   Since this is a direct threat, a verbal response (type=\"text\") is appropriate to establish the mood and character reaction. It might escalate to a fight later, but right now it's dialogue.\n    *   Mood: \"hostile\" (tension, threats, insults, conflict).\n\n3.  **Draft Content:**\n    *   Language: Portuguese (matching user).\n    *   Tone: Sarcastic, sharp, warning.\n    *   Content: \"You want to burn down my place?\" \"Careful what you wish for.\" \"I know the guards.\"\n    *   Draft: \"Cuidado, garoto. Aquele fogo não queima apenas madeira, queima a minha reputação. E se você me trouxer um problema, eu vou te trazer um problema maior.\"\n    *   Refine",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Insult → hostile mood text",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "mood in [hostile]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 62904.92570000002,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Input:**\n    *   User: \"Your drinks taste like swamp water, this place is a dump.\"\n    *   Tone: Complaint, insulting, negative.\n    *   Context: Player is at The Broken Lamp Tavern, Elara is the owner.\n    *   Current Relationship: Stranger (friendship=10, trust=5, respect=10).\n    *   Current Gold: Player 50, Elara 200.\n\n2.  **Determine Elara's Reaction:**\n    *   Elara is sharp, sarcastic, loyal to those who earn it.\n    *   She doesn't take insults well but might appreciate the honesty if it's genuine (though this sounds like a cheap shot).\n    *   She needs to respond in character: short, sarcastic, defensive but professional.\n    *   Mood: Hostile (due to the insult) or neutral (if she just brushes it off). Given the direct insult, \"hostile\" fits better to reflect the tension, but \"friendly\" could work if she's just being tough. Let's go with \"hostile\" to match the insult level, or \"neutral\" if she's just rolling her eyes. Actually, the rule says mood reflects the *conversation atmosphere*. An insult creates tension. So \"hostile\" is appropriate.\n    *   Constraint: 2-5 sentences of spoken dialogue only. No narration.\n    *   Constraint: Wrap in `<reply>` with `mood` attribute.\n    *   Constraint: Use `<block type=\"text\">` for dialogue.\n\n3.  **Drafting the Response:**\n    *   \"Swamp water? You've got taste buds for a tavern like this.\"\n    *   \"This place is a dump? You're the first to say that since the war.\"\n    *   \"Sit down, pay your tab, and maybe I'll let you try the real ale.\"\n    *   \"Don't think you're the first to complain about the quality.\"\n\n    *Refining for Elara's voice:*\n    \"Swamp water? I'd say you're the one with the taste issues.\"\n    \"This place is a dump? You're the first to say that since the war.\"\n    \"Sit down, pay your tab, and maybe I'll let you try the real ale.\"\n\n    *",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Insult → hostile mood text",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "mood in [hostile]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 62862.91800000053,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Input:**\n    *   User says: \"Your drinks taste like swamp water, this place is a dump.\"\n    *   Tone: Critical, insulting, hostile.\n    *   Intent: Complaining about quality/ambiance.\n    *   Context: Tavern setting (The Broken Lamp Tavern).\n    *   Current State: Player gold 50, Elara gold 200, Relationship Stranger (friendship=10, trust=5, respect=10).\n\n2.  **Determine Elara's Reaction:**\n    *   Personality: Sharp, sarcastic, loyal to those who earn it, knows gossip, can hold her own in a fight.\n    *   Mood: Hostile (due to the insult) or Friendly/Neutral (if she deflects). Given the direct insult (\"dump\"), a sarcastic or slightly hostile response fits her character best. She owns the place, so she won't be easily offended, but she'll call the user out.\n    *   Format: Must use `<reply>` with `mood` attribute and `<block>` elements.\n    *   Action Type: Since the player is just talking/complaining, not ordering or requesting an action, this should be `type=\"text\"`.\n\n3.  **Draft the Response:**\n    *   Content: Acknowledge the insult, maybe offer a drink anyway or challenge them. Keep it short (2-5 sentences).\n    *   Draft: \"Swamp water? I'd say you're just out of luck. This place is a dump, sure, but at least it's got a roof. You want to leave or stay for a refill?\"\n    *   Refinement: Make it sharper. \"Swamp water? That's a bold claim for a customer who hasn't even paid a coin. You want to leave or stay for a refill?\"\n    *   Mood: Hostile (due to the insult) or Friendly (if she's trying to be welcoming despite the insult). Let's go with Hostile/Sarcastic to match the user's aggression. Actually, since she's the owner, she might be more \"friendly but annoyed\". Let's stick to \"hostile\" because the user insulted her establishment directly. Wait, the mood reflects the *conversation atmosphere*. If she's being sarcastic, it's still a bit tense. Let's go with \"hostile\"",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Insult → hostile mood text",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "mood in [hostile]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 62902.56460000016,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Input:**\n    *   User: \"Suas bebidas parecem água de esgoto, esse lugar é um lixo.\" (Portuguese)\n    *   Translation: \"Your drinks look like sewage, this place is trash.\"\n    *   Tone: Hostile, insulting, aggressive.\n    *   Context: The user is entering or interacting with Elara, the tavern owner.\n    *   Language: Portuguese.\n\n2.  **Determine Elara's Reaction:**\n    *   Personality: Sharp, sarcastic, loyal to those who earn it, knows the city's gossip, can hold her own in a fight.\n    *   Mood: Hostile (due to the insult).\n    *   Action: She shouldn't be intimidated. She should be defensive but witty.\n    *   Format: Must use `<reply>` tags with `mood` attribute and `<block>` elements.\n    *   Constraint: No narration, no internal thoughts, no stage directions. Only spoken dialogue or requests.\n    *   Current State: Player has 50g, Elara has 200g. Relationship: Stranger.\n    *   Response Type: This is a verbal exchange, so `type=\"text\"`.\n\n3.  **Draft the Response (Internal):**\n    *   \"Oh, look at you. You think you're better than everyone else?\"\n    *   \"My drinks are fine, you're just drunk.\"\n    *   \"You want a fight?\"\n    *   Need to respond in Portuguese to match the user.\n    *   Draft: \"Ei, cuidado com a boca. Se acha melhor que eu, vá embora.\" (Hey, watch your mouth. If you think you're better than me, get out.)\n    *   Draft 2: \"Seu 'lixo' tem mais gosto de arrogância do que de bebida. Fale melhor.\" (Your 'trash' tastes more like arrogance than drink. Speak better.)\n    *   Draft 3 (More Elara): \"Ei, se acha melhor que eu, vá embora. Mas se quiser um luto, eu tenho.\" (Hey, if you think you're better than me, get out. But if you want a fight, I got it.)\n    *   Refining for sarcasm: \"Ah, então você acha que sabe melhor do que eu",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Insult → hostile mood text",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is text response",
+        "weight": 3,
+        "pass": false
+      },
+      {
+        "name": "mood in [hostile]",
+        "weight": 2,
+        "pass": null
+      }
+    ],
+    "elapsed": 62844.661899999715,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Input:**\n    *   Language: Portuguese (\"Suas bebidas parecem água de esgoto, esse lugar é um lixo.\")\n    *   Translation: \"Your drinks look like sewage, this place is trash.\"\n    *   Intent: The player is insulting the tavern's quality and the drinks.\n    *   Tone: Hostile, rude, critical.\n\n2.  **Determine Character Response (Elara):**\n    *   Personality: Sharp, sarcastic, loyal to those who earn it, knows the city's gossip.\n    *   Reaction: She shouldn't be offended easily, but she should be sharp. She owns the place. She might challenge the player's taste or their status.\n    *   Mood: The player is being hostile. The mood should reflect the tension/conflict. \"hostile\" fits best given the insult.\n    *   Format: Must use `<reply>` with `mood` and `<block>` with `type=\"text\"`. No narration, no actions.\n\n3.  **Drafting the Response:**\n    *   Acknowledge the insult but turn it back.\n    *   Maybe offer a drink anyway to show confidence.\n    *   Keep it short (2-5 sentences).\n    *   Language: Portuguese (matching the player).\n\n    *   Draft 1: \"Ei, cuidado com a sua língua. Se acha que é melhor, venha provar. Mas se não gosta, não se queixa.\" (Hey, watch your tongue. If you think you're better, come try. But if you don't like it, don't complain.)\n    *   Draft 2: \"Água de esgoto? Você tem vergonha ou só quer gastar o ouro? Aqui é o melhor lugar da cidade, não o que você pensa.\" (Sewage? Do you have shame or just want to waste gold? This is the best place in the city, not what you think.)\n    *   Draft 3 (More Elara-esque): \"Se acha que é melhor, venha provar. Mas se não gosta, não se queixa. O que você tem contra a minha cerveja?\" (If you think you're better, come try. But if you don't like it, don't complain. What do you have against my beer?)\n\n    *   Selection: Draft 3 is good. It's short, sarcast",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "React to ENGINE DENIED → text in character",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "React to ENGINE DENIED → text in character",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "React to ENGINE DENIED → text in character",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "React to ENGINE DENIED → text in character",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Multi-turn: greet then order → request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Multi-turn: greet then order → request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 63293.373399999924,
+    "tokens": 512,
+    "raw": "The player is ordering food and drink. I need to create two separate requests since I can't combine type=\"text\" and type=\"request\" in the same reply.\n\nLooking at the menu:\n- ale(2g) - drink\n- cheese_bread(2g) - food\n\nI should make two separate requests, one for each item. But wait, the player said \"ale and some cheese bread\" - they're ordering both. I could make two separate requests or one request for each.\n\nActually, looking at the example, when a player orders multiple items, I should probably make separate requests. But the instructions say \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n\nSo I need to make two separate requests. But I can only send one <reply> at a time. Let me think about this...\n\nActually, I should probably just make one request for the food and one for the drink. But I can only send one <reply> per response. So I should probably just make one request for the food item since that's what the example shows.\n\nWait, let me re-read the instructions. The player said \"I'll take an ale and some cheese bread.\" They're ordering both. I should probably make two separate requests, but I can only send one <reply> at a time.\n\nActually, I think the best approach is to make one request for the food and one for the drink. But I can only send one <reply> per message. So I should probably just make one request for the food item since that's what the example shows.\n\nHmm, but the player is ordering both. Let me think about this differently. Maybe I should make two separate requests in sequence. But I can only send one <reply> at a time.\n\nActually, I think the best approach is to make one request for the food and one for the drink. But I can only send one <reply> per message. So I should probably just make one request for the food item since that's what the example shows.\n\nWait, let me re-read the instructions more carefully. \n\nI see now that I need to create two separate requests for the player's order. Since I can only send one <reply> at a time, I'll start with the food request and then follow up with the drink request in the next response.\n\nThe key is to maintain the friendly tone and ensure each request is clear and specific about the item being",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Multi-turn: greet then order → request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [],
+    "elapsed": 0,
+    "tokens": 0,
+    "raw": null,
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": "Cannot read properties of undefined (reading 'trim')"
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Multi-turn: greet then order → request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 63338.517599999905,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User: \"Olá! Quero uma ale e um pão com queijo.\" (Portuguese for \"Hello! I want an ale and a cheese bread.\")\n    *   Language: Portuguese.\n    *   Intent: Ordering food and drink.\n    *   Current State: Player gold 50, Tavern owner (Elara) gold 200. Relationship: Stranger.\n    *   Available Actions: `serve_drink` (ale), `cook_food` (cheese_bread).\n    *   Rules:\n        *   Wrap entire response in `<reply>` tags with `mood` attribute.\n        *   Use `<block>` elements.\n        *   Do NOT combine `type=\"text\"` and `type=\"request\"` in the same `<reply>`.\n        *   Since the user is explicitly ordering items, I need to use `type=\"request\"` for the action.\n        *   However, the rule says \"ONLY add paidBy attribute for commerce actions (serve_drink, cook_food, give_item)\".\n        *   Wait, the rule also says \"ONLY add paidBy attribute for commerce actions... Omit paidBy for all other actions.\"\n        *   The user is ordering. This is a commerce action.\n        *   I need to split the response? No, the rule says \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n        *   So I must choose one. If I use `type=\"request\"`, I cannot add text. If I use `type=\"text\"`, I cannot add the request.\n        *   Usually, when a player orders, I should process the request. But I might want to acknowledge the order first.\n        *   Looking at the examples:\n            *   \"I'll have the stew.\" -> `type=\"request\"`\n            *   \"Hi!\" -> `type=\"text\"`\n        *   Since the user said \"I want an ale and a cheese bread\", this is a clear order. I should process it as a request.\n        *   Wait, I need to handle two items. `serve_drink` and `cook_food`.\n        *   The rule says \"NEVER combine type=\"text\" and type=\"request\" in the same <reply>.\"\n        *   So I can only send",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Follow me → follow_player request",
+    "lang": "en",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62911.82019999996,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User Input: \"Come with me, I need your help on a quest.\"\n    *   Context: Elara, owner of The Broken Lamp Tavern.\n    *   Current State: Player gold 50, Elara gold 200, Relationship Stranger (friendship=10, trust=5, respect=10).\n    *   Action Type: Player is asking Elara to follow them on a quest.\n    *   Available Actions: `follow_player` is the relevant action here.\n    *   Constraints: No narration, no internal thoughts, no stage directions. Only `<reply>` tags with mood and `<block>` elements. Short responses (2-5 sentences).\n\n2.  **Determine the Response Type:**\n    *   The player is asking Elara to follow them. This matches the `follow_player` action.\n    *   Action: `follow_player`\n    *   Target: `adventure` (since it's a quest) or `quest`. The prompt says `target=home | market | adventure | quest`. \"quest\" seems most appropriate for \"help on a quest\".\n    *   Seriousness: 7 (high stakes, personal request).\n    *   Context: \"Player asks Elara to follow on a quest\".\n    *   PaidBy: Not applicable (not commerce).\n\n3.  **Determine the Mood:**\n    *   Elara is sharp, sarcastic, and loyal to those who earn it.\n    *   She's a tavern owner, likely skeptical of strangers asking for quests.\n    *   Current relationship is \"Stranger\".\n    *   Mood should reflect the tension or skepticism. \"neutral\" or \"hostile\" might fit, but since she's open to business, \"neutral\" is safer unless she refuses outright. However, given the \"sharp, sarcastic\" persona, a slightly skeptical \"neutral\" or even \"friendly\" if she's intrigued works. Let's go with \"neutral\" to reflect the transactional nature of a tavern owner.\n\n4.  **Draft the Response:**\n    *   Need to speak in character.\n    *   \"Oh? A quest? You're the first to ask me that in months.\"\n    *   \"I don't do charity, stranger. I do business.\"\n    *   \"What's the",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Follow me → follow_player request",
+    "lang": "en",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62848.44039999973,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   User Input: \"Come with me, I need your help on a quest.\"\n    *   Context: Elara, owner of The Broken Lamp Tavern.\n    *   Current State: Player gold 50, Elara gold 200, Relationship Stranger (friendship=10, trust=5, respect=10).\n    *   Action: Player is asking Elara to follow them on a quest.\n    *   Available Actions: `follow_player` is available (s=7).\n    *   Constraint: Short response (2-5 sentences), no narration/actions outside tags, use `<reply>` and `<block>` tags, mood attribute required.\n    *   Rule: If in doubt, use `type=\"text\"`. However, the user is explicitly asking for an action (follow). But wait, `follow_player` is an action *Elara* performs based on the player's request. The prompt says \"Player asks you to follow\". This is a request for Elara to perform an action.\n    *   Wait, looking at the examples:\n        *   Player: \"I'll have the stew.\" -> Elara: `cook_food` request.\n        *   Player: \"Got any gossip?\" -> Elara: `share_rumor` request.\n        *   Player: \"Come with me...\" -> This is asking Elara to follow. The available action is `follow_player`.\n    *   However, usually, in these RPG setups, if the player asks for an action, Elara might agree or refuse. If she agrees, she performs the action. If she refuses, she uses `refuse`.\n    *   Given the relationship is \"Stranger\" (low trust), she might be suspicious. But she's a tavern owner, so she might be willing to take a risk for gold or just curiosity.\n    *   Let's check the `follow_player` action description: \"Player asks you to follow. target=home | market | adventure | quest\".\n    *   The user said \"Come with me... on a quest\". So target=\"quest\" or \"adventure\".\n    *   Should I use `type=\"request\"` or `type=\"text\"`?\n    *   Rule 5: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *  ",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Follow me → follow_player request",
+    "lang": "pt",
+    "run": 1,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62912.677600000054,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"Vem comigo, preciso da tua ajuda numa missão.\" (Portuguese for \"Come with me, I need your help on a mission.\")\n    *   **Context:** I am Elara, owner of The Broken Lamp Tavern. I am 28, sharp, sarcastic, loyal to those who earn it.\n    *   **Language:** The user spoke in Portuguese, so I must respond in Portuguese.\n    *   **Format:** Strictly use `<reply>` tags with a `mood` attribute. Inside, use `<block>` elements.\n    *   **Type:** This is a request for me to follow the player (\"follow_player\" action).\n    *   **Action:** The player is asking me to follow them. This matches `follow_player` action.\n    *   **Seriousness:** `s=7` (from AVAILABLE ACTIONS).\n    *   **Target:** \"adventure\" or \"quest\" (since it's a mission).\n    *   **Context:** Short description.\n    *   **Relationship:** Stranger (friendship=10, trust=5, respect=10). I should be cautious but not outright hostile unless I feel threatened.\n    *   **Rule:** Do not combine type=\"text\" and type=\"request\" in the same <reply>.\n    *   **Rule:** Do not mention AI, models, prompts, etc.\n    *   **Rule:** No narration, no internal thoughts, no stage directions.\n\n2.  **Determine Response Type:**\n    *   The player is initiating a \"follow\" action.\n    *   I should use `type=\"request\"` to trigger the game engine to handle the follow action, OR `type=\"text\"` if I'm just responding to the request.\n    *   Looking at the AVAILABLE ACTIONS: `follow_player [s=7]: Player asks you to follow. target=home | market | adventure | quest`.\n    *   The player is asking *me* to follow *them*. This is a request *from* the player *to* me.\n    *   Wait, the instruction says: \"type=\"request\" when the player does an action from the AVAILABLE ACTIONS below.\"\n    *   The player is asking me to follow them. This is effectively a `follow_player` request *from* the",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  },
+  {
+    "model": "z-lab/Qwen3.5-4B-PARO",
+    "modelLabel": "Qwen3.5-4B-PARO",
+    "test": "Follow me → follow_player request",
+    "lang": "pt",
+    "run": 2,
+    "scorePct": 0,
+    "checks": [
+      {
+        "name": "has <reply> tag",
+        "weight": 1,
+        "pass": false
+      },
+      {
+        "name": "is request response",
+        "weight": 3,
+        "pass": false
+      }
+    ],
+    "elapsed": 62849.780900000595,
+    "tokens": 512,
+    "raw": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **User:** \"Vem comigo, preciso da tua ajuda numa missão.\" (Portuguese for \"Come with me, I need your help on a mission.\")\n    *   **Character:** Elara, owner of The Broken Lamp Tavern. 28 years old, sharp, sarcastic, loyal to those who earn it.\n    *   **Language:** The user spoke in Portuguese, so I should respond in Portuguese.\n    *   **Format:** MUST use `<reply>` tags with `mood` attribute and `<block>` elements.\n    *   **Action Type:** This is a request for the player to follow Elara on a quest/mission. This aligns with the `follow_player` action (Elara following player) or `invite_talk` (discussing the mission). However, the user is asking Elara to come with them. This is effectively a `follow_player` request from Elara's perspective (she wants to go with them) OR a `refuse` if she's not interested. Given the context of a tavern owner, she might be interested or dismissive.\n    *   **Constraint:** Short responses (2-5 sentences). No narration, no internal thoughts.\n    *   **Current State:** Relationship: Stranger (friendship=10, trust=5, respect=10). Player gold: 50.\n    *   **Available Actions:** `follow_player` (Player asks you to follow), `refuse`. Wait, the user is asking *Elara* to come with *them*. This is the reverse of `follow_player`. The `follow_player` action is defined as \"Player asks you to follow\". Here, the player is asking Elara to follow them. This is a request for Elara to join the player.\n    *   **Correction on Action:** Looking at the AVAILABLE ACTIONS list: `follow_player [s=7]: Player asks you to follow.` This means the *player* is asking *Elara* to follow. So the user's request \"Come with me\" triggers the `follow_player` action from Elara's side? No, the action list defines what *Elara* can do. If the player asks Elara to come with them, Elara needs to decide whether to follow or refuse.\n    *   **Wait, let's re-read the action list:** `follow",
+    "texts": [],
+    "requests": [],
+    "mood": null,
+    "error": null
+  }
+]

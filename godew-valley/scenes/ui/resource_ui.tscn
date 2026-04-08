@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjuiwygspkh17"]
+
+[ext_resource type="Script" uid="uid://bvcs843e8u3eq" path="res://scenes/ui/resource_ui.gd" id="1_iahqc"]
+[ext_resource type="Theme" uid="uid://rhcgh2v8xs3h" path="res://scenes/ui/game_theme.tres" id="1_vmyg7"]
+
+[node name="ResourceUI" type="Control" groups=["ResourceUI"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_vmyg7")
+script = ExtResource("1_iahqc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="HideTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="HideTimer" to="." method="hide"]

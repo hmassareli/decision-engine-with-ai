@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3 uid="uid://dxxa2cdh5ipd1"]
+
+[ext_resource type="Script" uid="uid://y0rdgl85eosn" path="res://scenes/levels/tv.gd" id="1_bif1e"]
+[ext_resource type="Texture2D" uid="uid://d4nnmlscu1se6" path="res://graphics/machines/tv.png" id="1_i6lrx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bif1e"]
+atlas = ExtResource("1_i6lrx")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujlcr"]
+atlas = ExtResource("1_i6lrx")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjtmt"]
+atlas = ExtResource("1_i6lrx")
+region = Rect2(64, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8dpb"]
+atlas = ExtResource("1_i6lrx")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7daw1"]
+atlas = ExtResource("1_i6lrx")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pk4yt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bif1e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujlcr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjtmt")
+}],
+"loop": true,
+"name": &"rain",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t8dpb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7daw1")
+}],
+"loop": true,
+"name": &"sun",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qawod"]
+size = Vector2(14, 12)
+
+[node name="TV" type="StaticBody2D"]
+collision_layer = 12
+collision_mask = 0
+script = ExtResource("1_bif1e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pk4yt")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_qawod")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

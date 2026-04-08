@@ -1,0 +1,95 @@
+[gd_scene load_steps=12 format=3 uid="uid://jagwlsp7f7ck"]
+
+[ext_resource type="PackedScene" uid="uid://7r64eqnfq7fl" path="res://scenes/machines/machine.tscn" id="1_rivgu"]
+[ext_resource type="Script" uid="uid://cxgqwicudyr26" path="res://scenes/machines/sprinkler.gd" id="2_4f0up"]
+[ext_resource type="Texture2D" uid="uid://cqkc2r311d0pb" path="res://graphics/machines/sprinkler.png" id="2_7pp0t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4f0up"]
+size = Vector2(6, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7yiw"]
+atlas = ExtResource("2_7pp0t")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5yj7"]
+atlas = ExtResource("2_7pp0t")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3cumb"]
+atlas = ExtResource("2_7pp0t")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8od64"]
+atlas = ExtResource("2_7pp0t")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wvn4"]
+atlas = ExtResource("2_7pp0t")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j5ix2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7yiw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5yj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3cumb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8od64")
+}],
+"loop": false,
+"name": &"action",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wvn4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4f0up"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 8.0
+emission_ring_cone_angle = 90.0
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 15.0
+gravity = Vector3(0, 0, 0)
+color = Color(0.027665941, 0.81410724, 0.880886, 1)
+
+[node name="Sprinkler" instance=ExtResource("1_rivgu")]
+script = ExtResource("2_4f0up")
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_4f0up")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1"]
+position = Vector2(0, -2)
+sprite_frames = SubResource("SpriteFrames_j5ix2")
+animation = &"action"
+autoplay = "default"
+
+[node name="Timer" type="Timer" parent="." index="2"]
+wait_time = 5.0
+autostart = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." index="3"]
+position = Vector2(0, -3)
+emitting = false
+amount = 50
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_4f0up")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://drbptkvju1amb"]
+
+[ext_resource type="PackedScene" uid="uid://7r64eqnfq7fl" path="res://scenes/machines/machine.tscn" id="1_oysi4"]
+[ext_resource type="Script" uid="uid://ck576mvwimbcr" path="res://scenes/machines/fisher.gd" id="2_3xeds"]
+[ext_resource type="SpriteFrames" uid="uid://prqhluye08u2" path="res://premade/fisher.tres" id="2_pnbx3"]
+[ext_resource type="Texture2D" uid="uid://k4r0km103lsj" path="res://graphics/ui/v_bar.png" id="4_k3aki"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pnbx3"]
+size = Vector2(6, 10)
+
+[node name="Fisher" instance=ExtResource("1_oysi4")]
+script = ExtResource("2_3xeds")
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_pnbx3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = ExtResource("2_pnbx3")
+animation = &"left_idle"
+
+[node name="Timer" type="Timer" parent="." index="2"]
+wait_time = 30.0
+one_shot = true
+
+[node name="Control" type="Control" parent="." index="3"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control" index="0"]
+custom_minimum_size = Vector2(20, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 28.0
+nine_patch_stretch = true
+texture_under = ExtResource("4_k3aki")
+texture_progress = ExtResource("4_k3aki")
+tint_under = Color(0.18039216, 0.18039216, 0.18039216, 1)
+tint_progress = Color(0.24705882, 1, 0.3882353, 1)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

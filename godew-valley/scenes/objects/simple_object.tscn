@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://vem02mh7silc"]
+
+[ext_resource type="Texture2D" uid="uid://bxsysay51a72s" path="res://graphics/tilesets/decoration.png" id="1_jad2w"]
+[ext_resource type="Script" uid="uid://db6eht15me8uk" path="res://scenes/objects/simple_object.gd" id="1_n4sul"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4sul"]
+size = Vector2(10, 4)
+
+[node name="SimpleObject" type="StaticBody2D"]
+z_index = -1
+collision_mask = 0
+script = ExtResource("1_n4sul")
+style = 1
+random = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jad2w")
+hframes = 4
+vframes = 2
+frame = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_n4sul")
+disabled = true
