@@ -1062,11 +1062,14 @@ function printTestResult(name, lang, results, verbose) {
   const avgTime = results.reduce((s, r) => s + r.elapsed, 0) / results.length;
   const avgTokens = results.reduce((s, r) => s + r.tokens, 0) / results.length;
   const tokPerSec = avgTime > 0 ? avgTokens / (avgTime / 1000) : 0;
+  const normalizedLang = String(lang).toLowerCase();
 
   const icon = avgPct >= 90 ? "✔" : avgPct >= 60 ? "◐" : "✖";
   const iconColor = avgPct >= 90 ? C.green : avgPct >= 60 ? C.yellow : C.red;
   const langTag =
-    lang === "pt" ? `${C.magenta}PT${C.reset}` : `${C.white}EN${C.reset}`;
+    normalizedLang === "pt"
+      ? `${C.magenta}PT${C.reset}`
+      : `${C.white}EN${C.reset}`;
 
   console.log(
     `  ${iconColor}${icon}${C.reset} [${langTag}] ${name.padEnd(42)} ${printBar(avgPct)} ${pctColor(avgPct)}${avgPct.toFixed(0).padStart(3)}%${C.reset}  ${C.dim}${avgTime.toFixed(0)}ms ${avgTokens.toFixed(0)}tok ${tokPerSec.toFixed(2)}tok/s${C.reset}`,
