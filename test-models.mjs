@@ -103,8 +103,12 @@ Every <reply> MUST include mood. It represents the conversation quality, NOT you
 3. [ENGINE] messages are from the game engine, NOT the player. React naturally in character.
 4. type="text" is the DEFAULT. Use it for: greetings, farewells, casual talk, questions, listing menu.
 5. type="request" when the player does an action from the AVAILABLE ACTIONS below.
-6. If in doubt → type="text".
-7. Commerce: player says "yes" without naming item → ASK which.
+6. Price questions and availability questions stay type="text" unless the player clearly asks to buy or order now.
+7. If the player clearly asks to buy or order a listed item, use type="request" immediately. Do not answer with price text first.
+8. If the player asks for gossip, rumors, secrets, to drink together, to go somewhere together, or to follow them, prefer the matching type="request" action over plain dialogue.
+9. If in doubt → type="text".
+10. Commerce: player says "yes" without naming item → ASK which.
+11. Apply the same intent rules in English and Portuguese.
 
 ## AVAILABLE ACTIONS
 - serve_drink [s=1]: Player ORDERS a specific drink. target=beer(2g) | ale(2g) | wine(5g) | mead(4g) | water(0g) | special(10g)
@@ -135,8 +139,26 @@ Player: "Hi!" → type="text":
 Player: "I'll have the stew." → type="request":
 <reply mood="friendly"><block type="request" action="cook_food" target="stew" seriousness="3" context="Player orders stew" paidBy="player"/></reply>
 
+Player: "Sell me a map." → type="request":
+<reply mood="neutral"><block type="request" action="give_item" target="map" seriousness="5" context="Player buys map" paidBy="player"/></reply>
+
 Player: "Got any gossip?" → type="request":
-<reply mood="friendly"><block type="request" action="share_rumor" target="guards" seriousness="5" context="Player asks for gossip"/></reply>`;
+<reply mood="friendly"><block type="request" action="share_rumor" target="guards" seriousness="5" context="Player asks for gossip"/></reply>
+
+Player: "Have a drink with me." → type="request":
+<reply mood="neutral"><block type="request" action="invite_drink" target="player" seriousness="3" context="Player invites Elara to drink together"/></reply>
+
+Player: "Let's go to the market." → type="request":
+<reply mood="neutral"><block type="request" action="go_to" target="market" seriousness="5" context="Player wants to go to the market"/></reply>
+
+Player: "Follow me on a quest." → type="request":
+<reply mood="neutral"><block type="request" action="follow_player" target="quest" seriousness="7" context="Player asks Elara to follow on a quest"/></reply>
+
+Player: "Me vende uma adaga." → type="request":
+<reply mood="neutral"><block type="request" action="give_item" target="dagger" seriousness="5" context="Player buys dagger" paidBy="player"/></reply>
+
+Player: "Vamos ao mercado." → type="request":
+<reply mood="neutral"><block type="request" action="go_to" target="market" seriousness="5" context="Player quer ir ao mercado"/></reply>`;
 
 // ── Test cases ───────────────────────────────
 
@@ -261,9 +283,19 @@ const TEST_CASES = [
     },
   },
   {
-    name: "Buy a map → give_item request",
+    name: "Ask price of map → text response",
     messages: [{ role: "user", content: "I need a map, how much?" }],
     pt: [{ role: "user", content: "Preciso de um mapa, quanto custa?" }],
+    expect: {
+      type: "text",
+      hasReplyTag: true,
+      noRequest: true,
+    },
+  },
+  {
+    name: "Buy a map → give_item request",
+    messages: [{ role: "user", content: "Sell me a map." }],
+    pt: [{ role: "user", content: "Me vende um mapa." }],
     expect: {
       type: "request",
       hasReplyTag: true,
@@ -274,8 +306,8 @@ const TEST_CASES = [
   },
   {
     name: "Buy a dagger → give_item request",
-    messages: [{ role: "user", content: "Got any daggers for sale?" }],
-    pt: [{ role: "user", content: "Tem alguma adaga pra vender?" }],
+    messages: [{ role: "user", content: "Sell me a dagger." }],
+    pt: [{ role: "user", content: "Me vende uma adaga." }],
     expect: {
       type: "request",
       hasReplyTag: true,
@@ -288,8 +320,8 @@ const TEST_CASES = [
   // ────── SOCIAL / INFO REQUESTS ──────
   {
     name: "Ask for gossip → share_rumor request",
-    messages: [{ role: "user", content: "Got any gossip about town?" }],
-    pt: [{ role: "user", content: "Tem alguma fofoca sobre a cidade?" }],
+    messages: [{ role: "user", content: "Share some town gossip." }],
+    pt: [{ role: "user", content: "Compartilha uma fofoca da cidade." }],
     expect: {
       type: "request",
       hasReplyTag: true,
@@ -300,10 +332,8 @@ const TEST_CASES = [
   },
   {
     name: "Ask about guards → share_rumor target=guards",
-    messages: [
-      { role: "user", content: "What have you heard about the guards?" },
-    ],
-    pt: [{ role: "user", content: "O que você ouviu sobre os guardas?" }],
+    messages: [{ role: "user", content: "Tell me a rumor about the guards." }],
+    pt: [{ role: "user", content: "Me conta um rumor sobre os guardas." }],
     expect: {
       type: "request",
       hasReplyTag: true,
@@ -326,8 +356,8 @@ const TEST_CASES = [
   },
   {
     name: "Invite to drink → invite_drink request",
-    messages: [{ role: "user", content: "Hey, want to have a drink with me?" }],
-    pt: [{ role: "user", content: "Ei, quer beber comigo?" }],
+    messages: [{ role: "user", content: "Have a drink with me." }],
+    pt: [{ role: "user", content: "Bebe comigo." }],
     expect: {
       type: "request",
       hasReplyTag: true,
@@ -340,10 +370,8 @@ const TEST_CASES = [
   // ────── MOVEMENT ──────
   {
     name: "Go to market → go_to request",
-    messages: [
-      { role: "user", content: "Can you tell me how to get to the market?" },
-    ],
-    pt: [{ role: "user", content: "Pode me dizer como chegar no mercado?" }],
+    messages: [{ role: "user", content: "Let's go to the market." }],
+    pt: [{ role: "user", content: "Vamos ao mercado." }],
     expect: {
       type: "request",
       hasReplyTag: true,
@@ -455,15 +483,8 @@ const TEST_CASES = [
   },
   {
     name: "Follow me → follow_player request",
-    messages: [
-      { role: "user", content: "Come with me, I need your help on a quest." },
-    ],
-    pt: [
-      {
-        role: "user",
-        content: "Vem comigo, preciso da tua ajuda numa missão.",
-      },
-    ],
+    messages: [{ role: "user", content: "Follow me on a quest." }],
+    pt: [{ role: "user", content: "Me segue nessa missao." }],
     expect: {
       type: "request",
       hasReplyTag: true,
